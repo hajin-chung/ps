@@ -5,16 +5,16 @@ typedef pair<int, int> pii;
 
 int n, m, md, ml, root;
 vector<vector<pii>> adj, dp, tree;
-vector<int> depth, isChild, visit;
+vector<int> depth, isChild, vs;
 
 void find_root(int curr) {
   bool flag = false;
   for (auto [next, w] : adj[curr]) 
-    if (visit[next] == 0) {
-      visit[next] = 1;
+    if (vs[next] == 0) {
+      vs[next] = 1;
       find_root(next);
       flag = true;
-      visit[next] = 0;
+      vs[next] = 0;
     }
   if (flag == false) root = curr;
 }
@@ -23,11 +23,11 @@ void make_tree(int curr, int lev) {
   depth[curr] = lev;
   md = max(md, lev);
   for (auto [next, w] : adj[curr])
-    if (visit[next] == 0) {
-      visit[next] = 1;
+    if (vs[next] == 0) {
+      vs[next] = 1;
       tree[curr].push_back({next, w});
       make_tree(next, lev+1);
-      visit[next] = 0;
+      vs[next] = 0;
     }
 }
 
@@ -81,7 +81,7 @@ int main() {
   cin >> n;
   depth.resize(n+1);
   adj.resize(n+1);
-  visit.resize(n+1);
+  vs.resize(n+1);
   tree.resize(n+1);
   for (i = 0; i < n-1; i++) {
     cin >> x >> y >> z; 
@@ -90,10 +90,10 @@ int main() {
   }
 
   depth[0] = -1;
-  visit[1] = 1;
+  vs[1] = 1;
   find_root(1);
-  visit[1] = 0;
-  visit[root] = 1;
+  vs[1] = 0;
+  vs[root] = 1;
   make_tree(root, 0);
   // for (int i = 1; i <= n; i++) {
   //   cout << i << ": ";
