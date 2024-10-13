@@ -3,12 +3,35 @@ using namespace std;
 
 typedef pair<int, int> pii;
 
-int n, m, md, ml;
-vector<vector<pii>> a, dp;
-vector<int> depth, isChild;
+int n, m, md, ml, root;
+vector<vector<pii>> adj, dp, tree;
+vector<int> depth, isChild, visit;
+
+void find_root(int curr) {
+  bool flag = false;
+  for (auto [next, w] : adj[curr]) 
+    if (visit[next] == 0) {
+      visit[next] = 1;
+      find_root(next);
+      flag = true;
+      visit[next] = 0;
+    }
+  if (flag == false) root = curr;
+}
+
+void make_tree(int curr, int lev) {
+  depth[curr] = lev;
+  md = max(md, lev);
+  for (auto [next, w] : adj[curr])
+    if (visit[next] == 0) {
+      visit[next] = 1;
+      tree[curr].push_back({next, w});
+      make_tree(next, lev+1);
+      visit[next] = 0;
+    }
+}
 
 void dfs(int curr) {
-  md = max(md, depth[curr]);
   if (depth[curr] > 0) {
     int max_level = (int)floor(log2(depth[curr]));
     for (int i = 1; i <= max_level; i++) {
@@ -17,11 +40,8 @@ void dfs(int curr) {
     }
   }
 
-  for (auto [next, w] : a[curr]) {
-    depth[next] = depth[curr] + 1;
-
+  for (auto [next, w] : tree[curr]) {
     int max_level = (int)floor(log2(depth[next]));
-    dp[next].resize(max_level + 1);
     dp[next][0] = {curr, w};
     dfs(next);
   }
@@ -38,13 +58,14 @@ int lca(int x, int y) {
       }
   }
   if (x != y) {
-    for (int i = dp[x].size()-1; i >= 0; i--) {
-      if (dp[x][i] != dp[y][i]) {
+    for (int i = ml; i >= 0; i--) {
+      if (dp[x][i].first != dp[y][i].first) {
         x = dp[x][i].first;
         y = dp[y][i].first;
+        ret += dp[x][i].second + dp[y][i].second;
       }
-      ret += dp[x][i].second + dp[y][i].second;
     }
+    ret += dp[x][0].second + dp[y][0].second;
   }
   return ret;
 }
@@ -56,21 +77,34 @@ int main() {
 
   int i;
   int x, y, z;
-  int root;
 
   cin >> n;
-  dp.resize(n+1);
   depth.resize(n+1);
-  a.resize(n+1);
-  isChild.resize(n+1, 0);
+  adj.resize(n+1);
+  visit.resize(n+1);
+  tree.resize(n+1);
   for (i = 0; i < n-1; i++) {
     cin >> x >> y >> z; 
-    isChild[y] = 1;
-    a[x].push_back({y, z});
+    adj[x].push_back({y, z});
+    adj[y].push_back({x, z});
   }
 
-  for (i = 1; i <= n; i++) if (!isChild[i]) root = i;
+  depth[0] = -1;
+  visit[1] = 1;
+  find_root(1);
+  visit[1] = 0;
+  visit[root] = 1;
+  make_tree(root, 0);
+  // for (int i = 1; i <= n; i++) {
+  //   cout << i << ": ";
+  //   for (auto [p, w] : tree[i])
+  //     cout << "{" << p << ", " << w << "}, ";
+  //   cout << "\n";
+  // }
 
+  ml = (int)floor(log2(md));
+  // cout << "ml : " << ml << endl;
+  dp.resize(n+1, vector<pii>(ml+1));
   dfs(root);
   // for (int i = 1; i <= n; i++) {
   //   cout << i << ": ";
