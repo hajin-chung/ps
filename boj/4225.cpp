@@ -40,9 +40,9 @@ bool solve() {
   }
   swap(p[li], p[0]);
   pivot = p[0];
-  printf("pivot: %lf %lf\n", p[0].fi, p[0].se);
+  // printf("pivot: %lf %lf\n", p[0].fi, p[0].se);
   sort(p.begin(), p.end(), cmp);
-  for (int i = 0; i < n; i++) printf("%lf %lf\n", p[i].fi, p[i].se);
+  // for (int i = 0; i < n; i++) printf("%lf %lf\n", p[i].fi, p[i].se);
 
   stack<pdd> S;
   S.push(p[0]);
@@ -52,7 +52,7 @@ bool solve() {
     while (S.size() >= 2) {
       pdd se = S.top(); S.pop();
       pdd fi = S.top();
-      if (ccw(fi, se, p[next])) {
+      if (ccw(fi, se, p[next]) > 0) {
         S.push(se);
         break;
       }
@@ -66,8 +66,8 @@ bool solve() {
     S.pop();
   }
 
-  for (int i = 0; i < ch.size(); i++) 
-    printf("%lf %lf\n", ch[i].fi, ch[i].se);
+  // for (int i = 0; i < ch.size(); i++) 
+  //   printf("%lf %lf\n", ch[i].fi, ch[i].se);
   
   double ans = 10000000;
   for (int i = 0; i < ch.size(); i++) {
@@ -85,7 +85,7 @@ bool solve() {
     ans = min(ans, mx);
   }
   ans += 0.005;
-  printf("Case %d: %.2lf\n",caseNum, ans);
+  // printf("Case %d: %.2lf\n",caseNum, ans);
   return true;
 }
 
