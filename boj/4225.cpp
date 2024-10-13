@@ -41,7 +41,7 @@ bool solve() {
   swap(p[li], p[0]);
   pivot = p[0];
   // printf("pivot: %lf %lf\n", p[0].fi, p[0].se);
-  sort(p.begin(), p.end(), cmp);
+  sort(p.begin()+1, p.end(), cmp);
   // for (int i = 0; i < n; i++) printf("%lf %lf\n", p[i].fi, p[i].se);
 
   stack<pdd> S;
