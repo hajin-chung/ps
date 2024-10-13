@@ -85,7 +85,7 @@ bool solve() {
     ans = min(ans, mx);
   }
   ans += 0.005;
-  // printf("Case %d: %.2lf\n",caseNum, ans);
+  printf("Case %d: %.2lf\n",caseNum, ans);
   return true;
 }
 
