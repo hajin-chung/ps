@@ -51,7 +51,7 @@ int lca(int x, int y) {
   int ret = 0;
   if (depth[x] != depth[y]) {
     if (depth[x] > depth[y]) swap(x, y);
-    for (int i = dp[y].size()-1; i >= 0; i--)
+    for (int i = ml; i >= 0; i--)
       if (depth[x] <= depth[dp[y][i].first]) {
         ret += dp[y][i].second;
         y = dp[y][i].first;
@@ -60,9 +60,9 @@ int lca(int x, int y) {
   if (x != y) {
     for (int i = ml; i >= 0; i--) {
       if (dp[x][i].first != dp[y][i].first) {
+        ret += dp[x][i].second + dp[y][i].second;
         x = dp[x][i].first;
         y = dp[y][i].first;
-        ret += dp[x][i].second + dp[y][i].second;
       }
     }
     ret += dp[x][0].second + dp[y][0].second;
@@ -95,24 +95,10 @@ int main() {
   vs[1] = 0;
   vs[root] = 1;
   make_tree(root, 0);
-  // for (int i = 1; i <= n; i++) {
-  //   cout << i << ": ";
-  //   for (auto [p, w] : tree[i])
-  //     cout << "{" << p << ", " << w << "}, ";
-  //   cout << "\n";
-  // }
 
   ml = (int)floor(log2(md));
-  // cout << "ml : " << ml << endl;
   dp.resize(n+1, vector<pii>(ml+1));
   dfs(root);
-  // for (int i = 1; i <= n; i++) {
-  //   cout << i << ": ";
-  //   for (auto [p, w] : dp[i])
-  //     cout << "{" << p << ", " << w << "}, ";
-  //   cout << "\n";
-  // }
-  // cout << endl;
 
   cin >> m;
   while (m--) {
