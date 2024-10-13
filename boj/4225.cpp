@@ -69,7 +69,7 @@ bool solve() {
   // for (int i = 0; i < ch.size(); i++) 
   //   printf("%lf %lf\n", ch[i].fi, ch[i].se);
   
-  double ans = 10000000;
+  double ans = 10000000000;
   for (int i = 0; i < ch.size(); i++) {
     pdd p1 = ch[i];
     pdd p2 = ch[(i+1)%ch.size()];
@@ -84,7 +84,12 @@ bool solve() {
       }
     ans = min(ans, mx);
   }
-  ans += 0.005;
+  ans *= 100;
+  if (ans - (long long)ans > (1e-12)) {
+    ans += 1;
+    ans = (long long)ans;
+  }
+  ans /= 100;
   printf("Case %d: %.2lf\n",caseNum, ans);
   return true;
 }
