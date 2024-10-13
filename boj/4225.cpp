@@ -67,7 +67,7 @@ bool solve() {
   }
 
   for (int i = 0; i < ch.size(); i++) 
-    printf("%llf %llf\n", ch[i].fi, ch[i].se);
+    printf("%lf %lf\n", ch[i].fi, ch[i].se);
   
   double ans = 10000000;
   for (int i = 0; i < ch.size(); i++) {
