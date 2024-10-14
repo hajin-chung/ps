@@ -84,12 +84,6 @@ bool solve() {
       }
     ans = min(ans, mx);
   }
-  ans *= 100;
-  if (ans - (long long)ans > (1e-12)) {
-    ans += 1;
-    ans = (long long)ans;
-  }
-  ans /= 100;
   printf("Case %d: %.2lf\n",caseNum, ans);
   return true;
 }
