@@ -23,7 +23,9 @@ bool solve() {
       i++;
     }
   }
-  printf("%d\n", n/(n-dp[n-1]));
+  if (n % (n-dp[n-1]) == 0)
+    printf("%d\n", n/(n-dp[n-1]));
+  else printf("1\n");
   return true;
 }
 
