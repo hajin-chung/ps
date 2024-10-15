@@ -8,21 +8,24 @@ bool solve() {
   ll n, x, ans = 0, i;
   stack<pll> S;
 
+  while (!S.empty()) S.pop();
+
   scanf("%lld", &n);
   if (n == 0) return false;
 
   for (i = 0; i < n; i++) {
     scanf("%lld", &x);
-    while (!S.empty() && S.top().first > x) {
+    while (!S.empty() && S.top().first >= x) {
       auto [h, idx] = S.top(); S.pop();
-      ans = max(ans, h * (i - idx));
+      ll w = S.empty() ? i : i - idx - 1;
+      ans = max(ans, h * w);
     }
     S.push({x, i});
   }
   while (!S.empty()) {
-    auto [h, idx] = S.top();
-    S.pop();
-    ans = max(ans, h * (i - idx));
+    auto [h, idx] = S.top(); S.pop();
+    ll w = S.empty() ? i : i - idx - 1;
+    ans = max(ans, h * w);
   }
   printf("%lld\n", ans);
 
