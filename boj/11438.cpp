@@ -3,31 +3,19 @@ using namespace std;
 
 typedef pair<int, int> pii;
 
-vector<vector<int>> dp, adj, tree;
+vector<vector<int>> dp, adj;
 vector<int> depth, check;
 int n, m;
 
-void make_tree(int curr) {
-  check[curr] = true; 
-  for (auto next : adj[curr])
-    if (check[next] == 0) {
-      tree[curr].push_back(next);
-      make_tree(next);
-    }
-}
-
-void dfs(int curr, int parent, int lev) {
+void dfs(int curr = 1, int lev = 0) {
+  check[curr] = 1;
   depth[curr] = lev;
-
-  if (lev > 0) {
-    dp[curr].resize((int)floor(log2(lev)) + 1);
-    dp[curr][0] = parent;
-    for (int i = 1; i < dp[curr].size(); i++) 
-      dp[curr][i] = dp[dp[curr][i-1]][i-1];
-  }
-
-  for (auto next : tree[curr]) 
-    dfs(next, curr, lev+1);
+  dp[curr].resize(40);
+  for (auto next : adj[curr])
+    if (!check[next]) {
+      dp[next][0] = curr;
+      dfs(next, lev+1);
+    }
 }
 
 int lca(int a, int b) {
@@ -48,14 +36,13 @@ int lca(int a, int b) {
 }
 
 int main() {
-  int i;
+  int i, j;
   int x, y, z;
 
   scanf("%d", &n);
   adj.resize(n+1);
   check.resize(n+1);
-  tree.resize(n+1);
-  dp.resize(n+1);
+  dp.resize(n+1, vector<int>(30));
   depth.resize(n+1);
   for (i = 0; i < n-1; i++) {
     scanf("%d %d", &x, &y);
@@ -63,8 +50,10 @@ int main() {
     adj[y].push_back(x);
   }
 
-  make_tree(1);
-  dfs(1, 0, 0);
+  dfs();
+  for (j = 1; j < 30; j++) 
+    for (i = 1; i <= n; i++)
+      dp[i][j] = dp[dp[i][j-1]][j-1];
 
   scanf("%d", &m);
   for (i = 0; i < m; i++) {
