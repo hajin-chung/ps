@@ -17,14 +17,14 @@ bool solve() {
     scanf("%lld", &x);
     while (!S.empty() && S.top().first >= x) {
       auto [h, idx] = S.top(); S.pop();
-      ll w = S.empty() ? i : i - idx - 1;
+      ll w = S.empty() ? i : i - S.top().second - 1;
       ans = max(ans, h * w);
     }
     S.push({x, i});
   }
   while (!S.empty()) {
     auto [h, idx] = S.top(); S.pop();
-    ll w = S.empty() ? i : i - idx - 1;
+    ll w = S.empty() ? n : n - S.top().second - 1;
     ans = max(ans, h * w);
   }
   printf("%lld\n", ans);
