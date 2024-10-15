@@ -4,13 +4,13 @@ using namespace std;
 typedef pair<int, int> pii;
 
 vector<vector<int>> dp, adj, tree;
-vector<int> depth, visit;
+vector<int> depth, check;
 int n, m;
 
 void make_tree(int curr) {
-  visit[curr] = true; 
+  check[curr] = true; 
   for (auto next : adj[curr])
-    if (visit[next] == 0) {
+    if (check[next] == 0) {
       tree[curr].push_back(next);
       make_tree(next);
     }
@@ -53,7 +53,7 @@ int main() {
 
   scanf("%d", &n);
   adj.resize(n+1);
-  visit.resize(n+1);
+  check.resize(n+1);
   tree.resize(n+1);
   dp.resize(n+1);
   depth.resize(n+1);
