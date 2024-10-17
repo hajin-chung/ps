@@ -33,7 +33,7 @@ int main() {
   ans.resize(5*n, vector<ll>(5*n));
   for (int i = 0; i < n; i++) {
     char tmp[12];
-    scanf("%s", &tmp);
+    scanf("%s", tmp);
     for (int j = 0; j < n; j++) {
       ll w = tmp[j] - '0';
       if (1 <= w && w <= 5)
