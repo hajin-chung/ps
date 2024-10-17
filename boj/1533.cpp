@@ -28,7 +28,7 @@ void matpow() {
 }
 
 int main() {
-  scanf("%lld%lld%lld%lld", &n, &s, &e, &t);
+  scanf("%d%d%d%d", &n, &s, &e, &t);
   a.resize(5*n, vector<ll>(5*n));
   ans.resize(5*n, vector<ll>(5*n));
   for (int i = 0; i < n; i++) {
