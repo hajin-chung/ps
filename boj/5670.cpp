@@ -55,6 +55,6 @@ int main() {
     for (auto next : root->children) sum += walk(next, 1);
     cout << fixed;
     cout.precision(2);
-    cout << (double)sum/n << endl;
+    cout << (double)sum/n << "\n";
   }
 }
