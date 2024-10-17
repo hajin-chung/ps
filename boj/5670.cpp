@@ -20,25 +20,24 @@ void add(Trie* root, string s) {
         curr = next;
         break;
       }
-    cout << "hihi" << endl;
     if (!flag) {
-      cout << "hihi2" << endl;
-      Trie next = new Trie(s[i], i == s.size()-1);
-      curr->children.push_back(&next);
-      curr = &next;
+      Trie *next = new Trie(s[i], i == s.size()-1);
+      curr->children.push_back(next);
+      curr = next;
     }
+    if (i == s.size()-1) curr->isWord = true;
   }
 }
 
 int walk(Trie* curr, int lev) {
-  if (curr->children.size() <= 1) return lev;
-  else {
-    int sum = 0;
-    if (curr->isWord) sum += lev;
-    for (auto next : curr->children) 
-      sum += walk(next, lev+1);
-    return sum;
-  } 
+  // cout << curr->c << " " << lev << " " << (curr->isWord ? "word" : "no") << endl;
+  int ret = 0;
+  if (curr->isWord) ret = lev;
+  if (curr->children.size() == 1) ret += walk(curr->children[0], lev + curr->isWord);
+  else for (auto next : curr->children) ret += walk(next, lev+1);
+  // cout << curr->c << " " << lev << " " << curr->isWord ? "word" : "no";
+  // cout << " " << ret << endl;
+  return ret;
 }
 
 int main() {
@@ -50,9 +49,12 @@ int main() {
     for (int i = 0; i < n; i++) {
       string s;
       cin >> s;
-      cout << s << endl;
       add(root, s);
     }
-    cout << walk(root, 0) << endl;
+    int sum = 0;
+    for (auto next : root->children) sum += walk(next, 1);
+    cout << fixed;
+    cout.precision(2);
+    cout << (double)sum/n << endl;
   }
 }
