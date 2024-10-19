@@ -30,9 +30,9 @@ int main() {
       for (int j = 1; j <= k; j++) {
         int ty = dy[i]*j + yy;
         int tx = dx[i]*j + xx;
-        if (ty < 0 || ty >= n || tx < 0 || tx >= m) continue;
+        if (ty < 0 || ty >= n || tx < 0 || tx >= m) break;
         if (a[ty][tx] == '#') break;
-        if (d[ty][tx] <= d[yy][xx]) break;
+        if (d[ty][tx] <= d[yy][xx]+1) break;
         d[ty][tx] = d[yy][xx] + 1;
         if (ty == e.fi && tx == e.se) {
           printf("%d\n", d[ty][tx]);
