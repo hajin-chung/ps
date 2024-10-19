@@ -7,7 +7,6 @@ vector<int> cnt, chk;
 int dfs(int curr) {
   chk[curr] = 1;
   cnt[curr] = 1;
-  if (adj[curr].size() == 1) return cnt[curr];
   for (auto next : adj[curr])
     if (!chk[next]) 
       cnt[curr] += dfs(next);
