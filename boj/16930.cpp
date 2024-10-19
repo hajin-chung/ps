@@ -32,15 +32,16 @@ int main() {
         int tx = dx[i]*j + xx;
         if (ty < 0 || ty >= n || tx < 0 || tx >= m) break;
         if (a[ty][tx] == '#') break;
-        if (d[ty][tx] <= d[yy][xx]+1) break;
-        d[ty][tx] = d[yy][xx] + 1;
-        if (ty == e.fi && tx == e.se) {
-          printf("%d\n", d[ty][tx]);
-          return 0;
+        if (d[ty][tx] < d[yy][xx]+1) break;
+        if (d[ty][tx] == INF) {
+          d[ty][tx] = d[yy][xx] + 1;
+          if (ty == e.fi && tx == e.se) {
+            printf("%d\n", d[ty][tx]);
+            return 0;
+          }
+          Q.push({ty, tx});
         }
-        Q.push({ty, tx});
       }
   }
-  if (d[e.fi][e.se] == INF) printf("-1\n");
-  else printf("%d\n", d[e.fi][e.se]);
+  printf("-1\n");
 }
