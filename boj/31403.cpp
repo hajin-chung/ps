@@ -2,7 +2,13 @@
 using namespace std;
 
 int main() {
-  int a, b, c;
+  int a, b, c, sa = 0, t, cnt = 0;
   scanf("%d%d%d",&a,&b,&c);
-  printf("%d\n%d", a+b-c, a*10+b-c);
+  t = b;
+  sa = a;
+  while (t) {
+    sa *= 10;
+    t /= 10;
+  }
+  printf("%d\n%d\n", a+b-c, sa+b-c);
 }
