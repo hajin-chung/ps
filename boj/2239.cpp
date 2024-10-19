@@ -21,20 +21,22 @@ void print() {
   }
 }
 
-void dfs(int y, int x) {
+void rec(int y, int x) {
   if (y == 9 && x == 0) {
     print();
     exit(0);
   }
 
-  if (a[y][x] == 0) 
+  if (a[y][x] == 0)  {
     for (int i = 1; i <= 9; i++)
       if (check(y, x, i)) {
         a[y][x] = i;
-        dfs(y+(x+1)/9, (x+1)%9);
+        rec(y+(x+1)/9, (x+1)%9);
         a[y][x] = 0;
       }
-  else dfs(y+(x+1)/9, (x+1)%9);
+  } else {
+    rec(y+(x+1)/9, (x+1)%9);
+  }
 }
 
 int main() {
@@ -44,5 +46,5 @@ int main() {
     for (int j = 0; j < 9; j++)
       a[i][j] = tmp[j] - '0';
   }
-  dfs(0, 0);
+  rec(0, 0);
 }
