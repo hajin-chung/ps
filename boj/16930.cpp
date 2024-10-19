@@ -28,6 +28,7 @@ int main() {
   while (!pq.empty()) {
     pip t = pq.top(); pq.pop();
     int yy = t.se.fi, xx = t.se.se;
+    if (d[yy][xx] < t.fi) continue;
     if (e.fi == yy && e.se == xx) break;
     for (int i = 0; i < 4; i++)
       for (int j = 1; j <= k; j++) {
