@@ -28,7 +28,7 @@ ll query(int a, int b) {
 }
 
 int main() {
-  int x, y, z;
+  ll x, y, z;
   scanf("%d%d%d", &n, &m, &k);
   a.resize(n+1, 0);
   ft.resize(n+1, 0);
@@ -39,8 +39,8 @@ int main() {
   }
 
   for (int i = 0; i < m+k; i++) {
-    scanf("%d%d%d", &x, &y, &z);
-    if (x == 1) update(y, (ll)z);
+    scanf("%lld%lld%lld", &x, &y, &z);
+    if (x == 1) update(y, z);
     else printf("%lld\n", query(y, z));
   }
 }
