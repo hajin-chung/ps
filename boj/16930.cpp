@@ -12,7 +12,7 @@ int main() {
   int n, m, k;
   char a[1005][1005];
   int d[1005][1005];
-  priority_queue<pip, vector<pip>, greater<pip>> pq;
+  queue<pip> Q;
   pii s, e;
   
   scanf("%d %d %d", &n, &m, &k);
@@ -23,10 +23,10 @@ int main() {
     for (int j = 0; j < m; j++)
       d[i][j] = INF;
 
-  pq.push({0, s});
+  Q.push({0, s});
   d[s.fi][s.se] = 0;
-  while (!pq.empty()) {
-    pip t = pq.top(); pq.pop();
+  while (!Q.empty()) {
+    pip t = Q.front(); Q.pop();
     int yy = t.se.fi, xx = t.se.se;
     if (d[yy][xx] < t.fi) continue;
     if (e.fi == yy && e.se == xx) break;
@@ -36,9 +36,9 @@ int main() {
         int tx = dx[i]*j + xx;
         if (ty < 0 || ty >= n || tx < 0 || tx >= m) continue;
         if (a[ty][tx] == '#') break;
-        if (d[ty][tx] < d[yy][xx] + 1) continue;
+        if (d[ty][tx] < d[yy][xx] + 1) break;
         d[ty][tx] = d[yy][xx] + 1;
-        pq.push({d[ty][tx], {ty, tx}});
+        Q.push({d[ty][tx], {ty, tx}});
       }
   }
   if (d[e.fi][e.se] == INF) printf("-1\n");
