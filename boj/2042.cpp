@@ -34,7 +34,7 @@ int main() {
   ft.resize(n+1, 0);
   for (int i = 1; i <= n; i++) {
     scanf("%lld", &a[i]);
-    update(i, x);
+    update(i, a[i]);
   }
 
   for (int i = 0; i < m+k; i++) {
