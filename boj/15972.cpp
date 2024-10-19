@@ -38,7 +38,7 @@ int main() {
       if (u != 0) adj[v].push_back({u, x});
     }
 
-  for (int i = 1; i <= n*m; i++) d[i] = INF;
+  for (int i = 1; i <= n*m; i++) d[i] = h;
 
   Q.push(0);
   d[0] = 0;
