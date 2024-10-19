@@ -33,8 +33,9 @@ int main() {
   a.resize(n+1, 0);
   ft.resize(n+1, 0);
   for (int i = 1; i <= n; i++) {
-    scanf("%lld", &a[i]);
-    update(i, a[i]);
+    ll c;
+    scanf("%lld", &c);
+    update(i, c);
   }
 
   for (int i = 0; i < m+k; i++) {
@@ -42,6 +43,4 @@ int main() {
     if (x == 1) update(y, (ll)z);
     else printf("%lld\n", query(y, z));
   }
-  for (int i = 1; i <= n; i++) printf("%lld ", ft[i]);
-  printf("\n");
 }
