@@ -30,6 +30,8 @@ int main() {
       }
     }
   printf("%d\n", mx);
-  print(si, sj);
-  printf("\n");
+  if (mx != 0) {
+    print(si, sj);
+    printf("\n");
+  }
 }
