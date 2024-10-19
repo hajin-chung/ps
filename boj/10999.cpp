@@ -5,7 +5,9 @@ typedef long long int ll;
 vector<ll> a, ft;
 int n, m, k;
 
-void update(int idx, ll diff) {
+void update(int idx, ll val) {
+  ll diff = val - a[idx];
+  a[idx] = val;
   while (idx <= n) {
     ft[idx] += diff;
     idx += idx & -idx;
@@ -18,7 +20,7 @@ ll sum(int idx) {
     ret += ft[idx];
     idx -= idx & -idx;
   }
-  return ret
+  return ret;
 }
 
 ll query(int a, int b) {
@@ -26,18 +28,19 @@ ll query(int a, int b) {
 }
 
 int main() {
-  ll x, y, z;
   scanf("%d%d%d", &n, &m, &k);
-  a.resize(n+1);
-  ft.resize(n+1);
+  a.resize(n+1, 0);
+  ft.resize(n+1, 0);
   for (int i = 1; i <= n; i++) {
-    scanf("%lld", &a[i]);
-    update(i, x);
+    ll c;
+    scanf("%lld", &c);
+    update(i, c);
   }
 
+  ll x, y, z;
   for (int i = 0; i < m+k; i++) {
     scanf("%lld%lld%lld", &x, &y, &z);
-    if (x == 1) update(y, z-a[y]);
+    if (x == 1) update(y, z);
     else printf("%lld\n", query(y, z));
   }
 }
