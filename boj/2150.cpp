@@ -31,6 +31,8 @@ int dfs(int curr) {
   return parent;
 }
 
+bool cmp(vector<int> a, vector<int> b) { return a[0] < b[0]; }
+
 int main() {
   scanf("%d %d", &n, &m);
   adj.resize(n+1);
@@ -45,6 +47,7 @@ int main() {
     if (d[i] == 0)
       dfs(i);
   printf("%d\n", scc.size());
+  sort(scc.begin(), scc.end(), cmp);
   for (auto cc : scc) {
     sort(cc.begin(), cc.end());
     for (auto v : cc) printf("%d ", v);
