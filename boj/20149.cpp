@@ -2,43 +2,28 @@
 using namespace std;
 
 typedef long long int ll;
-int bit[500005], n;
 
-void update(int idx, int diff) {
-  while (idx <= n) {
-    bit[idx] += diff;
-    idx += idx & -idx;
-  }
-}
+struct Point {
+  ll x, y;
+};
 
-ll sum(int idx) {
-  ll ret = 0;
-  while (idx > 0) {
-    ret += bit[idx]; 
-    idx -= idx & -idx;
-  } 
-  return ret;
-}
+Point p1, p2, p3, p4;
 
-ll query(int idx) {
-  return sum(n) - sum(idx-1);
+int ccw(Point p1, Point p2, Point p3) {
+  ll c = (p2.x-p1.x)*(p3.y-p1.y) - (p2.y-p1.y)*(p3.x-p1.x);
+  if (c == 0) return 0;
+  return c > 0;
 }
 
 int main() {
-  ll ans = 0;
-  int x;
-  map<int, int> idx;
-
-  scanf("%d", &n);
-  for (int i = 0; i < n; i++) {
-    scanf("%d", &x);
-    idx[x] = i+1;
+  scanf("%d %d %d %d", &p1.x, &p1.y, &p2.x, &p2.y);
+  scanf("%d %d %d %d", &p3.x, &p3.y, &p4.x, &p4.y);
+  int c1 = ccw(p1, p2, p3) * ccw(p1, p2, p4);
+  int c2 = ccw(p3, p4, p1) * ccw(p3, p4, p2);
+  if (c1 == 0 && c2 == 0) printf("0\n");
+  else if (c1 <= 0 && c2 <= 0) {
+    printf("1\n")
+  } else {
+    printf("0\n");
   }
-
-  for (int i = 0; i < n; i++) {
-    scanf("%d", &x);
-    ans += query(idx[x]);
-    update(idx[x], 1);
-  }
-  printf("%lld\n", ans);
 }
