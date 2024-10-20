@@ -29,17 +29,19 @@ bool cmp(ppi a, ppi b) {
 }
 
 void solve() {
-  int n;
+  int n, idx = 0;
   vector<ppi> a;
   scanf("%d", &n);
   for (int i = 0; i < n; i++) {
     int x, y;
     scanf("%d%d", &x, &y);
     a.push_back({{x, y}, i});
-    if (i == 0) pivot = a[i];
-    else if (pivot > a[i]) pivot = a[i];
+    if (i == 0) pivot = a[i], idx = 0;
+    else if (pivot > a[i]) pivot = a[i], idx = i;
   }
-  sort(a.begin(), a.end(), cmp);
+  swap(a[idx], a[0]);
+  sort(a.begin()+1, a.end(), cmp);
+  if (ccw(a[0], a[n-2], a[n-1]) == 0) swap(a[n-1], a[n-2]);
   for (auto [p, idx] : a) printf("%d ", idx);
   printf("\n");
 }
