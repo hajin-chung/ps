@@ -47,7 +47,7 @@ int main() {
     if (d[i] == 0)
       dfs(i);
   printf("%d\n", scc.size());
-  for (auto cc : scc) sort(cc.begin(), cc.end());
+  for (int i = 0; i < scc.size(); i++) sort(scc[i].begin(), scc[i].end());
   sort(scc.begin(), scc.end(), cmp);
   for (auto cc : scc) {
     for (auto v : cc) printf("%d ", v);
