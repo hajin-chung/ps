@@ -28,6 +28,10 @@ bool cmp(ppi a, ppi b) {
   else return dist(pivot, a) < dist(pivot, b);
 }
 
+bool cmp2(ppi a, ppi b) {
+  return dist(pivot, a) > dist(pivot, b);
+}
+
 void solve() {
   int n, idx = 0;
   vector<ppi> a;
@@ -41,7 +45,9 @@ void solve() {
   }
   swap(a[idx], a[0]);
   sort(a.begin()+1, a.end(), cmp);
-  if (ccw(a[0], a[n-2], a[n-1]) == 0) swap(a[n-1], a[n-2]);
+  idx = n-1;
+  while (ccw(a[0], a[idx], a[idx-1])) idx--;
+  sort(a.begin() + idx, a.end(), cmp2);
   for (auto [p, idx] : a) printf("%d ", idx);
   printf("\n");
 }
