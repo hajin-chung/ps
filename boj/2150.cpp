@@ -46,6 +46,7 @@ int main() {
       dfs(i);
   printf("%d\n", scc.size());
   for (auto cc : scc) {
+    sort(cc.begin(), cc.end());
     for (auto v : cc) printf("%d ", v);
     printf("-1\n");
   }
