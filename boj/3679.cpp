@@ -42,9 +42,9 @@ void solve() {
   swap(a[idx], a[0]);
   sort(a.begin()+1, a.end(), cmp);
   idx = n-1;
-  while (ccw(a[0], a[idx], a[idx-1])) idx--;
-  for (int i = 0; i < idx-1; i++) printf("%d ", a[i].se);
-  for (int i = n-1; i >= idx-1; i--) printf("%d ", a[i].se);
+  while (ccw(a[0], a[idx], a[idx-1]) == 0) idx--;
+  for (int i = 0; i < idx; i++) printf("%d ", a[i].se);
+  for (int i = n-1; i >= idx; i--) printf("%d ", a[i].se);
   printf("\n");
 }
 
