@@ -29,9 +29,13 @@ void flip(int idx, int mask) {
 int solve(int mask) {
   int cnt = 0;
   for (int i = 0; i < 10; i++)
+    if (mask & (1 << i))
+      cnt++;
+
+  for (int i = 0; i < 10; i++)
     b[i] = a[i];
 
-  for (int i = 0; i < 9; i++) {
+  for (int i = 0; i < 10; i++) {
     flip(i, mask);
     mask = 0;
     for (int j = 0; j < 10; j++)
@@ -61,14 +65,7 @@ int main() {
   }
 
   int ans = INF;
-  for (int i = 1; i <= (1<<10); i++) {
-    int cnt = 0;
-    for (int j = 0; j < 10; j++)
-      if (i & (1 << j))
-        cnt++;
-    cnt += solve(i);
-    ans = min(ans, cnt);
-  }
+  for (int i = 1; i <= (1<<10); i++) ans = min(ans, solve(i));
   if (ans == INF) printf("-1\n");
   else printf("%d\n", ans);
 }
