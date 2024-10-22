@@ -69,5 +69,6 @@ int main() {
     cnt += solve(i);
     ans = min(ans, cnt);
   }
-  printf("%d\n", ans);
+  if (ans == INF) printf("-1\n");
+  else printf("%d\n", ans);
 }
