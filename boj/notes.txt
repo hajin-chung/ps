@@ -1,11 +1,7 @@
-10 5
-xxxxx
-x...x
-x.x.x
-x...x
-xxxxx
-xxxxx
-x...x
-x.x.x
-x...x
-xxxxx
+https://www.acmicpc.net/problem/15481
+https://www.acmicpc.net/problem/1626
+
+things to do at home
+1. setting my nas
+2. pollish some of my utils
+  - yul
