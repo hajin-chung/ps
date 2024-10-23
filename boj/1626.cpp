@@ -37,7 +37,7 @@ void dfs(int curr, int lev) {
   for (auto [nxt, w] : adj[curr])
     if (!chk[nxt]) {
       dfs(nxt, lev+1);
-      dp[nxt][0] = {curr, w, 0};
+      dp[nxt][0] = {curr, w, -1};
     }
 }
 
