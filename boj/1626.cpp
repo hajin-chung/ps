@@ -1,6 +1,4 @@
 #include <bits/stdc++.h>
-#define fi first
-#define se second
 #define N 50005
 #define INF (1<<31)-1
 using namespace std;
@@ -8,10 +6,16 @@ using namespace std;
 typedef long long int ll;
 typedef pair<int, ll> pil;
 typedef pair<ll, pair<int, int>> plp;
+struct node {
+  int nxt;
+  ll m1;
+  ll m2;
+};
 int n, m;
-vector<plp> edges, sorted;
+vector<plp> edges;
+vector<bool> used;
 vector<vector<pil>> adj;
-pil dp[N][25];
+node dp[N][25];
 int p[N], depth[N];
 bool chk[N];
 
@@ -30,35 +34,49 @@ void merge(int u, int v) {
 void dfs(int curr, int lev) {
   chk[curr] = true;
   depth[curr] = lev;
-  for (auto [next, w] : adj[curr])
-    if (!chk[next]) {
-      dfs(next, lev+1);
-      dp[next][0] = {curr, w};
+  for (auto [nxt, w] : adj[curr])
+    if (!chk[nxt]) {
+      dfs(nxt, lev+1);
+      dp[nxt][0] = {curr, w, 0};
     }
 }
 
-ll lca(int u, int v) {
-  ll ret = 0;
+pair<ll, ll> lca(int u, int v) {
+  set<ll> ret;
   if (depth[u] < depth[v]) swap(u, v);
   for (int i = 24; i >= 0; i--)
-    if (depth[dp[u][i].fi] >= depth[v]) {
-      ret = max(ret, dp[u][i].se);
-      u = dp[u][i].fi;
+    if (depth[dp[u][i].nxt] >= depth[v]) {
+      ret.insert(dp[u][i].m1);
+      ret.insert(dp[u][i].m2);
+      u = dp[u][i].nxt;
+      while (ret.size() > 2) ret.erase(ret.begin());
     }
-  if (u == v) return ret;
+  if (u == v) {
+    if (ret.size() == 1) return {*ret.begin(), -1};
+    else return {*next(ret.begin()), *ret.begin()};
+  }
   for (int i = 24; i >= 0; i--)
-    if (dp[u][i].fi != dp[v][i].fi) {
-      ret = max(ret, max(dp[u][i].se, dp[v][i].se));
-      u = dp[u][i].fi;
-      v = dp[v][i].fi;
+    if (dp[u][i].nxt != dp[v][i].nxt) {
+      ret.insert(dp[u][i].m1);
+      ret.insert(dp[u][i].m2);
+      ret.insert(dp[v][i].m1);
+      ret.insert(dp[v][i].m2);
+      u = dp[u][i].nxt;
+      v = dp[v][i].nxt;
+      while (ret.size() > 2) ret.erase(ret.begin());
     }
-  ret = max(ret, max(dp[u][0].se, dp[v][0].se));
-  return ret;
+  ret.insert(dp[u][0].m1);
+  ret.insert(dp[u][0].m2);
+  ret.insert(dp[v][0].m1);
+  ret.insert(dp[v][0].m2);
+  if (ret.size() == 1) return {*ret.begin(), -1};
+  else return {*next(ret.begin()), *ret.begin()};
 }
 
 int main() {
   scanf("%d %d", &n, &m);
   adj.resize(n+1);
+  used.resize(m);
   for (int i = 1; i <= n; i++) p[i] = i;
   for (int i = 0; i < m; i++) {
     int u, v;
@@ -66,12 +84,11 @@ int main() {
     scanf("%d %d %lld", &u, &v, &w);
     edges.push_back({w, {u, v}});
   }
-  sorted = edges;
-  sort(sorted.begin(), sorted.end());
+  sort(edges.begin(), edges.end());
   ll mst = 0;
   int cnt = 0;
-  for (auto edge : sorted) {
-    auto [w, pp] = edge;
+  for (int i = 0; i < edges.size(); i++) {
+    auto [w, pp] = edges[i];
     auto [u, v] = pp;
     if (find(u) == find(v)) continue;
     merge(u, v);
@@ -79,6 +96,7 @@ int main() {
     adj[u].push_back({v, w});
     adj[v].push_back({u, w});
     cnt++;
+    used[i] = true;
   }
   if (cnt != n-1) {
     printf("-1\n");
@@ -89,18 +107,27 @@ int main() {
   dfs(1, 0);
   for (int i = 1; i < 25; i++)
     for (int j = 1; j <= n; j++) {
-      int next = dp[j][i-1].fi;
-      dp[j][i].fi = dp[next][i-1].fi;
-      dp[j][i].se = max(dp[j][i-1].se, dp[next][i-1].se);
+      set<ll> ret;
+      int nxt = dp[j][i-1].nxt;
+      ret.insert(dp[j][i-1].m1);
+      ret.insert(dp[j][i-1].m2);
+      ret.insert(dp[nxt][i-1].m1);
+      ret.insert(dp[nxt][i-1].m2);
+      while (ret.size() > 2) ret.erase(ret.begin());
+      dp[j][i].nxt = dp[nxt][i-1].nxt;
+      dp[j][i].m1 = *next(ret.begin());
+      if (ret.size() >= 2) dp[j][i].m2 = *ret.begin();
     }
 
-  ll smst = INF;
-  for (auto edge : edges) {
-    auto [w, pp] = edge;
+  ll ans = INF;
+  for (int i = 0; i < edges.size(); i++) {
+    if (used[i]) continue;
+    auto [w, pp] = edges[i];
     auto [u, v] = pp;
-    ll nmst = mst - lca(u, v) + w;
-    if (nmst != mst) smst = min(smst, nmst); 
+    auto [m1, m2] = lca(u, v);
+    if (m1 != w) ans = min(ans, mst - m1 + w);
+    if (m2 != -1) ans = min(ans, mst - m2 + w);
   }
-  if (smst == INF) printf("-1\n");
-  else printf("%lld\n", smst);
+  if (ans == INF) printf("-1\n");
+  else printf("%lld\n", ans);
 }
