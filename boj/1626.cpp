@@ -1,15 +1,17 @@
 #include <bits/stdc++.h>
+#define fi first
+#define se second
 #define N 50005
 #define INF (1<<31)-1
 using namespace std;
 
 typedef long long int ll;
 typedef pair<int, ll> pil;
+typedef pair<ll, ll> pll;
 typedef pair<ll, pair<int, int>> plp;
 struct node {
   int nxt;
-  ll m1;
-  ll m2;
+  pll mx;
 };
 int n, m;
 vector<plp> edges;
@@ -18,6 +20,18 @@ vector<vector<pil>> adj;
 node dp[N][25];
 int p[N], depth[N];
 bool chk[N];
+
+pll f(pll a, pll b) {
+  vector<ll> v;
+  v.push_back(a.fi);
+  v.push_back(a.se);
+  v.push_back(b.fi);
+  v.push_back(b.se);
+  sort(v.begin(), v.end());
+  v.erase(unique(v.begin(), v.end()), v.end());
+  if (v.size() < 2) v.push_back(-1);
+  return {v[0], v[1]};
+}
 
 int find(int u) {
   if (p[u] == u) return u;
@@ -37,40 +51,30 @@ void dfs(int curr, int lev) {
   for (auto [nxt, w] : adj[curr])
     if (!chk[nxt]) {
       dfs(nxt, lev+1);
-      dp[nxt][0] = {curr, w, -1};
+      dp[nxt][0] = {curr, {w, -1}};
     }
 }
 
-pair<ll, ll> lca(int u, int v) {
-  set<ll> ret;
+pll lca(int u, int v) {
+  pll ret = {-1, -1};
   if (depth[u] < depth[v]) swap(u, v);
   for (int i = 24; i >= 0; i--)
     if (depth[dp[u][i].nxt] >= depth[v]) {
-      ret.insert(dp[u][i].m1);
-      ret.insert(dp[u][i].m2);
+      ret = f(ret, dp[u][i].mx);
       u = dp[u][i].nxt;
-      while (ret.size() > 2) ret.erase(ret.begin());
     }
-  if (u == v) {
-    if (ret.size() == 1) return {*ret.begin(), -1};
-    else return {*next(ret.begin()), *ret.begin()};
-  }
+  printf("%lld %lld\n", ret.fi, ret.se);
+  if (u == v) return ret;
   for (int i = 24; i >= 0; i--)
     if (dp[u][i].nxt != dp[v][i].nxt) {
-      ret.insert(dp[u][i].m1);
-      ret.insert(dp[u][i].m2);
-      ret.insert(dp[v][i].m1);
-      ret.insert(dp[v][i].m2);
+      ret = f(ret, dp[u][i].mx);
+      ret = f(ret, dp[v][i].mx);
       u = dp[u][i].nxt;
       v = dp[v][i].nxt;
-      while (ret.size() > 2) ret.erase(ret.begin());
     }
-  ret.insert(dp[u][0].m1);
-  ret.insert(dp[u][0].m2);
-  ret.insert(dp[v][0].m1);
-  ret.insert(dp[v][0].m2);
-  if (ret.size() == 1) return {*ret.begin(), -1};
-  else return {*next(ret.begin()), *ret.begin()};
+  ret = f(ret, dp[u][0].mx);
+  ret = f(ret, dp[v][0].mx);
+  return ret;
 }
 
 int main() {
@@ -107,26 +111,21 @@ int main() {
   dfs(1, 0);
   for (int i = 1; i < 25; i++)
     for (int j = 1; j <= n; j++) {
-      set<ll> ret;
       int nxt = dp[j][i-1].nxt;
-      ret.insert(dp[j][i-1].m1);
-      ret.insert(dp[j][i-1].m2);
-      ret.insert(dp[nxt][i-1].m1);
-      ret.insert(dp[nxt][i-1].m2);
-      while (ret.size() > 2) ret.erase(ret.begin());
       dp[j][i].nxt = dp[nxt][i-1].nxt;
-      dp[j][i].m1 = *next(ret.begin());
-      if (ret.size() >= 2) dp[j][i].m2 = *ret.begin();
+      dp[j][i].mx = f(dp[j][i-1].mx, dp[nxt][i-1].mx);
     }
 
+  printf("%lld\n", mst);
   ll ans = INF;
   for (int i = 0; i < edges.size(); i++) {
     if (used[i]) continue;
     auto [w, pp] = edges[i];
     auto [u, v] = pp;
     auto [m1, m2] = lca(u, v);
-    if (m1 != w) ans = min(ans, mst - m1 + w);
-    if (m2 != -1) ans = min(ans, mst - m2 + w);
+    printf("%d %d %lld %lld\n", u, v, m1, m2);
+    if (m1 != w && m1 != -1) ans = min(ans, mst - m1 + w);
+    if (m2 != w && m2 != -1) ans = min(ans, mst - m2 + w);
   }
   if (ans == INF) printf("-1\n");
   else printf("%lld\n", ans);
