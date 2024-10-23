@@ -2,7 +2,7 @@
 #define fi first
 #define se second
 #define N 50005
-#define INF (1<<31)-1;
+#define INF (1<<31)-1
 using namespace std;
 
 typedef long long int ll;
