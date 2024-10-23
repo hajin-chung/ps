@@ -27,7 +27,7 @@ pll f(pll a, pll b) {
   v.push_back(a.se);
   v.push_back(b.fi);
   v.push_back(b.se);
-  sort(v.begin(), v.end());
+  sort(v.rbegin(), v.rend());
   v.erase(unique(v.begin(), v.end()), v.end());
   if (v.size() < 2) v.push_back(-1);
   return {v[0], v[1]};
@@ -63,7 +63,6 @@ pll lca(int u, int v) {
       ret = f(ret, dp[u][i].mx);
       u = dp[u][i].nxt;
     }
-  printf("%lld %lld\n", ret.fi, ret.se);
   if (u == v) return ret;
   for (int i = 24; i >= 0; i--)
     if (dp[u][i].nxt != dp[v][i].nxt) {
@@ -116,14 +115,12 @@ int main() {
       dp[j][i].mx = f(dp[j][i-1].mx, dp[nxt][i-1].mx);
     }
 
-  printf("%lld\n", mst);
   ll ans = INF;
   for (int i = 0; i < edges.size(); i++) {
     if (used[i]) continue;
     auto [w, pp] = edges[i];
     auto [u, v] = pp;
     auto [m1, m2] = lca(u, v);
-    printf("%d %d %lld %lld\n", u, v, m1, m2);
     if (m1 != w && m1 != -1) ans = min(ans, mst - m1 + w);
     if (m2 != w && m2 != -1) ans = min(ans, mst - m2 + w);
   }
