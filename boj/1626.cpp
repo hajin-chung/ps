@@ -101,5 +101,6 @@ int main() {
     ll nmst = mst - lca(u, v) + w;
     if (nmst != mst) smst = min(smst, nmst); 
   }
-  printf("%lld\n", smst);
+  if (smst == INF) printf("-1\n");
+  else printf("%lld\n", smst);
 }
