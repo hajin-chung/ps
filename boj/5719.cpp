@@ -7,24 +7,26 @@ int adj[505][505];
 vector<vector<int>> path;
 int n, m, s, e;
 
-int dij() {
+int dij(bool dopath = true) {
   vector<int> d;
   priority_queue<pii, vector<pii>, greater<pii>> pq; 
 
   d.resize(n, INF);
-  path.resize(n);
+  if (dopath) path.resize(n);
   d[s] = 0;
   pq.push({0, s});
   while (!pq.empty()) {
     auto [dist, curr] = pq.top(); pq.pop();
     if (dist > d[curr]) continue;
     for (int next = 0; next < n; next++) {
-      if (d[next] == d[curr] + adj[curr][next]) 
+      if (dopath && d[next] == d[curr] + adj[curr][next]) {
         path[next].push_back(curr);
-      if (d[next] > d[curr] + adj[curr][next]) {
-        path[next].resize(0);
+      } else if (d[next] > d[curr] + adj[curr][next]) {
+        if (dopath) {
+          path[next].resize(0);
+          path[next].push_back(curr); 
+        }
         d[next] = d[curr] + adj[curr][next];
-        path[next].push_back(curr); 
         pq.push({d[next], next});
       }
     }
@@ -55,7 +57,7 @@ bool solve() {
 
   dij();
   dfs(e);
-  int mn = dij(); 
+  int mn = dij(false); 
   if (mn == INF) printf("-1\n");
   else printf("%d\n", mn);
   return true;
