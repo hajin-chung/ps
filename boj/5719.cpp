@@ -4,7 +4,7 @@ using namespace std;
 
 typedef pair<int, int> pii;
 int adj[505][505];
-bool chk[505];
+bool chk[505][505];
 vector<vector<int>> path;
 int n, m, s, e;
 
@@ -37,10 +37,12 @@ int dij(bool dopath = true) {
 }
 
 void dfs(int curr) {
-  for (auto next : path[curr]) {
-    adj[next][curr] = INF;
-    dfs(next);
-  }
+  for (auto next : path[curr])
+    if (!chk[next][curr]) {
+      chk[next][curr] = true;
+      adj[next][curr] = INF;
+      dfs(next);
+    }
 }
 
 bool solve() {
