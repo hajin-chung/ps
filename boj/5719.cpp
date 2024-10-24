@@ -4,6 +4,7 @@ using namespace std;
 
 typedef pair<int, int> pii;
 int adj[505][505];
+bool chk[505];
 vector<vector<int>> path;
 int n, m, s, e;
 
@@ -19,11 +20,12 @@ int dij(bool dopath = true) {
     auto [dist, curr] = pq.top(); pq.pop();
     if (dist > d[curr]) continue;
     for (int next = 0; next < n; next++) {
+      if (adj[curr][next] == INF) continue;
       if (dopath && d[next] == d[curr] + adj[curr][next]) {
         path[next].push_back(curr);
       } else if (d[next] > d[curr] + adj[curr][next]) {
         if (dopath) {
-          path[next].resize(0);
+          path[next].clear();
           path[next].push_back(curr); 
         }
         d[next] = d[curr] + adj[curr][next];
@@ -35,13 +37,17 @@ int dij(bool dopath = true) {
 }
 
 void dfs(int curr) {
-  for (auto next : path[curr]) {
-    adj[next][curr] = INF;
-    dfs(next);
-  }
+  chk[curr] = true;
+  for (auto next : path[curr])
+    if (!chk[next]) {
+      adj[next][curr] = INF;
+      dfs(next);
+    }
 }
 
 bool solve() {
+  path.clear();
+  memset(chk, false, sizeof(chk));
   scanf("%d %d", &n, &m);
   if (n == 0 && m == 0) return false;
   for (int i = 0; i < n; i++)
@@ -58,7 +64,7 @@ bool solve() {
   dij();
   dfs(e);
   int mn = dij(false); 
-  if (mn == INF) printf("-1\n");
+  if (mn >= INF) printf("-1\n");
   else printf("%d\n", mn);
   return true;
 }
