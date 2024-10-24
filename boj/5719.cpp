@@ -17,6 +17,7 @@ int dij() {
   pq.push({0, s});
   while (!pq.empty()) {
     auto [dist, curr] = pq.top(); pq.pop();
+    if (dist >= d[curr]) continue;
     for (int next = 0; next < n; next++) {
       if (d[next] == d[curr] + adj[curr][next]) 
         path[next].push_back(curr);
