@@ -1,6 +1,3 @@
-https://www.acmicpc.net/problem/15481
-https://www.acmicpc.net/problem/1626
-
 things to do at home
 1. setting my nas
 2. pollish some of my utils
