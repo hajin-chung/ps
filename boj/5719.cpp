@@ -37,12 +37,10 @@ int dij(bool dopath = true) {
 }
 
 void dfs(int curr) {
-  chk[curr] = true;
-  for (auto next : path[curr])
-    if (!chk[next]) {
-      adj[next][curr] = INF;
-      dfs(next);
-    }
+  for (auto next : path[curr]) {
+    adj[next][curr] = INF;
+    dfs(next);
+  }
 }
 
 bool solve() {
@@ -62,6 +60,12 @@ bool solve() {
   }
 
   dij();
+  // for (int i = 0; i < n; i++) {
+  //   printf("%d: ", i);
+  //   for (auto next : path[i])
+  //     printf("%d, ", next);
+  //   printf("\n");
+  // }
   dfs(e);
   int mn = dij(false); 
   if (mn >= INF) printf("-1\n");
