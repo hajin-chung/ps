@@ -61,15 +61,13 @@ bool solve() {
     adj[a][b] = w;
   }
 
-  dij();
-  // for (int i = 0; i < n; i++) {
-  //   printf("%d: ", i);
-  //   for (auto next : path[i])
-  //     printf("%d, ", next);
-  //   printf("\n");
-  // }
+  int mn = dij();
+  if (mn >= INF) {
+    printf("-1\n");
+    return true;
+  }
   dfs(e);
-  int mn = dij(false); 
+  mn = dij(false); 
   if (mn >= INF) printf("-1\n");
   else printf("%d\n", mn);
   return true;
