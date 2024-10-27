@@ -25,14 +25,14 @@ int main() {
 
   int j = 0;
   for (int i = 1; i < n; i++) {
-    while (j > 0 && str[i] != str[j]) j = pi[j-1];
-    if (str[i] == str[j]) pi[i] = ++j;
+    while (j > 0 && pat[i] != pat[j]) j = pi[j-1];
+    if (pat[i] == pat[j]) pi[i] = ++j;
   }
 
   j = 0;
   int cnt = 0;
-  for (int i = 1; i < n; i++) {
-    while (j > 0 && str[i] != pat[i]) j = pi[j-1];
+  for (int i = 0; i < n; i++) {
+    while (j > 0 && str[i] != pat[j]) j = pi[j-1];
     if (str[i] == pat[j]) {
       if (j == n-1) {
         cnt++;
