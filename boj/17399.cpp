@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 #define N 100000
-#define LOGN 20
+#define LOGN 25
 using namespace std;
 
 int n, p[N+5], depth[N+5], dp[N+5][LOGN];
