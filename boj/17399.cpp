@@ -3,7 +3,7 @@
 #define LOGN 25
 using namespace std;
 
-int n, p[N+5], depth[N+5], dp[N+5][LOGN];
+int n, depth[N+5], dp[N+5][LOGN];
 bool chk[N+5];
 vector<vector<int>> adj;
 
@@ -38,14 +38,14 @@ int dist(int u, int v) {
 
 int query(int a, int b, int c) {
   if (depth[a] < depth[b]) swap(a, b);
-  int dab = dist(a, b), cab = lca(a, b);
+  int dab = dist(a, b);
   if (dab % 2 != 0) return -1;
-  int m = a;
+  int dma = dab/2, m = a;
   for (int i = LOGN-1; i >= 0; i--)
-    if ((dab/2)&(1<<i))
+    if (dma&(1<<i))
       m = dp[a][i];
   int dmc = dist(m, c);
-  if (dmc == dab/2) return m;
+  if (dmc == dma) return m;
   return -1;
 }
 
@@ -70,10 +70,8 @@ int main() {
   while (m--) {
     int a, b, c;
     scanf("%d %d %d", &a, &b, &c);
-    int ans = -1;
-    ans = max(ans, query(a, b, c));
-    ans = max(ans, query(b, c, a));
-    ans = max(ans, query(c, a, b));
+    int abc = query(a, b, c), bca = query(b, c, a), cab = query(c, a, b);
+    int ans = (abc != -1) ? abc : (bca != -1) ? bca : (cab != -1) ? cab : -1;
     printf("%d\n", ans);
   }
 }
