@@ -31,16 +31,17 @@ int main() {
 
   j = 0;
   int cnt = 0;
-  for (int i = 0; i < n; i++) {
+  for (int i = 0; i < 2*n-1; i++) {
     while (j > 0 && str[i] != pat[j]) j = pi[j-1];
     if (str[i] == pat[j]) {
       if (j == n-1) {
         cnt++;
-        j = pi[j-1];
+        j = pi[j];
       } else {
         j++;
       }
     }
   }
-  printf("%d/%d\n", cnt, n);
+  int g = gcd(cnt, n);
+  printf("%d/%d\n", cnt/g, n/g);
 }
