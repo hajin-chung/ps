@@ -30,16 +30,10 @@ int main() {
   }
 
   j = 0;
-  for (int i = 1; i < 2*n; i++) {
+  bool possible = false;
+  for (int i = 0; i < 2*n; i++) {
     while (j > 0 && b[j] != a[i]) j =pi[j-1];
-    if (b[j] == a[i]) {
-      if (j == n-1) {
-        printf("possible\n");
-        return 0;
-      } else {
-        j++;
-      }
-    }
+    if (b[j] == a[i] && ++j == n) possible = true;
   }
-  printf("impossible\n");
+  possible ? printf("possible\n") : printf("impossible\n");
 }
