@@ -43,7 +43,7 @@ int query(int a, int b, int c) {
   int dma = dab/2, m = a;
   for (int i = LOGN-1; i >= 0; i--)
     if (dma&(1<<i))
-      m = dp[a][i];
+      m = dp[m][i];
   int dmc = dist(m, c);
   if (dmc == dma) return m;
   return -1;
