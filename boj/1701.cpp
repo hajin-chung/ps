@@ -21,9 +21,9 @@ int main() {
   cin.tie(0);
   int mx = 0;
   cin >> str;
-  string pat = "";
+  string pat;
   for (int i = 0; i < str.size(); i++) {
-    pat += str[i];
+    pat = str.substr(i);
     mx = max(mx, solve(pat));
   }
   printf("%d\n", mx);
