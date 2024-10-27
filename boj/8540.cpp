@@ -25,7 +25,7 @@ int dij(int idx) {
     auto [dist, curr] = pq.top(); pq.pop();
     if (dist > d[curr]) continue;
     for (auto next : adj[curr]) {
-      if (lookup[next] <= curr+1 && d[next] > d[curr] + isen(next)) {
+      if (lookup[next] <= idx+1 && d[next] > d[curr] + isen(next)) {
         d[next] = d[curr] + isen(next);
         pq.push({next, d[next]});
       }
