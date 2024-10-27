@@ -22,17 +22,17 @@ int main() {
   for (int i = 0; i < n; i++) b.push_back(i ? v[i] - v[i-1] : v[i]+360000-v[n-1]);
   for (int i = 0; i < n; i++) a.push_back(a[i]);
 
-  int j = 0;
   pi.resize(n);
+  int j = 0;
   for (int i = 1; i < n; i++) {
     while (j > 0 && b[i] != b[j]) j = pi[j-1];
-    if (b[i] == b[j]) pi[j] = ++j;
+    if (b[i] == b[j]) pi[i] = ++j;
   }
 
-  j = 0;
   bool possible = false;
+  j = 0;
   for (int i = 0; i < 2*n; i++) {
-    while (j > 0 && b[j] != a[i]) j =pi[j-1];
+    while (j > 0 && b[j] != a[i]) j = pi[j-1];
     if (b[j] == a[i] && ++j == n) possible = true;
   }
   possible ? printf("possible\n") : printf("impossible\n");
