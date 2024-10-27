@@ -27,16 +27,10 @@ int dij(int idx) {
     for (auto next : adj[curr]) {
       if (lookup[next] <= idx+1 && d[next] > d[curr] + isen(next)) {
         d[next] = d[curr] + isen(next);
-        pq.push({next, d[next]});
+        pq.push({d[next], next});
       }
     }
   }
-  printf("%d\n", idx);
-  for (auto dist : d) {
-    if (dist == INF) printf(". ");
-    else printf("%d ", dist);
-  }
-  printf("\n");
   return d[order[idx+1]];
 }
 
@@ -63,24 +57,9 @@ int main() {
   for (int i = 1; i <= a; i++) adj[s].push_back(i);
   for (int i = a+n+1; i <= a+n+b; i++) adj[i].push_back(e);
 
-  for (int i = 0; i <= e; i++) {
-    printf("%d: ", i);
-    for (auto next : adj[i]) printf("%d ", next);
-    printf("\n");
-  }
-
-  printf("order: ");
-  for (auto o : order) printf("%d ", o);
-  printf("\n");
-
-  printf("lookup: ");
-  for (auto o : lookup) printf("%d ", o);
-  printf("\n");
-
   int ans = 0;
   for (int i = 0; i <= k; i++) {
-    int dist = dij(order[i]);
-    printf("%d %d: %d\n", order[i], order[i+1], dist);
+    int dist = dij(i);
     if (dist >= INF) {
       ans = INF;
       break;
