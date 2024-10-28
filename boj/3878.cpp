@@ -75,7 +75,7 @@ bool line_line_chk(pii &a1, pii &a2, pii &b1, pii &b2) {
 bool hull_line_chk(vector<pii> &a, vector<pii> &l) {
   vector<pii> hull = make_hull(a);
   bool flag = line_line_chk(hull.back(), hull.front(), l[0], l[1]);
-  for (int i = 1; i < a.size(); i++)
+  for (int i = 1; i < hull.size(); i++)
     flag &= line_line_chk(hull[i-1], hull[i], l[0], l[1]);
   return flag;
 }
