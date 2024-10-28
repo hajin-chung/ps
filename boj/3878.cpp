@@ -33,17 +33,15 @@ bool cmp(pii a, pii b) {
   return dist(pivot, a) < dist(pivot, b);
 }
 
-bool hull_chk(vector<pii> &a, vector<pii> &b) {
-  int n = a.size(), m = b.size();
+vector<pii> make_hull(vector<pii> &a) {
   vector<pii> hull;
-
   sort(a.begin(), a.end());
   pivot = a[0];
   sort(a.begin(), a.end(), cmp);
   stack<pii> s;
   s.push(a[0]);
   s.push(a[1]);
-  for (int i = 2; i < n; i++) {
+  for (int i = 2; i < a.size(); i++) {
     while (s.size() >= 2) {
       pii se = s.top(); s.pop();
       pii fi = s.top();
@@ -58,10 +56,7 @@ bool hull_chk(vector<pii> &a, vector<pii> &b) {
     hull.push_back(s.top());
     s.pop();
   }
-  for (auto p : b) 
-    if (inside(hull, p)) 
-      return false;
-  return true;
+  return hull;
 }
 
 bool line_point_chk(pii a1, pii a2, pii b) {
@@ -70,11 +65,27 @@ bool line_point_chk(pii a1, pii a2, pii b) {
   return b.fi < min(a1.fi, a2.fi) || b.fi > max(a1.fi, a2.fi);
 }
 
-bool line_line_chk(pii a1, pii a2, pii b1, pii b2) {
+bool line_line_chk(pii &a1, pii &a2, pii &b1, pii &b2) {
   int c1 = ccw(a1, a2, b1) * ccw(a1, a2, b2);
   int c2 = ccw(b1, b2, a1) * ccw(b1, b2, a2);
   if (c1 == 0 && c2 == 0) return b1 > a2 || a1 > b2;
   return c1 > 0 && c2 > 0;
+}
+
+bool hull_line_chk(vector<pii> &a, vector<pii> &l) {
+  vector<pii> hull = make_hull(a);
+  bool flag = line_line_chk(hull.back(), hull.front(), l[0], l[1]);
+  for (int i = 1; i < a.size(); i++)
+    flag &= line_line_chk(hull[i-1], hull[i], l[0], l[1]);
+  return flag;
+}
+
+bool hull_hull_chk(vector<pii> &a, vector<pii> &b) {
+  vector<pii> hull = make_hull(a);
+  for (auto p : b) 
+    if (inside(hull, p)) 
+      return false;
+  return true;
 }
 
 bool solve() {
@@ -98,8 +109,10 @@ bool solve() {
   if (n == 1 && m == 2) return line_point_chk(b[0], b[1], a[0]);
   if (n == 2 && m == 2) return line_line_chk(a[0], a[1], b[0], b[1]);
   bool flag = true;
-  if (n >= 3) flag = hull_chk(a, b);
-  if (m >= 3) flag &= hull_chk(b, a);
+  if (n >= 3) flag = hull_hull_chk(a, b);
+  if (n >= 3 && m == 2) flag &= hull_line_chk(a, b);
+  if (m >= 3) flag &= hull_hull_chk(b, a);
+  if (m >= 3 && n == 2) flag &= hull_line_chk(b, a);
   return flag;
 }
 
