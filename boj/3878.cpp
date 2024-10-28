@@ -108,8 +108,8 @@ bool solve() {
   if (n == 1 && m == 2) return line_point_chk(b[0], b[1], a[0]);
   if (n == 2 && m == 1) return line_point_chk(a[0], a[1], b[0]);
   if (n == 2 && m == 2) return line_line_chk(a[0], a[1], b[0], b[1]);
-  if (n == 2 && m >= 3) return hull_line_chk(b, a);
-  if (n >= 3 && m == 2) return hull_line_chk(a, b);
+  if (n == 2 && m >= 3) return hull_line_chk(b, a) && hull_hull_chk(b, a);
+  if (n >= 3 && m == 2) return hull_line_chk(a, b) && hull_hull_chk(a, b);
   if (n >= 3 && m >= 3) return hull_hull_chk(a, b) && hull_hull_chk(b, a);
   return false;
 }
