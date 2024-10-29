@@ -28,7 +28,7 @@ void insert(Trie* root, int num) {
 
 void remove(Trie *root, int num) {
   Trie *curr = root;
-  for (int i = (int)30; i >= 0; i--) {
+  for (int i = LOG_MAX; i >= 0; i--) {
     if (num & (1 << i)) {
       curr = curr->o;
     } else {
@@ -44,19 +44,19 @@ int query(Trie* root, int num) {
   int ret = 0;
   for (int i = LOG_MAX; i >= 0; i--) {
     if (num & (1 << i)) {
-      if (curr->z != nullptr && curr->z->cnt != 0) {
+      if (curr->z != nullptr && curr->z->cnt > 0) {
         curr = curr->z;
         ret += (1<<i);
-      } else if (curr->o != nullptr && curr->o->cnt != 0) {
+      } else if (curr->o != nullptr && curr->o->cnt > 0) {
         curr = curr->o;
       } else {
         break;
       }
     } else {
-      if (curr->o != nullptr && curr->o->cnt != 0) {
+      if (curr->o != nullptr && curr->o->cnt > 0) {
         curr = curr->o;
         ret += (1<<i);
-      } else if (curr->z != nullptr && curr->z->cnt != 0) {
+      } else if (curr->z != nullptr && curr->z->cnt > 0) {
         curr = curr->z;
       } else {
         break;
