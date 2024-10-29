@@ -5,25 +5,23 @@ using namespace std;
 struct Trie {
   Trie *z;
   Trie *o;
+  Trie() : z(nullptr), o(nullptr) {}
 };
 int n;
 vector<int> a;
 
 void insert(Trie* root, int num) {
   Trie *curr = root;
-  printf("%u\n", num);
   for (int i = (int)30; i >= 0; i--) {
-    printf("%u %u\n", i, num & (1 << i));
     if (num & (1 << i)) {
-      if (curr->o == nullptr) curr->o = new Trie;
+      if (curr->o == nullptr) curr->o = new Trie();
       curr = curr->o;
     }
     else {
-      if (curr->z == nullptr) curr->z = new Trie;
+      if (curr->z == nullptr) curr->z = new Trie();
       curr = curr->z;
     }
     num = num & (~(1<<i));
-    printf("%d %u\n", i, num);
   }
 }
 
@@ -55,7 +53,7 @@ int find(Trie* root, int num) {
 }
 
 int main() {
-  Trie* root = new Trie;
+  Trie* root = new Trie();
   scanf("%d", &n); 
   int x;
   for (int i = 0; i < n; i++) {
