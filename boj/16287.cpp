@@ -11,14 +11,15 @@ int main() {
   for (int i = 0; i < n; i++) scanf("%d", &a[i]);
   for (int i = 0; i < n; i++)
     for (int j = i+1; j < n; j++)
-      m[a[i]+a[j]] = {i, j};
+      m[a[i]+a[j]] = {i+1, j+1};
   for (int i = 0; i < n; i++)
     for (int j = i+1; j < n; j++) {
       int sum = target - (a[i]+a[j]);
-      if (m[sum].first != i 
-          && m[sum].first != j 
-          && m[sum].second != i 
-          && m[sum].second != j) {
+      if (m[sum].first != 0
+          && m[sum].first != i+1 
+          && m[sum].first != j+1
+          && m[sum].second != i+1
+          && m[sum].second != j+1) {
         printf("YES\n");
         return 0;
       }
