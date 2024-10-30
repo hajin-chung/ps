@@ -2,7 +2,7 @@
 using namespace std;
 
 int target, n;
-pair<int, int> m[400000];
+pair<int, int> m[400005];
 vector<int> a;
 
 int main() {
