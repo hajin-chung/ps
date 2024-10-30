@@ -2,7 +2,7 @@
 using namespace std;
 
 int target, n;
-map<int, pair<int, int>> m;
+pair<int, int> m[400000];
 vector<int> a;
 
 int main() {
@@ -15,8 +15,7 @@ int main() {
   for (int i = 0; i < n; i++)
     for (int j = i+1; j < n; j++) {
       int sum = target - (a[i]+a[j]);
-      if (m.count(sum) > 0 
-          && m[sum].first != i 
+      if (m[sum].first != i 
           && m[sum].first != j 
           && m[sum].second != i 
           && m[sum].second != j) {
