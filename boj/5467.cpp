@@ -23,10 +23,7 @@ void insert(Trie* root, string &s) {
 }
 
 void traverse(Trie* curr) {
-  if (curr->term) {
-    ops.push_back('P');
-    return;
-  }
+  if (curr->term) ops.push_back('P');
   vector<pair<int, char>> v;
   for (auto [c, next] : curr->c) v.push_back({next->ml, c});
   sort(v.begin(), v.end());
