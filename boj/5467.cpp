@@ -3,8 +3,8 @@ using namespace std;
 
 struct Trie {
   bool term;
-  typedef pair<int, Trie*> pit;
-  map<char, pit> c;
+  int ml;
+  map<char, Trie*> c;
   Trie() : term(false) {}
 };
 
@@ -15,9 +15,9 @@ vector<char> ops;
 void insert(Trie* root, string &s) {
   Trie *curr = root;
   for (auto c : s) {
-    if (!curr->c.count(c)) curr->c[c] = {s.size(), new Trie()};
-    if (curr->c[c].first < s.size()) curr->c[c].first = s.size();
-    curr = curr->c[c].second;
+    if (!curr->c.count(c)) curr->c[c] = new Trie();
+    if (curr->c[c]->ml < s.size()) curr->c[c]->ml = s.size();
+    curr = curr->c[c];
   }
   curr->term = true;
 }
@@ -27,13 +27,12 @@ void traverse(Trie* curr) {
     ops.push_back('P');
     return;
   }
-  vector<pair<int, pair<char, Trie*>>> v;
-  for (auto [c, iT] : curr->c) v.push_back({iT.first, {c, iT.second}});
+  vector<pair<int, char>> v;
+  for (auto [c, next] : curr->c) v.push_back({next->ml, c});
   sort(v.begin(), v.end());
-  for (auto [l, cT] : v) {
-    auto [c, next] = cT;
+  for (auto [ml, c] : v) {
     ops.push_back(c);
-    traverse(next);
+    traverse(curr->c[c]);
     ops.push_back('-');
   }
 }
