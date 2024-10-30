@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-typedef unordered_map<int, bool> uib;
+typedef map<int, bool> uib;
 
 uib rmp;
 vector<uib> mp;
