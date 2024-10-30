@@ -15,7 +15,7 @@ int main() {
   for (int i = 0; i < n; i++)
     for (int j = i+1; j < n; j++) {
       int sum = target - (a[i]+a[j]);
-      if (sum < 0 || sum >= 400000) continue;
+      if (sum < 0 || sum > 400000) continue;
       if (m[sum].first == 0) continue;
       if (m[sum].first != i+1 
           && m[sum].first != j+1
