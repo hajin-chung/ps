@@ -15,8 +15,9 @@ int main() {
   for (int i = 0; i < n; i++)
     for (int j = i+1; j < n; j++) {
       int sum = target - (a[i]+a[j]);
-      if (m[sum].first != 0
-          && m[sum].first != i+1 
+      if (sum < 0) continue;
+      if (m[sum].first == 0) continue;
+      if (m[sum].first != i+1 
           && m[sum].first != j+1
           && m[sum].second != i+1
           && m[sum].second != j+1) {
