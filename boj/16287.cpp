@@ -1,45 +1,29 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-typedef map<int, bool> uib;
-
-uib rmp;
-vector<uib> mp;
-vector<int> weights;
-int n, goal;
-
-void print(uib m) {
-  for (auto [i, b] : m) printf("%d ", i);
-  printf("\n");
-}
+int target, n;
+map<int, pair<int, int>> m;
+vector<int> a;
 
 int main() {
-  scanf("%d %d", &goal, &n);
-  for (int i = 0; i < n; i++) {
-    int w;
-    scanf("%d", &w);
-    weights.push_back(w);
-  }
-  mp.resize(n);
-  for (int i = 1 ; i < n; i++) 
-    for (int j = 0; j < i; j++) {
-      int sum = weights[i] + weights[j];
-      mp[i][sum] = true;
-    }
-
-  for (int i = 2; i < n; i++) {
-    rmp.merge(mp[i-1]);
-    /*printf("%d\n", i);*/
-    /*print(rmp);*/
+  scanf("%d%d", &target, &n);
+  a.resize(n);
+  for (int i = 0; i < n; i++) scanf("%d", &a[i]);
+  for (int i = 0; i < n; i++)
+    for (int j = i+1; j < n; j++)
+      m[a[i]+a[j]] = {i, j};
+  for (int i = 0; i < n; i++)
     for (int j = i+1; j < n; j++) {
-      int sum = weights[i] + weights[j];
-      if (rmp.count(goal-sum)) {
+      int sum = target - (a[i]+a[j]);
+      if (m.count(sum) > 0 
+          && m[sum].first != i 
+          && m[sum].first != j 
+          && m[sum].second != i 
+          && m[sum].second != j) {
         printf("YES\n");
         return 0;
       }
     }
-  }
-
   printf("NO\n");
   return 0;
 }
