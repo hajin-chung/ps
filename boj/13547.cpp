@@ -12,7 +12,7 @@ struct Q {
 
 vector<Q> query;
 vector<int> a, ans;
-int n, m, cnt[100005], ucnt;
+int n, m, cnt[1000005], ucnt;
 
 int main() {
   scanf("%d", &n);
