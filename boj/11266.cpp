@@ -2,28 +2,26 @@
 #define N 100005
 using namespace std;
 
-int n, m, t;
-int order[N], par[N], low[N];
+int n, m, t, order[N];
+bool cut[N];
 vector<vector<int>> adj;
 vector<int> ans;
 
-void dfs(int curr, bool root = false) {
+int dfs(int curr, bool root = false) {
   order[curr] = ++t;
-  low[curr] = t;
+  int ret = order[curr];
   int cnt = 0;
-
   for (auto next : adj[curr]) {
-    if (next == par[curr]) continue;
     if (order[next] == 0) {
-      par[next] = curr;
       cnt++;
-      dfs(next);
-      if (root && cnt > 1) ans.push_back(curr);
-      else if (!root && low[next] > order[curr]) ans.push_back(curr);
-      low[curr] = min(low[curr], low[next]);
+      int df = dfs(next);
+      if (!root && df >= order[curr]) cut[curr] = true;
+      ret = min(ret, df);
     }
-    else low[curr] = min(low[curr], order[next]);
+    else ret = min(ret, order[next]);
   }
+  if (root && cnt > 1) cut[curr] = true;
+  return ret;
 }
 
 int main() {
@@ -35,9 +33,15 @@ int main() {
     adj[u].push_back(v);
     adj[v].push_back(u);
   }
-  dfs(1, true);
-  ans.erase(unique(ans.begin(), ans.end()), ans.end());
-  sort(ans.begin(), ans.end());
-  printf("%d\n", ans.size());
-  for (auto ai : ans) printf("%d ", ai);
+  for (int i = 1; i <= n; i++)
+    if (!order[i])
+      dfs(i, true);
+  int cnt = 0;
+  for (int i = 1; i <= n; i++)
+    if (cut[i])
+      cnt++;
+  printf("%d\n", cnt);
+  for (int i = 1; i <= n; i++)
+    if (cut[i])
+      printf("%d ", i);
 }
