@@ -47,7 +47,7 @@ int main() {
     while (e < q.e) cnt[a[++e]]++;
     while (e > q.e) cnt[a[e--]]--;
     ans[q.idx] = -1;
-    for (int j = 1; j <= m; j++) 
+    for (int j = 1; j <= c; j++) 
       if (cnt[j] > q.size()/2) {
         ans[q.idx] = j;
       }
