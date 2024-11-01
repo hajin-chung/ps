@@ -6,9 +6,9 @@ using namespace std;
 int sn;
 struct Q {
   int s, e, idx;
-  bool operator < (Q &x) {
-    if (s/sn != x.s/sn) return e < x.e;
-    return s/sn < x.s/sn;
+  bool operator<(Q &x) {
+    if (s/sn != x.s/sn) return s/sn < x.s/sn;
+    return e < x.e;
   }
   int size() {
     return e-s+1;
