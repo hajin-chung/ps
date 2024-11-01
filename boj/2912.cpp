@@ -15,19 +15,18 @@ struct Q {
   }
 };
 
-int n, m, mx;
+int n, c, m, mx;
 int a[N], cnt[C];
 vector<Q> query;
 vector<int> ans;
 
 int main() {
-  scanf("%d%d", &n, &m);
+  scanf("%d%d", &n, &c);
   sn = sqrt(n);
   for (int i = 1; i <= n; i++) scanf("%d", &a[i]);
-  int q;
-  scanf("%d", &q);
-  ans.resize(q);
-  for (int i = 0; i < q; i++) {
+  scanf("%d", &m);
+  ans.resize(m);
+  for (int i = 0; i < m; i++) {
     int s, e;
     scanf("%d%d", &s, &e);
     query.push_back({s, e, i});
@@ -35,14 +34,13 @@ int main() {
   sort(query.begin(), query.end());
 
   mx = -1;
-  int s = query[0].s, e = query[0].e;
-  for (int i = s; i <= e; i++) {
-    cnt[a[i]]++;
-    if (cnt[a[i]] > query[0].size()/2) mx = a[i];
-  }
-  ans[query[0].idx] = mx;
+  Q q = query[0];
+  int s = q.s, e = q.e;
+  for (int i = s; i <= e; i++) cnt[a[i]]++;
+  ans[q.idx] = -1;
+  for (int i = 1; i <= c; i++) if (cnt[i] > q.size()) ans[q.idx] = i;
 
-  for (int i = 1; i < q; i++) {
+  for (int i = 1; i < m; i++) {
     Q q = query[i];
     while (s < q.s) cnt[a[s++]]--;
     while (s > q.s) cnt[a[--s]]++;
@@ -50,8 +48,9 @@ int main() {
     while (e > q.e) cnt[a[e--]]--;
     ans[q.idx] = -1;
     for (int j = 1; j <= m; j++) 
-      if (cnt[j] > q.size()/2)
+      if (cnt[j] > q.size()/2) {
         ans[q.idx] = j;
+      }
   }
   for (auto aa : ans) {
     if (aa == -1) printf("no\n");
