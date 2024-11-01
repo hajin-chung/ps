@@ -12,13 +12,13 @@ int main() {
       if (c == '(') s.push('(');
       else if (c == ')') {
         if (s.empty()) flag = false;
-        else if (s.top() != ')') flag = false;
+        else if (s.top() != '(') flag = false;
         else s.pop();
       }
       else if (c == '[') s.push('[');
       else if (c == ']') {
         if (s.empty()) flag = false;
-        else if (s.top() != ']') flag = false;
+        else if (s.top() != '[') flag = false;
         else s.pop();
       }
     }
