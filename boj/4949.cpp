@@ -22,7 +22,7 @@ int main() {
         else s.pop();
       }
     }
-    if (flag) cout << "yes\n";
+    if (s.empty() && flag) cout << "yes\n";
     else cout << "no\n";
   }
 }
