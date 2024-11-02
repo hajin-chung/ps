@@ -59,8 +59,6 @@ int main() {
     }
   }
 
-  for (int i = 1; i <= n; i++) printf("%lld ", query(i, i));
-
   ans.resize(sqcnt);
   for (int i = 0; i < update_query.size(); i++) {
     if (i != 0) {
