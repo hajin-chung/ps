@@ -39,10 +39,8 @@ int rec(int s, int e) {
     auto ylb = lower_bound(all(tmp), lbp, comp);
     auto yub = upper_bound(all(tmp), ubp, comp);
     for (auto jt = ylb; jt != yub; jt++) 
-      if (*it != *jt) {
+      if (*it != *jt)
         mind = min(mind, dist(*it, *jt));
-        cout << dist(*it, *jt) << " ";
-      }
   }
   return mind;
 }
