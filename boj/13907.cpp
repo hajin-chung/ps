@@ -26,7 +26,7 @@ int main() {
 
   for (int i = 1; i <= n; i++) {
     if (i == s) continue;
-    for (int j = 1; j <= m; j++)
+    for (int j = 1; j <= n; j++)
       d[i][j] = INF;
   }
 
