@@ -23,5 +23,9 @@ int main() {
   for (auto x : a) if (cnt[x+4000] == cnt[mf+4000]) frq.push_back(x);
   sort(all(frq));
   sort(all(a));
-  cout << (int)(sum/n+0.5) << "\n" << a[n/2] << "\n" << frq[1] << "\n" << mx-mn << "\n";
+  cout << (int)(sum/n+0.5) << "\n";
+  cout << a[n/2] << "\n";
+  if (frq.size() == 1) cout << frq[0] << "\n";
+  else cout << frq[1] << "\n";
+  cout << mx-mn << "\n";
 }
