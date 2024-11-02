@@ -22,27 +22,10 @@ void insert(Trie* root, int num) {
   }
 }
 
-void remove(Trie *node) {
-  if (node->ch[0] != nullptr) {
-    node->ch[0] = nullptr;
-    free(node->ch[0]);
-  }
-  if (node->ch[1] != nullptr) {
-    node->ch[1] = nullptr;
-    free(node->ch[1]);
-  }
-  free(node);
-}
-
 void remove(Trie *root, int num) {
   Trie *curr = root;
   for (int i = LOG_MAX; i >= 0; i--) {
     int b = (num >> i) & 1;
-    if (curr->ch[b]->cnt == 1) {
-      remove(curr->ch[b]);
-      curr->ch[b] = nullptr;
-      break;
-    }
     curr = curr->ch[b];
     curr->cnt--;
   }
@@ -56,7 +39,7 @@ int query(Trie* root, int num) {
     if (curr->ch[1-b] != nullptr && curr->ch[1-b]->cnt > 0 ) {
       curr = curr->ch[1-b];
       ret += (1 << i);
-    } else if (curr->ch[b] != nullptr && curr->ch[b]->cnt > 0) {
+    } else {
       curr = curr->ch[b];
     } 
   }
