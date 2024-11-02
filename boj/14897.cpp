@@ -10,15 +10,31 @@ struct Q {
   }
 };
 vector<Q> query;
-vector<int> a, ans;
-unordered_map<int, int> cnt;
+vector<int> a, ans, cnt;
+vector<pair<int, int>> compress;
 int n, m;
 
 int main() {
   scanf("%d", &n); 
   sn = sqrt(n);
   a.resize(n+1);
-  for (int i = 1; i <= n; i++) scanf("%d", &a[i]);
+  for (int i = 1; i <= n; i++) {
+    scanf("%d", &a[i]);
+    compress.push_back({a[i], i});
+  }
+
+  sort(compress.begin(), compress.end());
+  a[compress[0].second] = 0;
+  for (int i = 1; i < n; i++) {
+    auto [curr, cidx] = compress[i];
+    auto [prev, pidx] = compress[i-1];
+    if (curr == prev)
+      a[cidx] = a[pidx];
+    else
+      a[cidx] = a[pidx]+1;
+  }
+  cnt.resize(a[compress.back().second]);
+
   scanf("%d", &m);
   ans.resize(m);
   for (int i = 0; i < m; i++) {
