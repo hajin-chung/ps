@@ -14,8 +14,8 @@ vector<int> a;
 
 void insert(Trie* root, int num) {
   Trie *curr = root;
-  for (int i = (int)30; i >= 0; i--) {
-    int b = (num & (1 << i)) != 0;
+  for (int i = LOG_MAX; i >= 0; i--) {
+    int b = (num >> i) & 1;
     if (curr->ch[b] == nullptr) curr->ch[b] = new Trie();
     curr = curr->ch[b];
     curr->cnt++;
@@ -25,10 +25,9 @@ void insert(Trie* root, int num) {
 void remove(Trie *root, int num) {
   Trie *curr = root;
   for (int i = LOG_MAX; i >= 0; i--) {
-    int b = (num & (1<<i)) != 0;
+    int b = (num >> i) & 1;
     curr = curr->ch[b];
     curr->cnt--;
-    num = num & (~(1<<i));
   }
 }
 
@@ -36,13 +35,14 @@ int query(Trie* root, int num) {
   Trie *curr = root;
   int ret = 0;
   for (int i = LOG_MAX; i >= 0; i--) {
-    int b = (num & (1<<i)) != 0; 
+    int b = (num >> i) & 1;
     if (curr->ch[1-b] != nullptr && curr->ch[1-b]->cnt > 0 ) {
       curr = curr->ch[1-b];
       ret += (1 << i);
     } else if (curr->ch[b] != nullptr && curr->ch[b]->cnt > 0) {
       curr = curr->ch[b];
     } else {
+      printf("dafdsla\n");
       break;
     }
   }
