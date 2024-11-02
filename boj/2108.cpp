@@ -10,7 +10,7 @@ int n;
 int main() {
   ios::sync_with_stdio(0); cin.tie(0);
   double sum = 0;
-  int mf = 0, mn = 4005, mx = 0;
+  int mf = 0, mn = 4005, mx = -4005;
   scanf("%d", &n); a.resize(n); 
   for (auto &x : a) {
     cin >> x;
