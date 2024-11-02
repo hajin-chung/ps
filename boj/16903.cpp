@@ -50,6 +50,7 @@ int main() {
   Trie* root = new Trie();
   scanf("%d", &n); 
   int q, x;
+  insert(root, 0);
   while (n--) {
     scanf("%d %d", &q, &x);
     if (q == 1) insert(root, x);
