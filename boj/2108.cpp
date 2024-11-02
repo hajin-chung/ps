@@ -20,7 +20,7 @@ int main() {
     mn = min(mn, x);
     mx = max(mx, x);
   }
-  for (int i = 0; i <= 4000; i++) if (cnt[i] == cnt[mf+4000]) frq.push_back(i-4000);
+  for (int i = 0; i <= 8000; i++) if (cnt[i] == cnt[mf+4000]) frq.push_back(i-4000);
   sort(all(frq));
   sort(all(a));
   cout << (int)round(sum/(double)n) << "\n";
