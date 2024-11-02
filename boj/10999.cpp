@@ -16,7 +16,7 @@ void propagate(int node, int l, int r) {
   }
 }
 
-void update(int node, int l, int r, int ql, int qr, int diff) {
+void update(int node, int l, int r, int ql, int qr, ll diff) {
   propagate(node, l, r); 
   if (r < ql || qr < l) return;
   if (ql <= l && r <= qr) {
