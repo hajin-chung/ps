@@ -17,7 +17,7 @@ int main() {
   if (ret > 0) ret -= p*q;
   d -= ret;
   if (p < q) swap(p, q);
-  ll ans = 1000000000;
+  ll ans = 2e9;
   for (ll i = 0; i * p <= d + p; i++) {
     ans = min(ans, p*i+((d-p*i+q-1)/q)*q);
   }
