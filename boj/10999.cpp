@@ -20,7 +20,7 @@ void update(int node, int l, int r, int ql, int qr, int diff) {
   propagate(node, l, r); 
   if (r < ql || qr < l) return;
   if (ql <= l && r <= qr) {
-    tree[node] += (l-r+1)*diff;
+    tree[node] += (r-l+1)*diff;
     if (l != r) {
       lazy[node*2] += diff;
       lazy[node*2+1] += diff;
