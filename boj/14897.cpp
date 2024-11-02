@@ -1,5 +1,4 @@
 #include <bits/stdc++.h>
-#define MAX 1000000000
 using namespace std;
 
 int sn;
@@ -12,7 +11,7 @@ struct Q {
 };
 vector<Q> query;
 vector<int> a, ans;
-int cnt[MAX+5];
+map<int, int> cnt;
 int n, m;
 
 int main() {
