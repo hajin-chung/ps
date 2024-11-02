@@ -2,45 +2,66 @@
 using namespace std;
 
 typedef long long int ll;
-vector<ll> a, ft;
+vector<ll> tree, lazy;
 int n, m, k;
 
-void update(int idx, ll val) {
-  ll diff = val - a[idx];
-  a[idx] = val;
-  while (idx <= n) {
-    ft[idx] += diff;
-    idx += idx & -idx;
+void propagate(int node, int l, int r) {
+  if (lazy[node] > 0) {
+    tree[node] += (r-l+1)*lazy[node];
+    if (l != r) {
+      lazy[node*2] += lazy[node];
+      lazy[node*2+1] += lazy[node];
+    }
+    lazy[node] = 0;
   }
 }
 
-ll sum(int idx) {
-  ll ret = 0;
-  while (idx > 0) {
-    ret += ft[idx];
-    idx -= idx & -idx;
+void update(int node, int l, int r, int ql, int qr, int diff) {
+  propagate(node, l, r); 
+  if (r < ql || qr < l) return;
+  if (ql <= l && r <= qr) {
+    tree[node] += (ql-qr+1)*diff;
+    if (l != r) {
+      lazy[node*2] += diff;
+      lazy[node*2+1] += diff;
+    }
+    return;
   }
-  return ret;
+  int mid = (l+r)>>1;
+  update(node*2, l, mid, ql, qr, diff);
+  update(node*2+1, mid+1, r, ql, qr, diff);
+  tree[node] = tree[node*2] + tree[node*2+1];
 }
 
-ll query(int a, int b) {
-  return sum(b) - sum(a-1);
+ll query(int node, int l, int r, int ql, int qr) {
+  propagate(node, l, r);
+  if (r < ql || qr < l) return 0;
+  if (ql <= l && r <= qr) return tree[node];
+  int mid = (l+r)>>1;
+  return query(node*2, l, mid, ql, qr) + query(node*2+1, mid+1, r, ql, qr);
 }
 
 int main() {
   scanf("%d%d%d", &n, &m, &k);
-  a.resize(n+1, 0);
-  ft.resize(n+1, 0);
+  tree.resize(4*n+5);
+  lazy.resize(4*n+5);
   for (int i = 1; i <= n; i++) {
-    ll c;
-    scanf("%lld", &c);
-    update(i, c);
+    ll x;
+    scanf("%lld", &x);
+    update(1, 1, n, i, i, x);
   }
-
-  ll x, y, z;
   for (int i = 0; i < m+k; i++) {
-    scanf("%lld%lld%lld", &x, &y, &z);
-    if (x == 1) update(y, z);
-    else printf("%lld\n", query(y, z));
+    int q;
+    scanf("%d", &q);
+    if (q == 1) {
+      int l, r;
+      ll diff;
+      scanf("%d%d%lld", &l, &r, &diff);
+      update(1, 1, n, l, r, diff);
+    } else {
+      int l, r;
+      scanf("%d%d", &l, &r);
+      printf("%lld\n", query(1, 1, n, l, r));
+    }
   }
 }
