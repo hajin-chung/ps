@@ -31,7 +31,7 @@ void sub(int i) {
 
 int main() {
   ios::sync_with_stdio(0); cin.tie(0);
-  scanf("%d%d",&n,&t); a.resize(n); ans.resize(t);
+  scanf("%d%d",&n,&t); a.resize(n+5); ans.resize(t+5);
   sn = sqrt(n);
   for (auto &x : a) cin >> x;
   for (int i = 0, s, e; i < t; i++) {
