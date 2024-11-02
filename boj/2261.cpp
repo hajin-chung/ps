@@ -32,10 +32,10 @@ int rec(int s, int e) {
   copy(a.begin()+s, a.begin()+e, back_inserter(tmp));
   sort(all(tmp), comp);
   auto lb = lower_bound(all(a), make_pair(a[mid].fi-mind, -MAX));
-  auto ub = upper_bound(all(a), make_pair(a[mid].fi+mind, -MAX));
+  auto ub = upper_bound(all(a), make_pair(a[mid].fi+mind, MAX));
   for (auto it = lb; it != ub; it++) {
     const auto lbp = make_pair(-MAX, it->se-mind);
-    const auto ubp = make_pair(-MAX, it->se+mind);
+    const auto ubp = make_pair(MAX, it->se+mind);
     auto ylb = lower_bound(all(tmp), lbp, comp);
     auto yub = upper_bound(all(tmp), ubp, comp);
     for (auto jt = ylb; jt != yub; jt++) 
