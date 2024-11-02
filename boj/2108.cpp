@@ -20,10 +20,10 @@ int main() {
     mn = min(mn, x);
     mx = max(mx, x);
   }
-  for (auto x : a) if (cnt[x+4000] == cnt[mf+4000]) frq.push_back(x);
+  for (int i = 0; i <= 4000; i++) if (cnt[i] == cnt[mf+4000]) frq.push_back(i-4000);
   sort(all(frq));
   sort(all(a));
-  cout << (int)(sum/n+0.5) << "\n";
+  cout << (int)round(sum/(double)n) << "\n";
   cout << a[n/2] << "\n";
   if (frq.size() == 1) cout << frq[0] << "\n";
   else cout << frq[1] << "\n";
