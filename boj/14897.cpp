@@ -1,7 +1,8 @@
 #include <bits/stdc++.h>
+#define all(x) (x).begin(), (x).end()
 using namespace std;
 
-int sn;
+int sn = 2000;
 struct Q {
   int idx, s, e;
   bool operator<(Q &x) {
@@ -27,29 +28,19 @@ void add(int i) {
 }
 
 int main() {
-  scanf("%d", &n); 
-  sn = sqrt(n);
-  a.resize(n+1);
-  for (int i = 1; i <= n; i++) {
-    scanf("%d", &a[i]);
-    compress.push_back({a[i], i});
-  }
+  ios::sync_with_stdio(0); cin.tie(0);
+  cin >> n; a.resize(n);
+  for (auto &x : a) cin >> x;
+  auto tmp  = a;
+  sort(all(tmp));
+  tmp.erase(unique(all(tmp)), tmp.end());
+  for (auto &x : a) x = lower_bound(all(tmp), x) - tmp.begin();
 
-  sort(compress.begin(), compress.end());
-  a[compress[0].second] = 0;
-  for (int i = 1; i < n; i++) {
-    auto [curr, cidx] = compress[i];
-    auto [prev, pidx] = compress[i-1];
-    if (curr == prev) a[cidx] = a[pidx];
-    else a[cidx] = a[pidx]+1;
-  }
-
-  scanf("%d", &m);
-  ans.resize(m);
+  cin >> m; ans.resize(m);
   for (int i = 0; i < m; i++) {
     int s, e;
-    scanf("%d%d", &s, &e);
-    query.push_back({i, s, e});
+    cin >> s >> e;
+    query.push_back({i, s-1, e-1});
   }
   sort(query.begin(), query.end());
   
@@ -65,5 +56,5 @@ int main() {
     while (e > q.e) sub(e--);
     ans[q.idx] = now;
   }
-  for (auto a : ans) printf("%d\n", a);
+  for (auto a : ans) cout << a << "\n";
 }
