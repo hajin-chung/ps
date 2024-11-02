@@ -11,7 +11,7 @@ struct Q {
 };
 vector<Q> query;
 vector<int> a, ans;
-map<int, int> cnt;
+unordered_map<int, int> cnt;
 int n, m;
 
 int main() {
