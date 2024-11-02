@@ -45,29 +45,13 @@ int main() {
     }
   }
 
-  vector<pii> res, branch;
-  for (int i = 1; i <= n; i++) res.push_back({d[e][i], i});
-  sort(res.begin(), res.end());
-  int lecnt = INF;
-  for (auto [dist, ecnt] : res) 
-    if (ecnt < lecnt) {
-      branch.push_back({dist, ecnt});
-      lecnt = ecnt;
-    }
-
-  printf("%d\n", branch[0].fi);
-  int sum = 0;
-  int idx = 0;
-  while (k--) {
-    int t;
-    scanf("%d", &t);
+  int sum = 0, t = 0;
+  for (int j = 0; j <= k; j++) {
+    if (j != 0) scanf("%d", &t);
     sum += t;
-    while (idx+1 < branch.size()) {
-      if (branch[idx].fi + branch[idx].se*sum 
-        > branch[idx+1].fi + branch[idx+1].se*sum) 
-        ++idx;
-      else break;
-    }
-    printf("%d\n", branch[idx].fi + branch[idx].se*sum);
+    int ans = INF;
+    for (int i = 1; i <= n; i++)
+      ans = min(ans, d[e][i] + i * sum);
+    printf("%d\n", ans);
   }
 }
