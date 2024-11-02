@@ -23,7 +23,7 @@ int main() {
 
   sort(all(frq));
   sort(all(a));
-  cout << lround(sum/(double)n) << "\n";
+  cout << (int)lround(sum/(double)n) << "\n";
   cout << a[n/2] << "\n";
   if (frq.size() == 1) cout << frq[0] << "\n";
   else cout << frq[1] << "\n";
