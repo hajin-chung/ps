@@ -6,7 +6,7 @@ vector<ll> tree, lazy;
 int n, m, k;
 
 void propagate(int node, int l, int r) {
-  if (lazy[node] > 0) {
+  if (lazy[node] != 0) {
     tree[node] += (r-l+1)*lazy[node];
     if (l != r) {
       lazy[node*2] += lazy[node];
@@ -20,7 +20,7 @@ void update(int node, int l, int r, int ql, int qr, int diff) {
   propagate(node, l, r); 
   if (r < ql || qr < l) return;
   if (ql <= l && r <= qr) {
-    tree[node] += (ql-qr+1)*diff;
+    tree[node] += (l-r+1)*diff;
     if (l != r) {
       lazy[node*2] += diff;
       lazy[node*2+1] += diff;
