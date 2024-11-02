@@ -10,7 +10,7 @@ typedef pair<int, int> pii;
 typedef pair<int, pii> pip;
 
 int n, m, k, s, e;
-int d[N+5][M+5];
+int d[N+5][N+5];
 vector<vector<pii>> adj;
 
 int main() {
@@ -35,6 +35,7 @@ int main() {
   while (!pq.empty()) {
     auto [dist, info] = pq.top(); pq.pop();
     auto [curr, ecnt] = info;
+    if (ecnt > n) continue;
     if (dist > d[curr][ecnt]) continue;
     for (auto [next, w] : adj[curr]) {
       if (d[next][ecnt+1] > d[curr][ecnt] + w) {
