@@ -13,9 +13,9 @@ struct Q {
 };
 vector<ll> a, ans;
 vector<Q> query;
-int cnt[1010101];
-int n, t;
+ll cnt[1010101];
 ll now;
+int n, t;
 
 ll pow2(ll x) { return x*x; }
 
@@ -31,7 +31,7 @@ void sub(int i) {
 
 int main() {
   ios::sync_with_stdio(0); cin.tie(0);
-  scanf("%d%d",&n,&t); 
+  cin >> n >> t;
   a.resize(n);
   ans.resize(t);
   sn = sqrt(n);
@@ -56,5 +56,5 @@ int main() {
     ans[q.idx] = now;
   }
   
-  for (auto x : ans) printf("%lld\n", x);
+  for (auto x : ans) cout << x << "\n";
 }
