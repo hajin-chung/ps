@@ -46,7 +46,7 @@ int main() {
   }
 
   vector<pii> res, branch;
-  for (int i = 1; i <= m; i++) res.push_back({d[e][i], i});
+  for (int i = 1; i <= n; i++) res.push_back({d[e][i], i});
   sort(res.begin(), res.end());
   int lecnt = INF;
   for (auto [dist, ecnt] : res) 
