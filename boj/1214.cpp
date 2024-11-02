@@ -18,7 +18,7 @@ int main() {
   d -= ret;
   if (p < q) swap(p, q);
   ll ans = 1000000000;
-  for (ll i = 0; i * p <= d + q; i++) {
+  for (ll i = 0; i * p <= d + p; i++) {
     ans = min(ans, p*i+((d-p*i+q-1)/q)*q);
   }
   printf("%lld\n", ret+ans);
