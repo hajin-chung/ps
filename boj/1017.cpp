@@ -3,24 +3,22 @@
 using namespace std;
 
 bool prime[MAX], chk[55];
-int n, a[55];
+int n, a[55], p[55];
 vector<int> ans;
 
-void dfs(int curr, int fp, int cnt) {
-  if (curr == n) {
-    if (cnt == n) ans.push_back(fp);
-    return;
-  } else if (chk[curr]) {
-    dfs(curr+1, fp, cnt);
-    return;
-  }
+bool dfs(int curr) {
+  for (int i = 0; i < n; i++) {
+    if (i == curr) continue;
+    if (prime[a[curr]+a[i]]) continue;
+    if (chk[a[i]]) continue;
 
-  for (int i = 0; i < n; i++)
-    if (i != curr && !chk[i] && !prime[a[curr]+a[i]]) {
-      chk[curr] = chk[i] = true;
-      dfs(curr+1, curr==0?a[i]:fp, cnt + 2);
-      chk[curr] = chk[i] = false;
+    chk[curr] = chk[a[i]] = true;
+    if (p[a[i]] == 0 || dfs(p[a[i]])) {
+      p[a[i]] = curr;
+      return true;
     }
+  }
+  return false;
 }
 
 int main() {
@@ -34,7 +32,10 @@ int main() {
       for (int j = i*i; j < 2000; j += i)
         prime[j] = true;
 
-  dfs(0, -1, 0);
+  for (int i = 0; i < n; i++) {
+
+  }
+
   sort(ans.begin(), ans.end());
   ans.erase(unique(ans.begin(), ans.end()), ans.end());
   for (auto a : ans) cout << a << " ";
