@@ -41,7 +41,7 @@ int main() {
 
   ll sum = 0;
   for (int i = 1; i <= n; i++) {
-    sum += (ll)query(a[i].se); 
+    sum += query(a[i].se); 
     update(a[i].se);
   }
   cout << sum << "\n";
