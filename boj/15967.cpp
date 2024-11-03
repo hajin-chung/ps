@@ -39,8 +39,8 @@ ll query(int node, int l, int r, int ql, int qr) {
   if (r < ql || qr < l) return 0;
   if (ql <= l && qr <= r) return tree[node];
   int mid = (l+r)>>1;
-  int lq = query(node*2, l, mid, ql, qr);
-  int rq = query(node*2+1, mid+1, r, ql, qr);
+  ll lq = query(node*2, l, mid, ql, qr);
+  ll rq = query(node*2+1, mid+1, r, ql, qr);
   return lq + rq;
 }
 
