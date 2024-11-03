@@ -3,7 +3,7 @@
 using namespace std;
 
 typedef long long int ll;
-int tree[4*N+5], lazy[4*N+1];
+ll tree[4*N+5], lazy[4*N+1];
 int q1, q2;
 ll n;
 
@@ -49,7 +49,7 @@ int main() {
   ios::sync_with_stdio(0); cin.tie(0);
   cin >> n >> q1 >> q2;
   int m = q1+q2;
-  for (int i = 1; i <= n; i++) {
+  for (ll i = 1; i <= n; i++) {
     ll x; 
     cin >> x;
     update(1, 1, n, i, i, x);
