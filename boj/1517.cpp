@@ -37,7 +37,7 @@ int main() {
     scanf("%d", &a[i].fi);
     a[i].se = i;
   }
-  sort(all(a));
+  sort(a.begin()+1, a.end());
 
   ll sum = 0;
   for (int i = 1; i <= n; i++) {
