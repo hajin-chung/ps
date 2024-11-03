@@ -55,6 +55,8 @@ void solve() {
   int r = 0;
   ll mx = 0;
   int p1, p2;
+  a = hull;
+  n = hull.size();
   for (int i = 0; i < n; i++) {
     while (r < n * 2 && ccw(a[i], a[(i+1)%n], a[(i+1)%n]+a[(r+1)%n]-a[r%n]) >= 0) {
       if (mx < dist(a[i], a[r%n])) {
