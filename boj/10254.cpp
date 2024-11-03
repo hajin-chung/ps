@@ -9,7 +9,7 @@ typedef pair<ll, ll> pll;
 pll pivot;
 
 int ccw(pll a, pll b, pll c) {
-  int v = (b.fi-a.fi)*(c.se-a.se)-(b.se-a.se)*(c.fi-a.fi);
+  ll v = (b.fi-a.fi)*(c.se-a.se)-(b.se-a.se)*(c.fi-a.fi);
   if (v > 0) return 1;
   if (v < 0) return -1;
   return 0;
