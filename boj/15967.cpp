@@ -4,9 +4,10 @@ using namespace std;
 
 typedef long long int ll;
 int tree[4*N+5], lazy[4*N+1];
-int n, q1, q2;
+int q1, q2;
+ll n;
 
-void propagate(int node, int l, int r) {
+void propagate(int node, ll l, ll r) {
   if (lazy[node] != 0) {
     tree[node] += (ll)(r-l+1)*lazy[node];
     if (l != r) {
@@ -17,7 +18,7 @@ void propagate(int node, int l, int r) {
   }
 }
 
-void update(int node, int l, int r, int ql, int qr, ll diff) {
+void update(int node, ll l, ll r, ll ql, ll qr, ll diff) {
   propagate(node, l, r);
   if (r < ql || qr < l) return;
   if (ql <= l && r <= qr) {
@@ -28,17 +29,17 @@ void update(int node, int l, int r, int ql, int qr, ll diff) {
     }
     return;
   }
-  int mid = (l+r)>>1;
+  ll mid = (l+r)>>1;
   update(node*2, l, mid, ql, qr, diff);
   update(node*2+1, mid+1, r, ql, qr, diff);
   tree[node] = tree[node*2] + tree[node*2+1];
 }
 
-ll query(int node, int l, int r, int ql, int qr) {
+ll query(int node, ll l, ll r, ll ql, ll qr) {
   propagate(node, l, r);
   if (r < ql || qr < l) return 0;
   if (ql <= l && r <= qr) return tree[node];
-  int mid = (l+r)>>1;
+  ll mid = (l+r)>>1;
   ll lq = query(node*2, l, mid, ql, qr);
   ll rq = query(node*2+1, mid+1, r, ql, qr);
   return lq + rq;
@@ -55,7 +56,7 @@ int main() {
   }
 
   while (m--) {
-    int q, l, r; 
+    ll q, l, r; 
     cin >> q >> l >> r;
     if (q == 1) cout << query(1, 1, n, l, r) << "\n";
     else {
