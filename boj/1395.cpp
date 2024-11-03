@@ -6,12 +6,11 @@ int n, m;
 int tree[4*N+5], lazy[4*N+5];
 
 void propagate(int node, int l, int r) {
-  lazy[node] %= 2;
-  if (lazy[node] == 1) {
+  if (lazy[node]%2 == 1) {
     tree[node] = (r-l+1) - tree[node];
     if (l != r) {
-      tree[node*2]++;
-      tree[node*2+1]++;
+      lazy[node*2]++;
+      lazy[node*2+1]++;
     }
     tree[node] = 0;
   } 
