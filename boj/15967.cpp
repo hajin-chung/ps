@@ -37,7 +37,7 @@ void update(int node, int l, int r, int ql, int qr, ll diff) {
 ll query(int node, int l, int r, int ql, int qr) {
   propagate(node, l, r);
   if (r < ql || qr < l) return 0;
-  if (ql <= l && qr <= r) return tree[node];
+  if (ql <= l && r <= qr) return tree[node];
   int mid = (l+r)>>1;
   ll lq = query(node*2, l, mid, ql, qr);
   ll rq = query(node*2+1, mid+1, r, ql, qr);
@@ -53,8 +53,6 @@ int main() {
     cin >> x;
     update(1, 1, n, i, i, x);
   }
-  for (int i = 1; i <= n; i++) cout << query(1, 1, n, i, i) << " ";
-  cout << "\n";
 
   while (m--) {
     int q, l, r; 
