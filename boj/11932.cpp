@@ -2,6 +2,8 @@
 #define all(x) (x).begin(), (x).end()
 using namespace std;
 
+typedef long long int;
+
 int n, m, cnt = 0;
 vector<int> w, traverse, lookup;
 vector<bool> chk;
@@ -47,7 +49,7 @@ int query(int ql, int qr, int k) {
   int l = 0, r = INT_MAX, mid;
   while (l < r) {
     mid = (l+r)>>1;
-    int cnt = query(1, 1, traverse.size()-1, ql, qr, mid);
+    int cnt = query(1, 1, traverse.size()-1, l, r, mid);
     if (k <= cnt) r = mid;
     else l = mid+1;
   }
