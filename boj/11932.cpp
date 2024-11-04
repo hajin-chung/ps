@@ -2,13 +2,14 @@
 #define all(x) (x).begin(), (x).end()
 using namespace std;
 
-typedef long long int;
+typedef long long int ll;
 
 int n, m, cnt = 0;
-vector<int> w, traverse, lookup;
+vector<ll> w;
+vector<int> traverse, lookup;
 vector<bool> chk;
 vector<vector<int>> e;
-vector<vector<int>> tree;
+vector<vector<ll>> tree;
 
 void dfs(int curr = 1) {
   lookup[curr] = traverse.size();
@@ -34,7 +35,7 @@ void init(int node, int l, int r) {
 }
 
 // number of elements smaller or equal to v
-int query(int node, int l, int r, int ql, int qr, int v) {
+int query(int node, int l, int r, int ql, int qr, ll v) {
   if (r < ql || qr < l) return 0;
   if (l <= ql && qr <= r) {
     auto it = lower_bound(all(tree[node]), v);
@@ -46,10 +47,10 @@ int query(int node, int l, int r, int ql, int qr, int v) {
 }
 
 int query(int ql, int qr, int k) {
-  int l = 0, r = INT_MAX, mid;
+  ll l = 0, r = (ll)INT_MAX+1, mid;
   while (l < r) {
     mid = (l+r)>>1;
-    int cnt = query(1, 1, traverse.size()-1, l, r, mid);
+    int cnt = query(1, 1, traverse.size()-1, ql, qr, mid);
     if (k <= cnt) r = mid;
     else l = mid+1;
   }
