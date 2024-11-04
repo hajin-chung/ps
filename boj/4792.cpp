@@ -53,7 +53,6 @@ bool solve() {
   int mn = mst(e);
   for (auto &[w, uv]: e) w = -w;
   int mx = -mst(e);
-  cout << mn << " " << mx << "\n";
   int ans = mn <= k && k <= mx;
   cout << ans << "\n";
   return true;
