@@ -21,7 +21,7 @@ int mst(vector<pip>& e) {
   int ret = 0;
   vector<int> p(n+1);
   for (int i = 1; i <= n; i++) p[i] = i;
-  priority_queue<pip> pq; 
+  priority_queue<pip, vector<pip>, greater<pip>> pq; 
   for (auto edge : e) pq.push(edge);
   while (!pq.empty()) {
     auto [w, uv] = pq.top(); pq.pop();
@@ -50,9 +50,9 @@ bool solve() {
     e.push_back({w, {v, u}});
   }
 
-  int mx = mst(e);
-  for (auto &[w, uv]: e) w = 1-w;
   int mn = mst(e);
+  for (auto &[w, uv]: e) w = -w;
+  int mx = -mst(e);
   cout << mn << " " << mx << "\n";
   int ans = mn <= k && k <= mx;
   cout << ans << "\n";
