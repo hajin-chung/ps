@@ -45,7 +45,7 @@ int main() {
   for (int i = 1; i <= n; i++) {
     int e = energy[i], curr = i;
     for (int j = LOG_N; j >= 0; j--)
-      if (dp[curr][j].se < e && dp[curr][j].fi != 0) {
+      if (dp[curr][j].se <= e && dp[curr][j].fi != 0) {
         e -= dp[curr][j].se;
         curr = dp[curr][j].fi;
       }
