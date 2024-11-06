@@ -1,7 +1,4 @@
-[Trie]
-- https://www.acmicpc.net/problem/5467
-- https://www.acmicpc.net/problem/16903
-
-[Dynamic Programming] 해야하는데...
-- https://solved.ac/search?query=%23dp+*g5..g1&sort=random&direction=asc&page=1
-  -> 랜덤으로 몇개씩 풀기?
+3 2
+10 20 30
+1 2
+3 1
