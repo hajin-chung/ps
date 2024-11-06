@@ -45,7 +45,7 @@ int query(int node, int l, int r, int ql, int qr, int v) {
   if (r < ql || qr < l) return 0;
   if (ql <= l && r <= qr) {
     auto it = upper_bound(all(tree[node]), v);
-    return distance(it, tree[node].begin());
+    return distance(tree[node].begin(), it);
   }
 
   int mid = (l+r) >> 1;
