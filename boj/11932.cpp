@@ -23,9 +23,9 @@ void dfs(int curr = 1) {
 void init(int node, int l, int r) {
   if (l == r) {
     tree[node].insert(w[traverse[l]]); 
-    cout << l << " " << r << ": ";
-    for (auto t : tree[node]) cout << t << " ";
-    cout << endl;
+    /*cout << l << " " << r << ": ";*/
+    /*for (auto t : tree[node]) cout << t << " ";*/
+    /*cout << endl;*/
     return;
   }
 
@@ -34,14 +34,14 @@ void init(int node, int l, int r) {
   init(node*2+1, mid+1, r);
   tree[node].insert(all(tree[node*2]));
   tree[node].insert(all(tree[node*2+1]));
-  cout << l << " " << r << ": ";
-  for (auto t : tree[node]) cout << t << " ";
-  cout << endl;
+  /*cout << l << " " << r << ": ";*/
+  /*for (auto t : tree[node]) cout << t << " ";*/
+  /*cout << endl;*/
 }
 
 // number of elements smaller or equal to v
 int query(int node, int l, int r, int ql, int qr, int v) {
-  cout << node << " " << l << " " << r << " " << ql << " " << qr << " " << v << endl;
+  /*cout << node << " " << l << " " << r << " " << ql << " " << qr << " " << v << endl;*/
   if (r < ql || qr < l) return 0;
   if (ql <= l && r <= qr) {
     auto it = upper_bound(all(tree[node]), v);
@@ -56,12 +56,12 @@ int query(int node, int l, int r, int ql, int qr, int v) {
 
 int query(int ql, int qr, int k) {
   int l = wmn, r = wmx, mid;
-  cout << "query: " << l << " " << r << endl;
+  /*cout << "query: " << l << " " << r << endl;*/
   while (l < r) {
     mid = (l+r)>>1;
-    cout << l << " " << r << endl;
+    /*cout << l << " " << r << endl;*/
     int cnt = query(1, 1, traverse.size()-1, ql, qr, mid);
-    cout << "-> " << cnt << endl;
+    /*cout << "-> " << cnt << endl;*/
     if (k <= cnt) r = mid;
     else l = mid+1;
   }
@@ -88,10 +88,10 @@ int main() {
   traverse.push_back(0);
   dfs();
 
-  for (auto t : traverse) cout << t << " ";
-  cout << endl;
-  for (auto t : lookup) cout << t << " ";
-  cout << endl;
+  /*for (auto t : traverse) cout << t << " ";*/
+  /*cout << endl;*/
+  /*for (auto t : lookup) cout << t << " ";*/
+  /*cout << endl;*/
 
   init(1, 1, traverse.size()-1);
 
