@@ -7,7 +7,7 @@ int n, lookup[N+1], dp[N+1], x;
 int main() {
   ios::sync_with_stdio(0); cin.tie(0);
   cin >> n;
-  int lis = 0;
+  int lis = 1;
   for (int i = 1; i <= n; i++) {
     cin >> x;
     lookup[x] = i;
