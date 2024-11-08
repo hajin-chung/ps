@@ -16,7 +16,7 @@ int main() {
   for (int i = 0; i < n; i++) {
     int tmp[NC+5];
     memcpy(tmp, dp, sizeof(dp));
-    for (int j = 0; j <= NC; j++) {
+    for (int j = 0; j <= NC-c[i]; j++) {
       if (dp[j] == -1) continue;
       dp[j+c[i]] = max(tmp[j+c[i]], tmp[j]+w[i]);
     }
