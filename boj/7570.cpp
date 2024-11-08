@@ -13,7 +13,7 @@ int main() {
     lookup[x] = i;
     if (lookup[x-1]) {
       dp[x] = dp[x-1] + 1;
-      lis = max(lis, dp[x])+1;
+      lis = max(lis, dp[x]+1);
     }
   }
   cout << n-lis << "\n";
