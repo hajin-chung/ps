@@ -56,5 +56,5 @@ int main() {
   }
   d += sqrt(dist(curr, first));
   d += (double)l * M_PI * 2.0;
-  printf("%d\n", (int)d);
+  printf("%d\n", (int)(d+0.5));
 }
