@@ -7,11 +7,11 @@ int main() {
   ios::sync_with_stdio(0); cin.tie(0);
   cin>>n;
   for (int i = 1; i <= n; i++) {
-    int t, m, mt = 0, k;
+    int t, m, mt = 0, j;
     cin>>t>>m;
-    for (int j = 0; j < m; j++) {
-      cin>>k;
-      mt = max(mt, dp[k]);
+    while (m--) {
+      cin>>j;
+      mt = max(mt, dp[j]);
     }
     dp[i] = mt+t;
   }
