@@ -39,6 +39,16 @@ int query(int node, int l, int r, int ql, int qr) {
   return query(node*2, l, m, ql, qr)^query(node*2+1, m+1, r, ql, qr);
 }
 
+void print(int node, int l, int r) {
+  propagate(node, l, r);
+  cout<<node<<"("<<l<<", "<<r<<"): "<<tree[node]<<"\n";
+  if (l != r) {
+    int m = (l+r)>>1;
+    print(node*2, l, m);
+    print(node*2+1, m+1, r);
+  }
+}
+
 int main() {
   ios::sync_with_stdio(0); cin.tie(0);
   cin>>n; tree.resize(4*n+1); lazy.resize(4*n+1);
@@ -46,6 +56,7 @@ int main() {
     cin>>x; 
     update(1, 0, n-1, i, i, x);
   }
+  print(1, 0, n-1);
   int m;
   cin>>m;
   while (m--) {
