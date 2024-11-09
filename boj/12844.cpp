@@ -20,8 +20,8 @@ void update(int node, int l, int r, int ql, int qr, int k) {
   if (ql <= l && r <= qr) {
     if ((r-l+1)%2 == 1) tree[node] ^= k;
     if (l != r) {
-      lazy[node*2] ^= lazy[node];
-      lazy[node*2+1] ^= lazy[node];
+      lazy[node*2] ^= k;
+      lazy[node*2+1] ^= k;
     }
     return;
   }
