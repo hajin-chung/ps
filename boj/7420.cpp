@@ -22,11 +22,10 @@ bool comp(pii a, pii b) {
 }
 
 int main() {
-  ios::sync_with_stdio(0); cin.tie(0);
-  cin>>n>>l; 
+  scanf("%d%d",&n,&l);
   int idx = 0;
   for (int x, y, i = 0; i < n; i++) {
-    cin>>x>>y;
+    scanf("%d%d",&x,&y);
     points.push_back({x, y});
     if (points[idx] > points[i]) idx = i;
   }
@@ -56,6 +55,6 @@ int main() {
     curr = next;
   }
   d += sqrt(dist(curr, first));
-  d += (double)l * M_PI * 2;
+  d += (double)l * M_PI * 2.0;
   printf("%d\n", (int)d);
 }
