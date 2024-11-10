@@ -18,11 +18,11 @@ void init(int node, int l, int r) {
 }
 
 int query(int node, int l, int r, int ql, int qr) {
-  if (qr < l || r < ql) return INF;
+  if (qr < l || r < ql) return 0;
   if (ql <= l && r <= qr) return tree[node];
   int m = (l+r)>>1;
-  int rl = a[query(node*2, l, m, ql, qr)];
-  int rr = a[query(node*2+1, m+1, r, ql, qr)];
+  int rl = query(node*2, l, m, ql, qr);
+  int rr = query(node*2+1, m+1, r, ql, qr);
   if (a[rl] < a[rr]) return rl;
   else return rr;
 }
@@ -30,12 +30,13 @@ int query(int node, int l, int r, int ql, int qr) {
 ll query(int ql, int qr) { return query(1, 1, n, ql, qr); }
 
 ll rec(int l = 1, int r = n) {
-  cout<<l<< " "<<r<<endl;
   if (l == r) return a[l]*a[l];
   int midx = query(l, r);
   ll sum = (psum[r]-psum[l-1])*a[midx];
-  ll rl = rec(l, midx-1);
-  ll rr = rec(midx+1, r);
+  ll rl, rr;
+  rl = rr = -1;
+  if (l <= midx-1) rl = rec(l, midx-1);
+  if (midx+1 <= r) rr = rec(midx+1, r);
   return max(sum, max(rl, rr));
 }
 
@@ -46,6 +47,7 @@ int main() {
     cin>>a[i];
     psum[i] = psum[i-1]+a[i];
   }
+  a[0] = INF;
   init(1, 1, n);
   cout << rec() << "\n";
 }
