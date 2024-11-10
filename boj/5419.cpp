@@ -5,6 +5,7 @@
 using namespace std;
 
 typedef pair<int, int> pii;
+typedef long long int ll;
 
 bool comp(pii a, pii b) {
   if (a.se == b.se) return a.fi < b.fi;
@@ -19,7 +20,7 @@ bool comp2(pii a, pii b) {
 struct Seg {
   int n, my;
   vector<pii> a;
-  vector<int> tree;
+  vector<ll> tree;
 
   void update(int idx) {
     while (idx <= n) {
@@ -28,8 +29,8 @@ struct Seg {
     }
   }
 
-  int query(int idx) {
-    int sum = 0;
+  ll query(int idx) {
+    ll sum = 0;
     while (idx > 0) {
       sum += tree[idx];
       idx -= idx&-idx;
@@ -50,8 +51,8 @@ struct Seg {
     my = cnt;
   }
 
-  int solve() {
-    int ret = 0;
+  ll solve() {
+    ll ret = 0;
     sort(all(a), comp2);
     for (auto [x, y] : a) {
       ret += query(y, my);
@@ -71,6 +72,6 @@ int main() {
     cin>>n; b.resize(n);
     for (auto &[x, y] : b) cin>>x>>y;
     Seg *seg = new Seg(n, b);
-    cout << seg->solve() << endl;
+    cout << seg->solve() << "\n";
   }
 }
