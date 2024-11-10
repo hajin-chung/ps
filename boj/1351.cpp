@@ -5,7 +5,7 @@ typedef long long int ll;
 unordered_map<ll, ll> mp;
 ll n, p, q;
 
-ll rec(int a) {
+ll rec(ll a) {
   if (mp.count(a)) return mp[a];
   mp[a] = rec(a/p) + rec(a/q);
   return mp[a];
