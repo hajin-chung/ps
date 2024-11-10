@@ -1,10 +1,11 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-unordered_map<int, int> mp;
-int n, p, q;
+typedef long long int ll;
+unordered_map<ll, ll> mp;
+ll n, p, q;
 
-int rec(int a) {
+ll rec(int a) {
   if (mp.count(a)) return mp[a];
   mp[a] = rec(a/p) + rec(a/q);
   return mp[a];
