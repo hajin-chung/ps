@@ -16,7 +16,7 @@ int dij(int mn) {
     for (int j = 1; j <= n; j++)
       d[i][j] = INF;
   d[1][1] = a[1][1];
-  q.push({0, {1, 1}});
+  q.push({d[1][1], {1, 1}});
   while (!q.empty()) {
     auto [dist, curr] = q.top(); q.pop();
     auto [yy, xx] = curr;
