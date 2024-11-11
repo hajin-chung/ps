@@ -10,6 +10,7 @@ int n, a[105][105];
 int dy[4] = {1, 0, -1, 0}, dx[4] = {0, 1, 0, -1};
 
 int dij(int mn) {
+  if (a[1][1] < mn || a[n][n] < mn) return INF; 
   priority_queue<pip, vector<pip>, greater<pip>> q;
   int d[105][105];
   for (int i = 1; i <= n; i++)
