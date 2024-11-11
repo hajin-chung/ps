@@ -17,7 +17,12 @@ int main() {
     } 
 
     if (SQ.size() == LQ.size()) {
-      SQ.push(x);
+      if (x <= SQ.top()) SQ.push(x);
+      else {
+        LQ.push(x);
+        SQ.push(LQ.top());
+        LQ.pop();
+      }
     } else {
       if (x <= SQ.top()) {
         LQ.push(SQ.top());
