@@ -1,88 +1,51 @@
-#include <stdio.h>
-#include <queue>
-#include <algorithm>
-
+#include <bits/stdc++.h>
+#define INF 1000000000
+#define fi first
+#define se second
 using namespace std;
 
-queue<pair<int, int> > Q;
-int n, m;
-int a[1505][1505];
-int d[1505][1505], path[1505][1505];
-int dy[4] = {0, 1, 0, -1}, dx[4] = {1, 0, -1, 0};
-int sx, sy, ex, ey;
+typedef pair<int, int> pii;
+typedef pair<int, pii> pip;
+int n, m, d[1505][1505];
+int dy[4] = {1, 0, -1, 0}, dx[4] = {0, 1, 0, -1};
+char a[1505][1505];
+priority_queue<pip, vector<pip>, greater<pip>> q;
+pii s, e;
 
 int main() {
-  int i, j, k;
-  char t[1505];
-  int cnt = 0, flag = 0;
-  int yy, xx, ty, tx;
-
-  scanf("%d %d", &n, &m);
-  for(i=1; i<=n; i++) {
-    scanf("%s", t);
-    for(j=1; j<=m; j++) {
-      d[i][j] = -1;
-      path[i][j] = 1000000000;
-      if (t[j-1] == 'X') a[i][j] = 1;
-      else if(t[j-1] == 'L') {
-        if (sx == 0) {
-          sy = i;
-          sx = j;
+  scanf("%d%d",&n,&m);
+  bool flag = false;
+  for (int i = 1; i <= n; i++) {
+    scanf("%s", &a[i][1]);
+    for (int j = 1; j <= m; j++)
+      if (a[i][j] == 'L') {
+        a[i][j] = '.';
+        if (!flag) {
+          s = {i, j};
+          flag = true;
         } else {
-          ey = i;
-          ex = j;
+          e = {i, j};
         }
+      }
+  }
+  for (int i = 1; i <= n; i++)
+    for (int j = 1; j <= m; j++)
+      d[i][j] = INF;
+  d[s.fi][s.se] = 0;
+  q.push({0, s});
+  while (!q.empty()) {
+    auto [dist, curr] = q.top(); q.pop();
+    auto [yy, xx] = curr;
+    if (dist > d[yy][xx]) continue;
+    for (int i = 0; i < 4; i++) {
+      int ty = yy + dy[i];
+      int tx = xx + dx[i];
+      if (!(0 < ty && ty <= n && 0 < tx && tx <= m)) continue;
+      if (d[ty][tx] > d[yy][xx] + (a[ty][tx] == 'X')) {
+        d[ty][tx] = d[yy][xx] + (a[ty][tx] == 'X');
+        q.push({d[ty][tx], {ty, tx}});
       }
     }
   }
-
-  for(i=1; i<=n; i++) {
-    for(j=1; j<=m; j++) {
-      if (d[i][j] == -1 && a[i][j] == 0) {
-        Q.push({i, j});
-        d[i][j] = 0;
-        while(!Q.empty()) {
-          yy = Q.front().first;
-          xx = Q.front().second;
-          Q.pop();
-          for(k=0; k<4; k++) {
-            ty = yy + dy[k];
-            tx = xx + dx[k];
-            if(ty > 0 && ty <= n && tx > 0 && tx <= m) {
-              if (a[ty][tx] == 1 && (d[ty][tx] == -1 || d[ty][tx] > d[yy][xx]+1)) {
-                d[ty][tx] = d[yy][xx] + 1; 
-                Q.push({ty, tx});
-              } else if(a[ty][tx] == 0 && d[ty][tx] == -1) {
-                d[ty][tx] = 0;
-                Q.push({ty, tx});
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-
-  Q.push({sy, sx});
-  path[sy][sx] = 0;
-  while(!Q.empty()) {
-    yy = Q.front().first;
-    xx = Q.front().second;
-    Q.pop();
-    for(k=0; k<4; k++) {
-      ty = yy + dy[k];
-      tx = xx + dx[k];
-      if (ty > 0 && ty <= n && tx > 0 && tx <= m) {
-        if (a[ty][tx] == 1 && a[yy][xx] == 1) {
-        }
-      }
-    }
-  }
-
-  for(i=1; i<=n; i++) {
-    for(j=1 ; j<=m; j++) printf("%d ", path[i][j]);
-    printf("\n");
-  }
-
-  printf("%d\n", path[ey][ex]);
+  printf("%d\n", (int)ceil((double)d[e.fi][e.se]/2));
 }
