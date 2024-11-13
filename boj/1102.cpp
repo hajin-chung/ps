@@ -1,13 +1,3 @@
-/*
- * dp[1111] = min(
- *   dp[0111]+min(a[1][0], a[2][0], a[3][0]),
- *   dp[1011]+min(a[0][1], a[2][1], a[3][1]),
- *   dp[1101]+min(a[0][2], a[1][2], a[3][2]),
- *   dp[1110]+min(a[0][3], a[1][3], a[2][3]),
- * )
- * 2^n * n * n = 
-*/
-
 #include <bits/stdc++.h>
 #define INF 1000000000
 using namespace std;
@@ -51,12 +41,13 @@ int main() {
   dp[mask] = 0;
   int ans = INF;
   for (int i = 0; i < (1<<16); i++) {
+    rec(i);
     int cnt = 0, t = i;
     while (t) {
       if (t & 1) cnt++;
       t >>= 1;
     }
-    if (cnt == p) ans = min(ans, rec(i));
+    if (cnt == p) ans = min(ans, dp[i]);
   }
   cout << ans << "\n";
 }
