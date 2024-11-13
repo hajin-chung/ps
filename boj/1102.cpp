@@ -4,6 +4,15 @@ using namespace std;
 
 int dp[1<<16], n, a[16][16], p;
 
+int bc(int mask) {
+  int ret = 0;
+  while (mask) {
+    if (mask&1) ret++;
+    mask>>=1;
+  }
+  return ret;
+}
+
 int rec(int mask) {
   if (dp[mask] != INF) return dp[mask];
   for (int i = 0; i < n; i++) 
@@ -23,18 +32,15 @@ int main() {
   for (int i = 0; i < n; i++)
     for (int j = 0; j < n; j++)
       cin>>a[i][j];
-  int mask = 0, mc = 0;
+  int mask = 0;
   for (int i = 0; i < n; i++) {
     char c;
     cin>>c;
-    if (c == 'Y') {
-      mask += (1<<i);
-      mc++;
-    }
+    if (c == 'Y') mask |= (1<<i);
   }
   cin>>p;
-  if (p <= mc) {
-    cout<< 0<<"\n";
+  if (bc(mask) >= p) {
+    cout << 0 << "\n";
     return 0;
   }
   for (int i = 0; i < (1<<16); i++) dp[i] = INF;
@@ -42,12 +48,8 @@ int main() {
   int ans = INF;
   for (int i = 0; i < (1<<16); i++) {
     rec(i);
-    int cnt = 0, t = i;
-    while (t) {
-      if (t & 1) cnt++;
-      t >>= 1;
-    }
-    if (cnt == p) ans = min(ans, dp[i]);
+    if (bc(i) == p) ans = min(ans, dp[i]);
   }
-  cout << ans << "\n";
+  if (ans == INF) cout << -1<< "\n";
+  else cout << ans << "\n";
 }
