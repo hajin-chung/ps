@@ -8,12 +8,10 @@
 using namespace std;
 
 typedef pair<int, int> pii;
-struct Query { pii s, e; };
 struct Height { int h; vector<pii> points; };
 int n, m, q, a[N][N], lo[Q], hi[Q], p[N*N];
-vector<pii> h[H+5];
+vector<pii> h[H+5], queries;
 vector<Height> heights;
-vector<Query> queries;
 int dy[4] = {1, 0, -1, 0}, dx[4] = {0, 1, 0, -1};
 
 int find(int u) { 
@@ -40,7 +38,7 @@ int main() {
   for (int i = 0; i < q; i++) {
     int sy, sx, ey, ex;
     cin>>sy>>sx>>ey>>ex;
-    queries.push_back({{sy-1, sx-1}, {ey-1, ex-1}});
+    queries.push_back({(sy-1)*m+sx-1, (ey-1)*m+ex-1});
   }
   for (int i = 0; i < q; i++) {
     lo[i] = 0; 
@@ -62,13 +60,13 @@ int main() {
         for (int k = 0; k < 4; k++) {
           int ty = yy+dy[k];
           int tx = xx+dx[k];
-          if (ty >= 0 && ty < n && tx >= 0 && tx < m && a[ty][tx] <= heights[i].h)
+          if (ty >= 0 && ty < n && tx >= 0 && tx < m && a[ty][tx] <= a[yy][xx])
             merge(yy*m+xx, ty*m+tx);
         }
       }
       for (auto idx : g[i]) {
-        int u = find(queries[idx].s.fi*m+queries[idx].s.se);
-        int v = find(queries[idx].e.fi*m+queries[idx].e.se);
+        int u = find(queries[idx].fi);
+        int v = find(queries[idx].se);
         if (u == v) hi[idx] = i;
         else lo[idx] = i+1;
       }
