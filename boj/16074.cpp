@@ -55,16 +55,14 @@ int main() {
         g[(lo[i]+hi[i])>>1].push_back(i);
       }
     if (!flag) break;
-    vector<bool> chk(n*m, false);
     for (int i = 0; i < n*m; i++) p[i] = i;
     for (int i = 0; i < heights.size(); i++) {
       auto [h, points] = heights[i];
       for (auto [yy, xx]: points) {
-        chk[yy*m+xx] = true;
         for (int k = 0; k < 4; k++) {
           int ty = yy+dy[k];
           int tx = xx+dx[k];
-          if (ty >= 0 && ty < n && tx >= 0 && tx < m && chk[ty*m+tx])
+          if (ty >= 0 && ty < n && tx >= 0 && tx < m && a[ty][tx] <= heights[i].h)
             merge(yy*m+xx, ty*m+tx);
         }
       }
