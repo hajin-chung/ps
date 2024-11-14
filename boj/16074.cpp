@@ -32,7 +32,7 @@ int main() {
       cin>>a[i][j];
       h[a[i][j]].push_back({i, j});
     }
-  for (int i = 1; i <= H; i++)
+  for (int i = 0; i <= H; i++)
     if (h[i].size() > 0)
       heights.push_back({i, h[i]});
   for (int i = 0; i < q; i++) {
