@@ -7,26 +7,27 @@
 #define H 1000000
 using namespace std;
 
-typedef pair<int, int> pii;
+typedef long long int ll;
+typedef pair<ll, ll> pii;
 struct Query { pii s, e; };
 struct Height {
-  int h;
-  vector<pii> points;
+  ll h;
+  vector<pii> polls;
 };
-int n, m, q, a[N][N], lo[Q], hi[Q], p[N*N];
+ll n, m, q, a[N][N], lo[Q], hi[Q], p[N*N];
 bool chk[N][N];
 vector<pii> h[H+1];
 vector<Height> heights;
 vector<Query> queries;
-int dy[4] = {1, 0, -1, 0}, dx[4] = {0, 1, 0, -1};
+ll dy[4] = {1, 0, -1, 0}, dx[4] = {0, 1, 0, -1};
 
-int find(int u) {
+ll find(ll u) {
   if (p[u] == u) return u;
   return p[u] = find(p[u]);
 }
-int find(pii pp) { return find(pp.fi*m+pp.se); }
+ll find(pii pp) { return find(pp.fi*m+pp.se); }
 
-void merge(int u, int v) {
+void merge(ll u, ll v) {
   u = find(u); v = find(v);
   if (u < v) p[v] = u;
   else p[u] = v;
@@ -36,55 +37,55 @@ void merge(pii u, pii v) { merge(u.fi*m+u.se, v.fi*m+v.se); }
 int main() {
   ios::sync_with_stdio(0); cin.tie(0);
   cin>>n>>m>>q;
-  for (int i = 0; i < n; i++)
-    for (int j = 0; j < m; j++) {
+  for (ll i = 0; i < n; i++)
+    for (ll j = 0; j < m; j++) {
       cin>>a[i][j];
       h[a[i][j]].push_back({i, j});
     }
-  for (int i = 1; i <= H; i++)
+  for (ll i = 1; i <= H; i++)
     if (h[i].size() > 0)
       heights.push_back({i, h[i]});
-  for (int i = 0; i < q; i++) {
-    int sy, sx, ey, ex;
+  for (ll i = 0; i < q; i++) {
+    ll sy, sx, ey, ex;
     cin>>sy>>sx>>ey>>ex;
     queries.push_back({{sy-1, sx-1}, {ey-1, ex-1}});
   }
-  for (int i = 0; i < q; i++) {
+  for (ll i = 0; i < q; i++) {
     lo[i] = 0; 
     hi[i] = heights.size()-1;
   }
   while (1) {
     bool flag = false;
-    vector<vector<int>> g;
+    vector<vector<ll>> g;
     g.resize(heights.size());
-    for (int i = 0; i < q; i++)
+    for (ll i = 0; i < q; i++)
       if (lo[i] < hi[i]) {
         flag = true;
         g[(lo[i]+hi[i])>>1].push_back(i);
       }
     if (!flag) break;
-    for (int i = 0; i < n*m; i++) p[i] = i;
-    for (int i = 0; i < n; i++)
-      for (int j = 0; j < m; j++)
+    for (ll i = 0; i < n*m; i++) p[i] = i;
+    for (ll i = 0; i < n; i++)
+      for (ll j = 0; j < m; j++)
         chk[i][j] = false;
-    for (int i = 0; i < heights.size(); i++) {
-      auto [h, points] = heights[i];
-      for (auto [yy, xx]: points) {
+    for (ll i = 0; i < heights.size(); i++) {
+      auto [h, polls] = heights[i];
+      for (auto [yy, xx]: polls) {
         chk[yy][xx] = true;
-        for (int k = 0; k < 4; k++) {
-          int ty = yy+dy[k];
-          int tx = xx+dx[k];
+        for (ll k = 0; k < 4; k++) {
+          ll ty = yy+dy[k];
+          ll tx = xx+dx[k];
           if (ty >= 0 && ty < n && tx >= 0 && tx < m && chk[ty][tx])
             merge({yy, xx}, {ty, tx});
         }
       }
       for (auto idx : g[i]) {
-        int u = find(queries[idx].s);
-        int v = find(queries[idx].e);
+        ll u = find(queries[idx].s);
+        ll v = find(queries[idx].e);
         if (u == v) hi[idx] = i;
         else lo[idx] = i+1;
       }
     }
   }
-  for (int i = 0; i < q; i++) cout << heights[lo[i]].h << "\n";
+  for (ll i = 0; i < q; i++) cout << heights[lo[i]].h << "\n";
 }
