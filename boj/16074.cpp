@@ -9,27 +9,21 @@ using namespace std;
 
 typedef pair<int, int> pii;
 struct Query { pii s, e; };
-struct Height {
-  int h;
-  vector<pii> points;
-};
-int n, m, q, a[N][N], lo[Q], hi[Q];
-pii p[N][N];
-bool chk[N][N];
-vector<pii> h[H+1];
+struct Height { int h; vector<pii> points; };
+int n, m, q, a[N][N], lo[Q], hi[Q], p[N*N];
+vector<pii> h[H+5];
 vector<Height> heights;
 vector<Query> queries;
 int dy[4] = {1, 0, -1, 0}, dx[4] = {0, 1, 0, -1};
 
-pii find(pii u) { 
-  if (p[u.fi][u.se] == u) return u;
-  return p[u.fi][u.se] = find(p[u.fi][u.se]);
+int find(int u) { 
+  if (p[u] == u) return u;
+  return p[u] = find(p[u]);
 }
-
-void merge(pii u, pii v) {
+void merge(int u, int v) {
   u = find(u); v = find(v);
-  if (u < v) p[v.fi][v.se] = u;
-  else p[u.fi][u.se] = v;
+  if (u < v) p[v] = u;
+  else p[u] = v;
 }
 
 int main() {
@@ -54,33 +48,29 @@ int main() {
   }
   while (1) {
     bool flag = false;
-    vector<vector<int>> g;
-    g.resize(heights.size());
+    vector<vector<int>> g(heights.size());
     for (int i = 0; i < q; i++)
       if (lo[i] < hi[i]) {
         flag = true;
         g[(lo[i]+hi[i])>>1].push_back(i);
       }
     if (!flag) break;
-    for (int i = 0; i < n; i++)
-      for (int j = 0; j < m; j++) {
-        chk[i][j] = false;
-        p[i][j] = {i, j};
-      }
+    vector<bool> chk(n*m, false);
+    for (int i = 0; i < n*m; i++) p[i] = i;
     for (int i = 0; i < heights.size(); i++) {
       auto [h, points] = heights[i];
       for (auto [yy, xx]: points) {
-        chk[yy][xx] = true;
+        chk[yy*m+xx] = true;
         for (int k = 0; k < 4; k++) {
           int ty = yy+dy[k];
           int tx = xx+dx[k];
-          if (ty >= 0 && ty < n && tx >= 0 && tx < m && chk[ty][tx])
-            merge({yy, xx}, {ty, tx});
+          if (ty >= 0 && ty < n && tx >= 0 && tx < m && chk[ty*m+tx])
+            merge(yy*m+xx, ty*m+tx);
         }
       }
       for (auto idx : g[i]) {
-        pii u = find(queries[idx].s);
-        pii v = find(queries[idx].e);
+        int u = find(queries[idx].s.fi*m+queries[idx].s.se);
+        int v = find(queries[idx].e.fi*m+queries[idx].e.se);
         if (u == v) hi[idx] = i;
         else lo[idx] = i+1;
       }
