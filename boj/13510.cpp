@@ -15,7 +15,7 @@ vector<pii> edges;
 int tree[4*N];
 
 int update(int node, int l, int r, int idx, int v) {
-  if (idx < l || r < idx) return 0;
+  if (idx < l || r < idx) return tree[node];
   if (l == r) return tree[node] = v;
   int m = (l+r)>>1;
   return tree[node] = max(
@@ -88,7 +88,9 @@ int main() {
     adj[u].push_back({v, w});
     adj[v].push_back({u, w});
   }
-  dfs(1); dfs1(1); dfs2(1);
+  dfs(1); dfs1(1); 
+  top[1] = 1;
+  dfs2(1);
   for (int i = 2; i <= n; i++)
     update(1, 1, n, in[i], weights[i]);
   int t;
