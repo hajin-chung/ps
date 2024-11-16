@@ -41,7 +41,10 @@ int main() {
       } else {
         if (sum != 0) ans += sum * cnt;
         sum += cnt;
-        cout << ans << " " << sum << "\n";
+        if (ans > k) {
+          cout<<"-1"<<"\n";
+          return 0;
+        }
       }
     }
   cout<<ans<<"\n";
