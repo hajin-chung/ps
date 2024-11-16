@@ -25,7 +25,7 @@ int update(int node, int l, int r, int idx, int v) {
 }
 
 int query(int node, int l, int r, int ql, int qr) {
-  if (qr < l || r < ql) return 0;
+  if (qr < l || r < ql) return -INF;
   if (ql <= l && r <= qr) return tree[node];
   int m = (l+r)>>1;
   return max(
