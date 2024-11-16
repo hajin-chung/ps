@@ -15,30 +15,30 @@ vector<vector<int>> adj;
 vector<int> cnt, depth;
 vector<bool> chk;
 
-int dfs(int curr, int d) {
-  depth[curr] = d;
+int dfs(int curr, int lev) {
+  chk[curr] = true;
+  depth[curr] = lev;
   cnt[curr] = 1;
   for (auto next : adj[curr])
     if (!chk[next]) {
-      chk[next] = true;
       dp[next][0] = curr;
-      cnt[curr] += dfs(next, d+1);
+      cnt[curr] += dfs(next, lev+1);
     }
   return cnt[curr];
 }
 
-pii lca(int u, int v) {
+int lca(int u, int v) {
   if (depth[u] < depth[v]) swap(u, v);
   for (int i = LOG_N-1; i >= 0; i--)
-    if (depth[dp[u][i]] <= depth[v])
+    if (depth[dp[u][i]] >= depth[v])
       u = dp[u][i];
-  if (u == v) return {v, 0};
+  if (u == v) return u;
   for (int i = LOG_N-1; i >= 0; i--)
     if (dp[u][i] != dp[v][i]) {
       u = dp[u][i];
       v = dp[v][i];
     }
-  return {dp[u][0], u};
+  return dp[u][0];
 }
 
 void solve(int tc) {
@@ -58,7 +58,7 @@ void solve(int tc) {
     adj[v].pb(u);
   }
 
-  chk[r] = 1;
+  depth[0] = -1;
   dfs(r, 0);
   for (int i = 1; i < LOG_N; i++)
     for (int j = 1; j <= n; j++)
@@ -81,9 +81,15 @@ void solve(int tc) {
     cin>>s>>u;
     if (s == 0) r = u;
     else {
-      auto [anc, ancnext] = lca(r, u);
+      int anc = lca(r, u);
       if (r == u) cout<<n<<"\n";
-      else if (anc == u) cout<<n-cnt[ancnext]<<"\n";
+      else if (anc == u) {
+        int ancnext = r;
+        for (int i = LOG_N-1; i >= 0; i--)
+          if (depth[dp[ancnext][i]] > depth[anc])
+            ancnext = dp[ancnext][i];
+        cout<<n-cnt[ancnext]<<"\n";
+      }
       else cout<<cnt[u]<<"\n";
     }
   }
