@@ -67,7 +67,9 @@ int main() {
       for (auto idx : g[i]) {
         int u = find(queries[idx].fi);
         int v = find(queries[idx].se);
-        if (u == v) hi[idx] = i;
+        int sy = queries[idx].fi/m, sx = queries[idx].fi%m;
+        int ey = queries[idx].se/m, ex = queries[idx].se%m;
+        if (u == v && h >= a[sy][sx] && h >= a[ey][ex]) hi[idx] = i;
         else lo[idx] = i+1;
       }
     }
