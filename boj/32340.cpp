@@ -25,6 +25,10 @@ int main() {
     adj[u].push_back(v);
     adj[v].push_back(u);
   }
+  if (m > n) {
+    cout<<0<<"\n";
+    return 0;
+  }
 
   ll ans = 0;
   for (int i = 1; i <= n; i++)
