@@ -11,7 +11,7 @@ int n;
 int sz[N+1], dep[N+1], par[N+1], top[N+1], in[N+1], out[N+1], weights[N+1];
 vector<int> g[N+1];
 vector<pii> adj[N+1];
-vector<pii> edges;
+vector<ppi> edges;
 int tree[4*N];
 
 int update(int node, int l, int r, int idx, int v) {
@@ -84,25 +84,25 @@ int main() {
   for (int i = 0; i < n-1; i++) {
     int u, v, w;
     cin>>u>>v>>w;
-    edges.push_back({u, v});
+    edges.push_back({{u, v}, w});
     adj[u].push_back({v, w});
     adj[v].push_back({u, w});
   }
-  dfs(1); dfs1(1); 
-  top[1] = 1;
-  dfs2(1);
-  for (int i = 2; i <= n; i++)
-    update(1, 1, n, in[i], weights[i]);
+  dfs(1); dfs1(1); dfs2(1);
+  for (auto &[uv, w] : edges) {
+    auto &[u, v] = uv;
+    if (par[v] == u) swap(u, v);
+    update(1, 1, n, in[u], w);
+  }
   int t;
   cin>>t;
   while (t--) {
-    int q, u, v;
-    cin>>q>>u>>v;
-    if (q == 1) {
-      auto [a, b] = edges[u-1];
-      if (dep[a] < dep[b]) swap(a, b);
-      update(1, 1, n, in[a], v);
+    int op; cin>>op;
+    if (op == 1) {
+      int i, c; cin>>i>>c;
+      update(1, 1, n, edges[i-1].fi.fi, c);
     } else {
+      int u, v; cin>>u>>v;
       cout << solve(u, v) << "\n";
     }
   }
