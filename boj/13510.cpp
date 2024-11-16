@@ -7,32 +7,32 @@ using namespace std;
 
 typedef pair<int, int> pii;
 typedef pair<pii, int> ppi;
-struct Seg {
-  int tree[1<<18];
-  int sz = 1<<17;
-
-  void update(int idx, int val) {
-    idx |= sz; tree[idx] = val;
-    while (idx>>=1) 
-      tree[idx] = max(tree[idx<<1], tree[idx<<1|1]);
-  }
-
-  int query(int l, int r) {
-    l |= sz; r |= sz;
-    int ret = 0;
-    while (l <= r) {
-      if (l&1) ret = max(ret, tree[l++]);
-      if (~r&1) ret = max(ret, tree[r--]);
-      l>>=1; r>>=1;
-    }
-    return ret;
-  }
-} seg;
 int n;
 int sz[N+1], dep[N+1], par[N+1], top[N+1], in[N+1], out[N+1], weights[N+1];
 vector<int> g[N+1];
 vector<pii> adj[N+1];
 vector<pii> edges;
+int tree[4*N];
+
+int update(int node, int l, int r, int idx, int v) {
+  if (idx < l || r < idx) return 0;
+  if (l == r) return tree[node] = v;
+  int m = (l+r)>>1;
+  return tree[node] = max(
+    update(node*2, l, m, idx, v),
+    update(node*2+1, m+1, r, idx, v)
+  );
+}
+
+int query(int node, int l, int r, int ql, int qr) {
+  if (qr < l || r < ql) return 0;
+  if (ql <= l && r <= qr) return tree[node];
+  int m = (l+r)>>1;
+  return max(
+    query(node*2, l, m, ql, qr),
+    query(node*2+1, m+1, r, ql, qr)
+  );
+}
 
 int chk[N+1];
 void dfs(int u) {
@@ -65,18 +65,16 @@ void dfs2(int u) {
   out[u] = pv;
 }
 
-void update(int u, int w) { seg.update(in[u], w); }
-
-int query(int a, int b) {
+int solve(int a, int b) {
   int ret = 0;
   while (top[a] != top[b]) {
     if (dep[top[a]] < dep[top[b]]) swap(a, b);
     int st = top[a];
-    ret = max(ret, seg.query(in[st], in[a]));
+    ret = max(ret, query(1, 1, n, in[st], in[a]));
     a = par[st];
   }
   if (dep[a] > dep[b]) swap(a, b);
-  ret = max(ret, seg.query(in[a], in[b]));
+  ret = max(ret, query(1, 1, n, in[a], in[b]));
   return ret;
 }
 
@@ -92,7 +90,7 @@ int main() {
   }
   dfs(1); dfs1(1); dfs2(1);
   for (int i = 2; i <= n; i++)
-    seg.update(in[i], weights[i]);
+    update(1, 1, n, in[i], weights[i]);
   int t;
   cin>>t;
   while (t--) {
@@ -101,9 +99,9 @@ int main() {
     if (q == 1) {
       auto [a, b] = edges[u-1];
       if (dep[a] < dep[b]) swap(a, b);
-      seg.update(in[a], v);
+      update(1, 1, n, in[a], v);
     } else {
-      cout << query(u, v) << "\n";
+      cout << solve(u, v) << "\n";
     }
   }
 }
