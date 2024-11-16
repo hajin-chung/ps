@@ -30,17 +30,18 @@ int main() {
     return 0;
   }
 
-  ll ans = 0;
+  ll ans = 0, sum = 0;
   for (int i = 1; i <= n; i++)
     if (!chk[i]) {
       chk[i] = true;
-      int cnt = dfs(i);
-      if (ans < 0) continue;
-      if (cnt == n) ans = 1;
-      else {
-        if (ans == 0) ans = cnt;
-        else ans *= cnt;
-        if (ans > k) ans = -1;
+      ll cnt = dfs(i);
+      if (cnt == n) {
+        cout<<1<<"\n";
+        return 0;
+      } else {
+        if (sum != 0) ans += sum * cnt;
+        sum += cnt;
+        cout << ans << " " << sum << "\n";
       }
     }
   cout<<ans<<"\n";
