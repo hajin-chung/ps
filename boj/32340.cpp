@@ -6,6 +6,11 @@ int n, m;
 ll k;
 vector<int> chk, adj[101010];
 
+void end() {
+  cout<<"-1\n";
+  exit(0);
+}
+
 ll dfs(int u) {
   ll ret = 1;
   for (auto v : adj[u])
@@ -30,25 +35,15 @@ int main() {
     return 0;
   }
 
-  ll ans = 1, c = 0; 
+  ll ans = 0, sum = 0;
   for (int i = 1; i <= n; i++)
     if (!chk[i]) {
       chk[i] = true;
       ll cnt = dfs(i);
-      if (cnt == n) {
-        cout<<1<<"\n";
-        return 0;
-      } 
-      ans *= cnt;
-      if (ans > k) {
-        cout<<"-1\n";
-        return 0;
-      }
-      c++;
+      if (cnt == n) { cout<<1<<"\n"; return 0; } 
+      if (sum != 0) ans += sum*cnt;
+      sum += cnt;
+      if (ans > k) end();
     }
-  ll perm = c*(c-1)/2;
-  if (perm > k) {cout<<"-1\n";return 0;}
-  ans *= perm;
-  if (ans > k) {cout<<"-1\n";return 0;}
   cout<<ans<<"\n";
 }
