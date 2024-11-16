@@ -22,7 +22,7 @@ struct Seg {
     int ret = 0;
     while (l <= r) {
       if (l&1) ret = max(ret, tree[l++]);
-      if (~r&1) ret = max(ret, tree[l--]);
+      if (~r&1) ret = max(ret, tree[r--]);
       l>>=1; r>>=1;
     }
     return ret;
@@ -90,7 +90,7 @@ int main() {
     adj[u].push_back({v, w});
     adj[v].push_back({u, w});
   }
-  dfs(1); dfs1(1); dfs(1);
+  dfs(1); dfs1(1); dfs2(1);
   for (int i = 2; i <= n; i++)
     seg.update(in[i], weights[i]);
   int t;
@@ -99,8 +99,7 @@ int main() {
     int q, u, v;
     cin>>q>>u>>v;
     if (q == 1) {
-      auto [a, b] = edges[u];
-      cout << "hi" << endl;
+      auto [a, b] = edges[u-1];
       if (dep[a] < dep[b]) swap(a, b);
       seg.update(in[a], v);
     } else {
