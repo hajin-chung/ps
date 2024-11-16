@@ -2,48 +2,53 @@
 using namespace std;
 
 typedef long long int ll;
+typedef pair<int, int> pii;
 int n, m;
 ll k;
-vector<int> chk, adj[101010];
+vector<pii> edges;
+ll cnt[101010];
+int p[101010];
 
 void end() {
   cout<<"-1\n";
   exit(0);
 }
 
-ll dfs(int u) {
-  ll ret = 1;
-  for (auto v : adj[u])
-    if (!chk[v]) {
-      chk[v] = 1;
-      ret += dfs(v);
-    }
-  return ret;
+int find(int u) {
+  if (u == p[u]) return u;
+  return p[u] = find(p[u]);
+}
+
+void merge(int u, int v) {
+  u = find(u); v = find(v); 
+  if (u < v) p[v] = u;
+  else p[u] = v;
 }
 
 int main() {
   ios::sync_with_stdio(0); cin.tie(0);
-  cin>>n>>m>>k; chk.resize(n+1, 0);
+  cin>>n>>m>>k;
   for (int i = 0; i < m; i++) {
     int u, v;
     cin>>u>>v;
-    adj[u].push_back(v);
-    adj[v].push_back(u);
+    edges.push_back({u, v});
   }
-  if (m > n) {
-    cout<<0<<"\n";
-    return 0;
+  if (m > n) { cout<<0<<"\n"; return 0; }
+
+  for (int i = 1; i <= n; i++) p[i] = i;
+  for (auto [u, v] : edges) {
+    if (find(u) == find(v)) end();
+    merge(u, v);
   }
 
+  for (int i = 1; i <= n; i++) cnt[find(i)]++;
+
   ll ans = 0, sum = 0;
-  for (int i = 1; i <= n; i++)
-    if (!chk[i]) {
-      chk[i] = true;
-      ll cnt = dfs(i);
-      if (cnt == n) { cout<<1<<"\n"; return 0; } 
-      if (sum != 0) ans += sum*cnt;
-      sum += cnt;
-      if (ans > k) end();
-    }
+  for (int i = 1; i <= n; i++) {
+    if (cnt[i] == 0) continue;
+    if (sum != 0) ans += sum * cnt[i];
+    sum += cnt[i];
+    if (ans > k) end();
+  }
   cout<<ans<<"\n";
 }
