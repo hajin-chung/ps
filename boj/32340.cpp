@@ -30,7 +30,7 @@ int main() {
     return 0;
   }
 
-  ll ans = 0, sum = 0;
+  ll ans = 1, c = 0; 
   for (int i = 1; i <= n; i++)
     if (!chk[i]) {
       chk[i] = true;
@@ -38,14 +38,17 @@ int main() {
       if (cnt == n) {
         cout<<1<<"\n";
         return 0;
-      } else {
-        if (sum != 0) ans += sum * cnt;
-        sum += cnt;
-        if (ans > k) {
-          cout<<"-1"<<"\n";
-          return 0;
-        }
+      } 
+      ans *= cnt;
+      if (ans > k) {
+        cout<<"-1\n";
+        return 0;
       }
+      c++;
     }
+  ll perm = c*(c-1)/2;
+  if (perm > k) {cout<<"-1\n";return 0;}
+  ans *= perm;
+  if (ans > k) {cout<<"-1\n";return 0;}
   cout<<ans<<"\n";
 }
