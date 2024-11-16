@@ -9,8 +9,8 @@ vector<pii> edges;
 ll cnt[101010];
 int p[101010];
 
-void end() {
-  cout<<"-1\n";
+void end(int x) {
+  cout<<x<<"\n";
   exit(0);
 }
 
@@ -33,11 +33,11 @@ int main() {
     cin>>u>>v;
     edges.push_back({u, v});
   }
-  if (m > n) { cout<<0<<"\n"; return 0; }
+  if (m > n) end(0);
 
   for (int i = 1; i <= n; i++) p[i] = i;
   for (auto [u, v] : edges) {
-    if (find(u) == find(v)) end();
+    if (find(u) == find(v)) end(0);
     merge(u, v);
   }
 
@@ -48,7 +48,7 @@ int main() {
     if (cnt[i] == 0) continue;
     if (sum != 0) ans += sum * cnt[i];
     sum += cnt[i];
-    if (ans > k) end();
+    if (ans > k) end(-1);
   }
   cout<<ans<<"\n";
 }
