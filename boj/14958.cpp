@@ -8,7 +8,7 @@ using namespace std;
 const double PI = acos(-1);
 typedef complex<double> cpx;
 typedef long long ll;
-const int SZ = 1<<20;
+const int SZ = 1<<17;
 int n, m;
 
 void fft(vector<cpx> &f, bool is_rev) {
@@ -42,17 +42,15 @@ void mul(vector<cpx> &a, vector<cpx> &b) {
 	fft(a,1);
 }
 
-int solve(string &sa, string &sb, char a1, char b1) {
+void solve(string &sa, string &sb, char a1, char b1, vector<ll> &win) {
   vector<cpx> a(sa.size(), cpx(0, 0)), b(sb.size(), cpx(0, 0));
   for (int i = 0; i < sa.size(); i++)
     a[i] = cpx(sa[i] == a1, 0);
   for (int i = 0; i < sb.size(); i++)
     b[i] = cpx(sb[i] == b1, 0);
   mul(a, b);
-  int mx = 0;
-  for (auto ai : a)
-    mx = max(mx, (int)round(ai.real()));
-  return mx;
+  for (int i = 0; i < n+m-1; i++)
+    win[i] += (ll)round(a[i].real());
 }
 
 int main() {
@@ -60,9 +58,11 @@ int main() {
   string sa, sb;
   cin>>n>>m>>sa>>sb;
   reverse(all(sb));
-  int mx = 0;
-  mx = max(mx, solve(sa, sb, 'R', 'P'));
-  mx = max(mx, solve(sa, sb, 'P', 'S'));
-  mx = max(mx, solve(sa, sb, 'S', 'R'));
+  vector<ll> win(SZ, 0);
+  solve(sa, sb, 'R', 'P', win);
+  solve(sa, sb, 'P', 'S', win);
+  solve(sa, sb, 'S', 'R', win);
+  ll mx = 0;
+  for (int i = m-1; i < n+m-1; i++) mx = max(win[i], mx);
   cout<<mx<<"\n";
 }
