@@ -6,7 +6,7 @@ using namespace std;
 const double PI = acos(-1);
 typedef complex<double> cpx;
 typedef long long ll;
-const int SZ = 1<<20;
+const int SZ = 1<<21;
 
 void fft(vector<cpx> &f, bool is_rev) {
 	int n = (int)f.size();
