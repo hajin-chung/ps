@@ -46,17 +46,20 @@ int main() {
   cin>>sa>>sb;
   int na = sa.size(), nb = sb.size();
   for (int i = 0; i < na; i++)
-    a[i] = cpx(sa[i]-'0', 0);
+    a[i] = cpx(sa[na-i-1]-'0', 0);
   for (int i = 0; i < nb; i++)
-    b[i] = cpx(sb[i]-'0', 0);
+    b[i] = cpx(sb[nb-i-1]-'0', 0);
   mul(a, b);
   string ans = "";
   int carry = 0;
   while (round(a.back().real()) != 0) a.pop_back();
   for (int i = 0; i < a.size(); i++) {
-    int digit = (int)round(a[i].real());
-    carry += digit;
-    ans.push_back(carry%10 + '0');
+    ll digit = (int)round(a[i].real()) + carry;
+    ans.push_back(digit%10 + '0');
+    carry = digit/10;
+  }
+  while(carry > 0) {
+    ans += (carry % 10) + '0';
     carry /= 10;
   }
   while (ans.back() == '0') ans.pop_back();
