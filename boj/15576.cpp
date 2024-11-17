@@ -52,7 +52,6 @@ int main() {
   mul(a, b);
   string ans = "";
   int carry = 0;
-  while (round(a.back().real()) != 0) a.pop_back();
   for (int i = 0; i < a.size(); i++) {
     ll digit = (int)round(a[i].real()) + carry;
     ans.push_back(digit%10 + '0');
@@ -64,5 +63,6 @@ int main() {
   }
   while (ans.back() == '0') ans.pop_back();
   reverse(all(ans));
-  cout<<ans<<"\n";
+  if (ans.size() == 0) cout << 0 << "\n";
+  else cout<<ans<<"\n";
 }
