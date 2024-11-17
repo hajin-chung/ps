@@ -74,7 +74,7 @@ int solve(int a, int b) {
     a = par[st];
   }
   if (dep[a] > dep[b]) swap(a, b);
-  ret = max(ret, query(1, 1, n, in[a], in[b]));
+  ret = max(ret, query(1, 1, n, in[a]+1, in[b]));
   return ret;
 }
 
@@ -100,7 +100,7 @@ int main() {
     int op; cin>>op;
     if (op == 1) {
       int i, c; cin>>i>>c;
-      update(1, 1, n, edges[i-1].fi.fi, c);
+      update(1, 1, n, in[edges[i-1].fi.fi], c);
     } else {
       int u, v; cin>>u>>v;
       cout << solve(u, v) << "\n";
