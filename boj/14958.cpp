@@ -8,7 +8,7 @@ using namespace std;
 const double PI = acos(-1);
 typedef complex<double> cpx;
 typedef long long ll;
-const int SZ = 1<<17;
+const int SZ = 1<<20;
 int n, m;
 
 void fft(vector<cpx> &f, bool is_rev) {
