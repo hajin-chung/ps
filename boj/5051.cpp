@@ -37,12 +37,12 @@ void fft(vector<cpx> &f, bool is_rev) {
 }
 
 vector<ll> mul(vector<ll> &a) {
-	vector<ll> ret(n);
+	vector<ll> ret(SZ);
 	vector<cpx> f(all(a));
 	f.resize(SZ); fft(f,0);
-	for(int i=0;i<f.size();i++) f[i]*=f[i];
+	for(int i=0;i<SZ;i++) f[i]*=f[i];
 	fft(f,1);
-	for(int i=1;i<f.size();i++) ret[i%n] += (ll)round(f[i].real());
+	for(int i=0;i<SZ;i++) ret[i] = (ll)round(f[i].real());
 	return ret;
 }
 
@@ -58,7 +58,7 @@ int main() {
 	ll ans = 0;
 	for (ll i = 1; i < n; i++) {
 		ll k = i*i%n;
-		ll a = ret[i*i%n];
+		ll a = ret[k]+ret[k+n];
 		ll eq = sq[k];
 		ans += (a-eq)/2+eq;
 	}
