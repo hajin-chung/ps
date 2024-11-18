@@ -50,8 +50,8 @@ int main() {
       lands.pop_back();
     lands.push_back(tmp[i]);
   }
-  ll dp = lands[0].fi*lands[0].se;
-  for (int i = 1; i < lands.size(); i++) {
+  ll dp = 0;
+  for (int i = 0; i < lands.size(); i++) {
     insert(lands[i].se, dp);
     dp = query(lands[i].fi);
   }
