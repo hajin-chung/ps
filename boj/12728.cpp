@@ -1,10 +1,11 @@
 #include <bits/stdc++.h>
+#define M 1000
 using namespace std;
 
 typedef long double ld;
 
 ld sanitize(ld x) {
-  x = x-((int)x/1000)*1000;
+  x -= (int)(x/M)*M;
   return x;
 }
 
@@ -25,6 +26,6 @@ int main() {
   ld x = 3.0+sqrt(5);
   while (t--) {
     int n; cin>>n;
-    printf("%03d\n", (int)pow(x, n));
+    printf("%03d\n", (int)pow(x, n)%1000);
   }
 }
