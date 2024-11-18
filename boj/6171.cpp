@@ -1,44 +1,61 @@
-// 우선 w를 기준으로 오름차순 정렬
-// dp[i] = i번째 땅 까지 고려했을 때 최선
-//       = min(dp[j]+w[i]*max(h[j+1]..h[i])) (j : 0..i-1)
-//       max(h[j+1]..h[i]) -> j 가 증가할수록 감
 #include <bits/stdc++.h>
 #define fi first
 #define se second
-#define N 50000
+#define all(x) (x).begin(), (x).end()
 using namespace std;
 
 typedef long long int ll;
 typedef pair<ll, ll> pll;
-struct Line {
-  ll a, b; // y = a*x+b;
-  Line(ll a, ll b) : a(a), b(b) {}
-  ll f(ll x) { return a*x+b; }
-};
+struct Line { // f(x) = px+q, x >= s
+  ll p, q; 
+  double s; 
+  ll f(ll x) { return p*x + q; }
+}; 
 int n;
-pll wh[N+1];
-ll dp[N+1];
-vector<Line> lv;
-int pv;
+vector<pll> lands, tmp;
+vector<Line> lines;
 
-int chk(const Line& a, const Line& b, const Line& c) {
-  return (double)(a.b-b.b)/(b.a-a.a) >= (double)(c.b-b.b)/(b.a-c.a);
+double intersect(Line a, Line b) {
+  return (double)(b.q-a.q)/(a.p-b.p);
 }
 
-void insert(Line l) {
-  while (lv.size() >= pv+2 && chk(lv[lv.size()-2], lv.back(), l)) lv.pop_back();
+void insert(ll p, ll q) {
+  Line f = {p, q, 0}; 
+  while (!lines.empty()) {
+    f.s = intersect(lines.back(), f);
+    if (lines.back().s < f.s) break;
+    lines.pop_back();
+  }
+  lines.push_back(f);
 }
 
 ll query(ll x) {
-  while (pv+1 < lv.size() && lv[pv].f(x) <= lv[pv+1].f(x)) pv++;
-  return lv[pv].f(x);
+  int l = 0, r = lines.size()-1;
+  while (l<r) {
+    int m = (l+r)>>1;
+    if (x < lines[m].s) r = m;
+    else l = m+1;
+  } 
+  if (l > 0 && x < lines[l].s) return lines[l-1].f(x);
+  return lines[l].f(x);
 }
 
 int main() {
   ios::sync_with_stdio(0); cin.tie(0);
-  cin>>n;
-  for (int i = 1; i <= n; i++) cin>>wh[i].fi>>wh[i].se;
-  for (int i = 1; i <= n; i++) {
-    
+  cin>>n; tmp.resize(n);
+  for (auto &[w, h] : tmp) cin>>w>>h;
+  sort(all(tmp));
+  for (int i = 0; i < n; i++) {
+    while (
+      !lands.empty()
+      && lands.back().fi <= tmp[i].fi && lands.back().se <= tmp[i].se
+    ) lands.pop_back();
+    lands.push_back(tmp[i]);
   }
+  ll dp = lands[0].fi*lands[0].se;
+  for (int i = 1; i < lands.size(); i++) {
+    insert(lands[i].se, dp);
+    dp = query(lands[i].fi);
+  }
+  cout<<dp<<"\n";
 }
