@@ -18,7 +18,6 @@ double intersect(Line a, Line b) {
 
 void insert(ll p, ll q) {
   Line f = {p, q, 0}; 
-  cout << p << " * x + " << q << "\n";
   while (!lines.empty()) {
     f.s = intersect(lines.back(), f);
     if (lines.back().s < f.s) break;
@@ -27,13 +26,14 @@ void insert(ll p, ll q) {
   lines.push_back(f);
 }
 
-int query(ll x) {
+ll query(ll x) {
   int l = 0, r = lines.size()-1;
   while (l<r) {
     int m = (l+r)>>1;
     if (x < lines[m].s) r = m;
     else l = m+1;
   } 
+  if (l > 0 && x < lines[l].s) return lines[l-1].f(x);
   return lines[l].f(x);
 }
 
@@ -46,8 +46,6 @@ int main() {
     cin>>x;
     s += x;
     dp = query(s) + a*s*s + b*s + c;
-    cout << dp << " " << s << " " << a*s*s + b*s + c << "\n";
   }
-  for (auto line : lines) cout << line.p << " * x + " << line.q << "  x >= " << line.s <<  "\n";
   cout<<dp<<"\n";
 }
