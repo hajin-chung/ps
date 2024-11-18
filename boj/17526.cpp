@@ -10,8 +10,10 @@ struct Line { // f(x) = px+q, x >= s
   ll p, q; 
   double s; 
   ll f(ll x) { return p*x + q; }
+  bool operator<(Line &l) { return p < l.p; }
+  bool operator<(double t) { return s < t; }
 }; 
-vector<Line> lines;
+multiset<Line> lines;
 
 double intersect(Line a, Line b) {
   return (double)(b.q-a.q)/(a.p-b.p);
@@ -19,23 +21,25 @@ double intersect(Line a, Line b) {
 
 void insert(ll p, ll q) {
   Line f = {p, q, 0}; 
-  while (!lines.empty()) {
-    f.s = intersect(lines.back(), f);
-    if (lines.back().s < f.s) break;
-    lines.pop_back();
+  auto it = lines.end(); it--;
+  while (it != lines.begin()) {
+    f.s = intersect(*it, f); /*f.s = intersect(lines.back(), f);*/
+    if (it->s < f.s) break;
+    lines.erase(it);
+    it--;
   }
-  lines.push_back(f);
+  lines.insert(f);
 }
 
 ll query(ll x) {
-  int l = 0, r = lines.size()-1;
-  while (l<r) {
-    int m = (l+r)>>1;
-    if (x < lines[m].s) r = m;
-    else l = m+1;
-  } 
-  if (l > 0 && x < lines[l].s) return lines[l-1].f(x);
-  return lines[l].f(x);
+  /*int l = 0, r = lines.size()-1;*/
+  /*while (l<r) {*/
+  /*  int m = (l+r)>>1;*/
+  /*  if (x < lines[m].s) r = m;*/
+  /*  else l = m+1;*/
+  /*} */
+  /*if (l > 0 && x < lines[l].s) return lines[l-1].f(x);*/
+  /*return lines[l].f(x);*/
 }
 
 int main() {
