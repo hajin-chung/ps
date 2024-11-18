@@ -11,7 +11,6 @@ struct Line { // f(x) = px+q, x >= s
   double s; 
   ll f(ll x) { return p*x + q; }
   bool operator<(Line &l) { return p < l.p; }
-  bool operator<(double t) { return s < t; }
 }; 
 multiset<Line> lines;
 
@@ -32,6 +31,8 @@ void insert(ll p, ll q) {
 }
 
 ll query(ll x) {
+  Line tmp;
+  tmp.s = x;
   /*int l = 0, r = lines.size()-1;*/
   /*while (l<r) {*/
   /*  int m = (l+r)>>1;*/
