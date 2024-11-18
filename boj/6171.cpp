@@ -46,10 +46,7 @@ int main() {
   for (auto &[w, h] : tmp) cin>>w>>h;
   sort(all(tmp));
   for (int i = 0; i < n; i++) {
-    while (
-      !lands.empty()
-      && lands.back().fi <= tmp[i].fi && lands.back().se <= tmp[i].se
-    ) lands.pop_back();
+    while (!lands.empty() && lands.back().se <= tmp[i].se) lands.pop_back();
     lands.push_back(tmp[i]);
   }
   ll dp = lands[0].fi*lands[0].se;
