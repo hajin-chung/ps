@@ -46,7 +46,7 @@ int main() {
   cin>>n; a.resize(n); b.resize(n);
   for (auto &ai : a) cin>>ai;
   for (auto &bi : b) cin>>bi;
-  ll dp = b[0];
+  ll dp = 0;
   for (int i = 1; i < n; i++) {
     cout << dp <<"\n";
     insert(b[i-1], dp);
