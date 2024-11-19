@@ -20,7 +20,6 @@ double intersect(Line a, Line b) {
 }
 
 void insert(ll p, ll q) {
-  cout << "y = " << p << " * x + " << q << "\n";
   Line f = {p, q, 0}; 
   while (!lines.empty()) {
     f.s = intersect(lines.back(), f);
@@ -48,7 +47,6 @@ int main() {
   for (auto &bi : b) cin>>bi;
   ll dp = 0;
   for (int i = 1; i < n; i++) {
-    cout << dp <<"\n";
     insert(b[i-1], dp);
     dp = query(a[i]);
   }
