@@ -40,18 +40,17 @@ ll query(ll x) {
 int main() {
   ios::sync_with_stdio(0); cin.tie(0); 
   int n; cin>>n; n--;
-  vector<ll> s(n+1);
-  for (int i = 1; i <= n; i++) {
-    ll x; cin>>x;
-    s[i] = s[i-1]+x;
-  }
+  vector<tuple<ll,ll,ll>> a(n+1);
+  for (int i = 1; i <= n; i++) cin>>get<2>(a[i]);
   vector<ll> p(n), q(n);
-  for (int i = 0; i < n; i++)
-    cin>>q[i]>>p[i];
-  ll dp = 0;
+  for (int i = 1; i <= n; i++) cin>>get<1>(a[i])>>get<0>(a[i]);
+  sort(all(a));
+  ll dp = 0, s;
   for (int i = 1; i <= n; i++) {
-    insert(p[i-1], -s[i-1]*p[i-1]+q[i-1]+dp);
-    dp = query(s[i]);
+    auto [p, q, x] = a[i];
+    insert(p, -s*p+q+dp);
+    s += x;
+    dp = query(s);
   }
   cout<<dp<<"\n";
 }
