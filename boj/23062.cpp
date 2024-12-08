@@ -44,6 +44,8 @@ void solve(ll A, ll B, ll C, ll a, ll b, ll c) {
     cout << "-1" << endl;
     return;
   }
+  cerr << "m1=" << m1 << " r1=" << r1 << "\n";
+  cerr << "m2=" << m2 << " r2=" << r2 << "\n";
   cout << r2 << endl;
 }
 
