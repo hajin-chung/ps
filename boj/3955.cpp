@@ -42,7 +42,12 @@ void solve() {
   } 
   ll x, y;
   ext_gcd(c, k, x, y);
-  cout << mod(x, k) << endl;
+  int ans = mod(x, k);
+  if (ans > 1e9) {
+    cout << "IMPOSSIBLE\n";
+    return;
+  }
+  cout << ans << endl;
 }
 
 int main() {
