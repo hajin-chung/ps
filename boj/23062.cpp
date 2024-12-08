@@ -1,4 +1,5 @@
 #include <bits/stdc++.h>
+#define endl "\n"
 #define INF 1000000000000LL
 using namespace std;
 
