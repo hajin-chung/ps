@@ -1,5 +1,5 @@
 #include <bits/stdc++.h>
-#define INF -10000000000
+#define INF 1000000000000LL
 using namespace std;
 
 typedef long long int ll;
@@ -16,7 +16,7 @@ ll ext_gcd(ll a, ll b, ll &x, ll &y) {
   ll x1, y1;
   ll d = ext_gcd(b, a%b, x1, y1); 
   x = y1; 
-  y = x1 - y1 * a / b;
+  y = x1 - (a / b) * y1;
   return d;
 }
 
@@ -44,8 +44,6 @@ void solve(ll A, ll B, ll C, ll a, ll b, ll c) {
     cout << "-1" << endl;
     return;
   }
-  cerr << "m1=" << m1 << " r1=" << r1 << "\n";
-  cerr << "m2=" << m2 << " r2=" << r2 << "\n";
   cout << r2 << endl;
 }
 
