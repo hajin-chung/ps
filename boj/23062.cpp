@@ -41,7 +41,7 @@ void solve(ll A, ll B, ll C, ll a, ll b, ll c) {
     cout << "-1" << endl;
     return;
   }
-  auto [m2, r2] = crt(m1, r1, B, b); 
+  auto [m2, r2] = crt(m1, r1, C, c); 
   if (m2 == INF && r2 == -1) {
     cout << "-1" << endl;
     return;
