@@ -1,6 +1,6 @@
 def ext_euc(a, b):
     if b == 0:
-                return a, 1, 0
+            return a, 1, 0
     g, x, y = ext_euc(b, a%b)
     return g, y, x-(a//b)*y
 
