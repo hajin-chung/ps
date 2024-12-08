@@ -32,7 +32,7 @@ int main() {
     if (q == 1) update(1, 1, N, x, 1);
     else {
       int ans = query(1, 1, N, x);
-      cout << query(1, 1, N, x) << endl;
+      cout << query(1, 1, N, x) << "\n";
       update(1, 1, N, ans, -1);
     }
   }
