@@ -23,15 +23,13 @@ ll ext_gcd(ll a, ll b, ll &x, ll &y) {
 pair<ll, ll> crt(ll n1, ll r1, ll n2, ll r2) {
   ll x, y;
   ll g = ext_gcd(n1, n2, x, y);
-  cout << n1 << " " << r1 << " " << n2 << " " << r2;
-  cout << endl << g << " " << x << " " << y << endl;
   if ((r2-r1)%g != 0) return {INF, -1};
   ll diff = (r2-r1)/g;
   ll n1p = n1 / g;
   ll n2p = n2 / g;
   ll X = r1 + x * diff * n1p;
-  ll m = n1p * n2;
-  X %= m;
+  ll m = n1 * n2p;
+  X = mod(X, m);
   return {m, X};
 }
 
