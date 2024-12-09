@@ -21,12 +21,14 @@ int log_10(ll n) {
 }
 
 bool cmp(ll a, ll b) {
-  int k = 14;
   int an = log_10(a), bn = log_10(b);
-  a *= tpow(k-an); 
-  a += (tpow(k-an)-1);
-  b *= tpow(k-bn); 
-  b += (tpow(k-bn)-1);
+  ll ta = a, tb = b;
+  a *= tpow(bn); 
+  a += tb;
+  /*a += (tpow(k-an)-1);*/
+  b *= tpow(an); 
+  b += ta;
+  /*b += (tpow(k-bn)-1);*/
   return a > b;
 }
 
