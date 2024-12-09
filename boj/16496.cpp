@@ -1,35 +1,11 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-typedef long long int ll;
-ll n;
-vector<ll> a;
+int n;
+vector<string> a;
 
-ll tpow(ll n) {
-  ll ret = 1;
-  while(n--) ret*=10;
-  return ret;
-}
-
-int log_10(ll n) {
-  int cnt = 0;
-  while (n) {
-    cnt++;
-    n/=10;
-  }
-  return cnt;
-}
-
-bool cmp(ll a, ll b) {
-  int an = log_10(a), bn = log_10(b);
-  ll ta = a, tb = b;
-  a *= tpow(bn); 
-  a += tb;
-  /*a += (tpow(k-an)-1);*/
-  b *= tpow(an); 
-  b += ta;
-  /*b += (tpow(k-bn)-1);*/
-  return a > b;
+bool cmp(string a, string b) {
+  return a + b > b + a;
 }
 
 int main() {
@@ -38,7 +14,7 @@ int main() {
   bool zflag = true;
   for (int i = 0; i < n; i++) {
     cin>>a[i];
-    if (a[i] != 0) zflag = false;
+    if (a[i] != "0") zflag = false;
   }
   if (zflag) {
     cout << "0\n";
