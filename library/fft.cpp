@@ -1,4 +1,7 @@
 #include <bits/stdc++.h>
+#define all(x) (x).begin(), (x).end()
+#define fi first
+#define se second
 using namespace std;
 
 const double PI = acos(-1);
