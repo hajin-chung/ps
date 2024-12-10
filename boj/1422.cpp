@@ -15,9 +15,8 @@ int main() {
     cin>>ai;
     mx = max(mx, ai);
   }
+  for (int i = 0; i < m-n; i++) a.push_back(mx);
   sort(all(a), comp);
-  if (a[0] == mx) for (int i = 0; i < m-n; i++) cout<<mx;
   for (auto ai : a) cout<<ai;
-  if (a[0] != mx) for (int i = 0; i < m-n; i++) cout<<mx;
   cout<<"\n";
 }
