@@ -13,7 +13,10 @@ int main() {
   string mx = "";
   for (auto &ai : a) {
     cin>>ai;
-    mx = max(mx, ai);
+    if (mx.size() == ai.size())
+      mx = max(mx, ai);
+    else if (mx.size() < ai.size())
+      mx = ai;
   }
   for (int i = 0; i < m-n; i++) a.push_back(mx);
   sort(all(a), comp);
