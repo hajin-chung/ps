@@ -13,15 +13,22 @@ bool comp(pii a, pii b) {
 int main() {
   ios::sync_with_stdio(0); cin.tie(0);
   int n; cin>>n;
-  vector<pii> a(n);
+  vector<pii> a(n), b;
   for (auto &[f, s] : a) cin>>f>>s;
   sort(a.begin(), a.end(), comp);
-  int ls = a[0].se, ans = 1;
-  for (int i = 1; i < n; i++) {
-    if (a[i].fi >= ls) {
-      ans++;
-      ls = a[i].se;
+  int ans = 0;
+  while (!a.empty()) {
+    int ls = a[0].se;
+    ans++;
+    for (int i = 1; i < a.size(); i++) {
+      if (a[i].fi >= ls) {
+        ls = a[i].se;
+      } else {
+        b.push_back(a[i]);
+      }
     }
+    a = b;
+    b.clear();
   }
   cout<<ans<<"\n";
 }
