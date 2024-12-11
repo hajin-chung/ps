@@ -29,6 +29,7 @@ int main() {
     }
     a = b;
     b.clear();
+    sort(a.begin(), a.end(), comp);
   }
   cout<<ans<<"\n";
 }
