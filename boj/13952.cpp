@@ -66,7 +66,7 @@ int main() {
   vector<int> lo(q, 0), hi(q, edges.size());
   while (true) {
     bool flag = true;
-    vector<int> g[N];
+    map<int, vector<int>> g;
     for (int i = 0; i < q; i++)
       if (lo[i] < hi[i]) {
         flag = false;
