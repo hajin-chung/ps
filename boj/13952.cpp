@@ -55,18 +55,16 @@ int main() {
       }
       d[i][j] = l*2-1;
     }
-  vector<pip> edges;
+  vector<pii> e[N+1];
   for (int i = 1; i <= n; i++)
     for (int j = 1; j <= n; j++)
-      edges.push_back({d[i][j], {i, j}});
-  sort(edges.begin(), edges.end(), comp);
-  /*for (auto [d, xy] : edges) cout << d << " " << xy.fi << " " << xy.se << "\n";*/
+      e[d[i][j]].push_back({i, j});
   cin>>q; queries.resize(q);
   for (auto &[s, e] : queries) cin>>s.fi>>s.se>>e.fi>>e.se; 
-  vector<int> lo(q, 0), hi(q, edges.size());
+  vector<int> lo(q, 0), hi(q, n);
   while (true) {
     bool flag = true;
-    map<int, vector<int>> g;
+    vector<int> g[N+1];
     for (int i = 0; i < q; i++)
       if (lo[i] < hi[i]) {
         flag = false;
@@ -86,23 +84,24 @@ int main() {
         p[i][j] = {i, j};
         chk[i][j] = 0;
       }
-    for (int ei = 0; ei < edges.size(); ei++) {
-      auto [dist, xy] = edges[ei];
-      auto [yy, xx] = xy;
-      chk[yy][xx] = 1;
-      for (int i = 0; i < 4; i++) {
-        int ty = yy + dy[i];
-        int tx = xx + dx[i];
-        if (ty < 1 || ty > n || tx < 1 || tx > n) continue;
-        if (chk[ty][tx]) merge(xy, {ty, tx});
+    for (int dist = n; dist >= 0; dist--) {
+      for (auto xy : e[dist]) {
+        auto [yy, xx] = xy;
+        chk[yy][xx] = 1;
+        for (int i = 0; i < 4; i++) {
+          int ty = yy + dy[i];
+          int tx = xx + dx[i];
+          if (ty < 1 || ty > n || tx < 1 || tx > n) continue;
+          if (chk[ty][tx]) merge(xy, {ty, tx});
+        }
       }
-      for (auto idx : g[ei]) {
+      for (auto idx : g[dist]) {
         if (find(queries[idx].s) == find(queries[idx].e))
-          hi[idx] = ei;
+          lo[idx] = dist+1;
         else
-          lo[idx] = ei+1;
+          hi[idx] = dist;
       }
     }
   }
-  for (auto ans : lo) cout << edges[ans].fi << "\n";
+  for (auto ans : hi) cout << ans-1 << "\n";
 }
