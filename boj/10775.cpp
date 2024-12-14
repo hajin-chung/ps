@@ -27,5 +27,6 @@ int main() {
       else merge(x, x-1);
     }
   }
-  cout<<ans<<"\n";
+  if (ans == -1) cout<<p<<"\n";
+  else cout<<ans<<"\n";
 }
