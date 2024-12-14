@@ -6,14 +6,6 @@ int dy[4] = {1, 1, -1, -1}, dx[4] = {1, -1, 1, -1};
 
 void rec(int yy, int xx, int cnt) {
   if (yy == n) {
-    if (cnt > ans) {
-      cout<<cnt<<"\n";
-      for (int i = 0; i < n; i++) {
-        for (int j = 0; j < n; j++)
-          cout<<a[i][j]<<" ";
-        cout<<"\n";
-      }
-    }
     ans = max(ans, cnt);
     return;
   }
@@ -26,7 +18,7 @@ void rec(int yy, int xx, int cnt) {
       while (ty >= 0 && ty < n && tx >= 0 && tx < n) {
         a[ty][tx]++;
         ty += dy[k];
-        tx += dy[k];
+        tx += dx[k];
       }
     }
   }
@@ -41,7 +33,7 @@ void rec(int yy, int xx, int cnt) {
       while (ty >= 0 && ty < n && tx >= 0 && tx < n) {
         a[ty][tx]--;
         ty += dy[k];
-        tx += dy[k];
+        tx += dx[k];
       }
     }
     rec(ny, nx, cnt);
