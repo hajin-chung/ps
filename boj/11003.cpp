@@ -6,14 +6,13 @@ int main() {
   int n, l; cin>>n>>l;
   vector<int> a(n);
   for (int i = 0; i < n; i++) cin>>a[i];
-  multiset<int> ms;
+  using pii = pair<int, int>;
+  priority_queue<pii, vector<pii>, greater<pii>> pq;
   for (int i = 0; i < n; i++) {
-    if (i >= l) {
-      auto it = ms.find(a[i-l]);
-      ms.erase(it);
-    }
-    ms.insert(a[i]);
-    cout<<*ms.begin()<<" ";
+    pq.push({a[i], i});
+    if (i >= l && !pq.empty() && pq.top().second <= i-l)
+      pq.pop();
+    cout<<pq.top().first<<" ";
   }
   cout<<"\n";
 }
