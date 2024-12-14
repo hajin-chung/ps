@@ -10,8 +10,9 @@ int main() {
   priority_queue<pii, vector<pii>, greater<pii>> pq;
   for (int i = 0; i < n; i++) {
     pq.push({a[i], i});
-    if (i >= l && !pq.empty() && pq.top().second <= i-l)
-      pq.pop();
+    if (i >= l)
+      while (!pq.empty() && pq.top().second <= i-l) 
+        pq.pop();
     cout<<pq.top().first<<" ";
   }
   cout<<"\n";
