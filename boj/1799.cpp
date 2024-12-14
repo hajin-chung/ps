@@ -1,53 +1,31 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int n, a[10][10], ans, tmp[10][10];
-int dy[4] = {1, 1, -1, -1}, dx[4] = {1, -1, 1, -1};
+int n, ans[2], c, a[10][10], l[33], r[33];
 
-void rec(int yy, int xx, int cnt) {
-  if (yy == n) {
-    ans = max(ans, cnt);
-    return;
+void rec(int y, int x, int cnt) {
+  ans[c] = max(ans[c], cnt);
+  if (x >= n) {
+    y++;
+    x = (c == 0) ? (y%2) : (1-y%2);
   }
-  int flag = a[yy][xx] == 0;
-  if (flag) {
-    tmp[yy][xx] = 1;
-    a[yy][xx]++;
-    for (int k = 0; k < 4; k++) {
-      int ty = yy + dy[k], tx = xx + dx[k];
-      while (ty >= 0 && ty < n && tx >= 0 && tx < n) {
-        a[ty][tx]++;
-        ty += dy[k];
-        tx += dx[k];
-      }
-    }
+  if (y == n) return;
+  if (a[y][x] && !l[y+x] && !r[y-x+n]) {
+    l[y+x] = r[y-x+n] = 1;
+    rec(y, x+2, cnt+1);
+    l[y+x] = r[y-x+n] = 0;
   }
-  int nx = xx+1, ny = yy;
-  if (nx == n) { nx = 0; ny++; }
-  rec(ny, nx, cnt+flag);
-  if (flag) {
-    tmp[yy][xx] = 0;
-    a[yy][xx]--;
-    for (int k = 0; k < 4; k++) {
-      int ty = yy + dy[k], tx = xx + dx[k];
-      while (ty >= 0 && ty < n && tx >= 0 && tx < n) {
-        a[ty][tx]--;
-        ty += dy[k];
-        tx += dx[k];
-      }
-    }
-    rec(ny, nx, cnt);
-  }
+  rec(y, x+2, cnt);
 }
+
 
 int main() {
   ios::sync_with_stdio(0); cin.tie(0);
   cin>>n;
   for (int i = 0; i < n; i++)
-    for (int j = 0; j < n; j++) {
+    for (int j = 0; j < n; j++)
       cin>>a[i][j];
-      a[i][j] = 1-a[i][j];
-    }
-  rec(0, 0, 0);
-  cout<<ans<<"\n";
+  rec(0, 0, 0); c = 1;
+  rec(0, 1, 0);
+  cout<<ans[0]+ans[1]<<"\n";
 }
