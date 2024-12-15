@@ -41,7 +41,8 @@ int main() {
     if (c == 'Y') {
       pll t = {x, y};
       a.push_back(t);
-      if (t.se < pivot.se || (t.se == pivot.se && t.fi < pivot.fi)) {
+      /*if (t.se < pivot.se || (t.se == pivot.se && t.fi < pivot.fi)) {*/
+      if (t < pivot) {
         idx = a.size()-1;
         pivot = t;
       }
