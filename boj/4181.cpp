@@ -44,8 +44,9 @@ int main() {
   for (int i = 1; i < n; i++) if (a[0] > a[i]) swap(a[0], a[i]);
   pivot = a[0];
   sort(a.begin()+1, a.end(), comp);
-  while (k > 1 && ccw(a[0], a[k], a[k-1]) == 0) { k--; }
+  while (k > 1 && ccw(a[0], a[k], a[k-1]) == 0) k--;
   reverse(a.begin()+k, a.end());
+
   cout<<n<<"\n";
   for (auto [x, y] : a) cout<<x<<" "<<y<<"\n";
 }
