@@ -57,7 +57,7 @@ int main() {
     while (hull.size() >= 2) {
       pll se = hull.back(); hull.pop_back(); 
       pll fi = hull.back();
-      if (ccw(fi, se, a[i]) > 0) {
+      if (ccw(fi, se, a[i]) >= 0) {
         hull.push_back(se);
         break;
       }
