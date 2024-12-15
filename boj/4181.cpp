@@ -62,5 +62,5 @@ int main() {
     hull.push_back(a[i]);
   }
   cout<<hull.size()<<"\n";
-  for (auto [x, y] : hull) cout<<y<<" "<<x<<"\n";
+  for (auto [x, y] : hull) cout<<x<<" "<<y<<"\n";
 }
