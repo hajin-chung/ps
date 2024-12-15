@@ -18,6 +18,7 @@ int dist(pii a, pii b) {
   return dy*dy+dx*dx;
 }
 
+// a > b
 bool lt(pii a, pii b) {
   if (a.se == b.se) return a.fi < b.fi;
   return a.se > b.se;
@@ -26,8 +27,8 @@ bool lt(pii a, pii b) {
 void solve_line(vector<pii> &a) {
   pii s = a[0], e = a[0];
   for (auto p : a) {
-    if (!lt(e, p)) e = p;
-    if (lt(s, p)) s = p;
+    if (lt(p, s)) s = p;
+    if (lt(e, p)) e = p;
   }
   cout<<2<<"\n";
   cout<<s.fi<<" "<<s.se<<"\n";
