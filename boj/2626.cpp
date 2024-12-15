@@ -23,14 +23,14 @@ pt get_circle(pt a, pt b, pt c) {
   ld bb = b.x*b.x+b.y*b.y;
   ld cc = c.x*c.x+c.y*c.y;
   ld dd = 2*(a.x*(b.y - c.y) + b.x*(c.y - a.y) + c.x*(a.y - b.y));
-  if (fabs(dd) < 1e-14) {
-    ld ab = dist(a, b);
-    ld bc = dist(b, c);
-    ld ca = dist(c, a);
-    if (ab > bc && ab > ca) return get_circle(a, b);
-    if (bc > ab && bc > ca) return get_circle(b, c);
-    if (ca > bc && ca > ab) return get_circle(c, a);
-  }
+  /*if (fabs(dd) < 1e-14) {*/
+  /*  ld ab = dist(a, b);*/
+  /*  ld bc = dist(b, c);*/
+  /*  ld ca = dist(c, a);*/
+  /*  if (ab > bc && ab > ca) return get_circle(a, b);*/
+  /*  if (bc > ab && bc > ca) return get_circle(b, c);*/
+  /*  if (ca > bc && ca > ab) return get_circle(c, a);*/
+  /*}*/
   ld ux = (aa*(b.y-c.y)+bb*(c.y-a.y)+cc*(a.y-b.y))/dd;
   ld uy = (aa*(c.x-b.x)+bb*(a.x-c.x)+cc*(b.x-a.x))/dd;
   return {ux, uy};
