@@ -49,8 +49,8 @@ int main() {
   }
   swap(a[idx], a[0]);
   sort(a.begin()+1, a.end(), comp);
-  int n = a.size(), k = n-2;
-  while (ccw(a[n-1], a[n-2], a[k-1]) == 0) { k--; }
+  int n = a.size(), k = n-1;
+  while (k > 1 && ccw(a[0], a[k], a[k-1]) == 0) { k--; }
   reverse(a.begin()+k, a.end());
   cout<<n<<"\n";
   for (auto [x, y] : a) cout<<x<<" "<<y<<"\n";
