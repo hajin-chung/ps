@@ -1,13 +1,13 @@
 #include <bits/stdc++.h>
 #define all(x) (x).begin(), (x).end()
-#define INF -1000000000
+#define INF 1000000000
 #define fi first
 #define se second
 using namespace std;
 
 typedef long long int ll;
 typedef pair<ll, ll> pll;
-pll pivot = {-INF, -INF};
+pll pivot = {INF, INF};
 int n;
 vector<pll> a;
 
