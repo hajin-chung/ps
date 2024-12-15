@@ -37,7 +37,7 @@ int main() {
   for (int i = 0; i < n; i++) {
     cin>>x>>y>>c;
     if (c == 'Y') {
-      pll t = {x, y};
+      pll t = {y, x};
       a.push_back(t);
       if (t < pivot) {
         idx = a.size()-1;
@@ -62,5 +62,5 @@ int main() {
     hull.push_back(a[i]);
   }
   cout<<hull.size()<<"\n";
-  for (auto [x, y] : hull) cout<<x<<" "<<y<<"\n";
+  for (auto [x, y] : hull) cout<<y<<" "<<x<<"\n";
 }
