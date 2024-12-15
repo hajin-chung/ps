@@ -46,7 +46,7 @@ int main() {
   }
   double ans = 0;
   n = hull.size();
-  for (int i = 0; i < n-1; i++)
+  for (int i = 0; i < n; i++)
     ans += sqrt((double)dist(hull[i], hull[(i+1)%n]));
   ans += 2*(double)r*M_PI;
   cout<<fixed<<setprecision(12)<<ans<<"\n";
