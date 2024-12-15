@@ -41,7 +41,6 @@ int main() {
     if (c == 'Y') {
       pll t = {x, y};
       a.push_back(t);
-      /*if (t.se < pivot.se || (t.se == pivot.se && t.fi < pivot.fi)) {*/
       if (t < pivot) {
         idx = a.size()-1;
         pivot = t;
@@ -50,20 +49,9 @@ int main() {
   }
   swap(a[idx], a[0]);
   sort(a.begin()+1, a.end(), comp);
-  vector<pll> hull;
-  hull.push_back(a[0]);
-  hull.push_back(a[1]);
-  for (int i = 2; i<a.size(); i++) {
-    while (hull.size() >= 2) {
-      pll se = hull.back(); hull.pop_back(); 
-      pll fi = hull.back();
-      if (ccw(fi, se, a[i]) >= 0) {
-        hull.push_back(se);
-        break;
-      }
-    }
-    hull.push_back(a[i]);
-  }
-  cout<<hull.size()<<"\n";
-  for (auto [x, y] : hull) cout<<x<<" "<<y<<"\n";
+  int n = a.size(), k = n-2;
+  while (ccw(a[n-1], a[n-2], a[k-1]) == 0) { k--; }
+  reverse(a.begin()+k, a.end());
+  cout<<n<<"\n";
+  for (auto [x, y] : a) cout<<x<<" "<<y<<"\n";
 }
