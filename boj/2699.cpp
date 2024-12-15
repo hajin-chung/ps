@@ -43,7 +43,7 @@ void solve() {
       swap(a[0], a[i]);
   sort(a.begin()+1, a.end(), [&](pii &u, pii &v) {
     int c = ccw(a[0], u, v);
-    if (c == 0) return dist(a[0], u) < dist(a[1], v);
+    if (c == 0) return dist(a[0], u) < dist(a[0], v);
     return c > 0;
   });
   
