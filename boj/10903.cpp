@@ -48,6 +48,6 @@ int main() {
   for (int i = 0; i < n-1; i++)
     ans += sqrt((double)dist(a[i], a[i+1]));
   if (hull.size() > 2) ans += sqrt((double)dist(a[0], a[n-1]));
-  ans += 2*r*M_PI;
+  ans += 2*(double)r*M_PI;
   cout<<fixed<<setprecision(12)<<ans<<"\n";
 }
