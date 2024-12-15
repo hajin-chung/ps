@@ -2,6 +2,7 @@
 #include <iomanip>
 using namespace std;
 
+typedef long long int ll;
 typedef long double ld;
 struct pt { ld x, y; };
 int n;
@@ -51,6 +52,7 @@ int main() {
       }
     }
   }
+  ll x = (int)(c.x*1000+0.5), y = (int)(c.y*1000+0.5);
   cout<<fixed<<setprecision(3);
-  cout<<sqrt(c.x*c.x)<<" "<<sqrt(c.y*c.y)<<"\n"<<r<<"\n";
+  cout<<(ld)x/1000<<" "<<(ld)y/1000<<"\n"<<r<<"\n";
 }
