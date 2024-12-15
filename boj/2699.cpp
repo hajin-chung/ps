@@ -39,12 +39,12 @@ void solve() {
   vector<pii> a(n);
   for (auto &[x, y] : a) cin>>x>>y;
   for (int i = 1; i < n; i++) 
-    if (a[0].se > a[i].se || (a[0].se == a[i].se && a[0].fi > a[i].fi)) 
+    if (!lt(a[0], a[i])) 
       swap(a[0], a[i]);
   sort(a.begin()+1, a.end(), [&](pii &u, pii &v) {
     int c = ccw(a[0], u, v);
     if (c == 0) return dist(a[0], u) < dist(a[0], v);
-    return c > 0;
+    return c < 0;
   });
   
   bool flag = true;
@@ -63,21 +63,14 @@ void solve() {
     while (hull.size()>=2) {
       pii se = hull.back(); hull.pop_back();
       pii fi = hull.back();
-      if (ccw(fi, se, a[i]) > 0) {
+      if (ccw(fi, se, a[i]) < 0) {
         hull.push_back(se);
         break;
       }
     }
     hull.push_back(a[i]);
   }
-  reverse(hull.begin(), hull.end());
-  n = hull.size();
-  for (int i = 1; i < n; i++) if (!lt(hull[0], hull[i])) swap(hull[0], hull[i]);
-  sort(hull.begin()+1, hull.end(), [&](pii &u, pii &v) {
-    int c = ccw(hull[0], u, v);
-    return c < 0;
-  });
-  cout<<n<<"\n";
+  cout<<hull.size()<<"\n";
   for (auto [x, y] : hull) cout << x << ' ' << y << "\n";
 }
 
