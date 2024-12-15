@@ -19,7 +19,9 @@ ll ccw(pll a, pll b, pll c) {
 }
 
 ll dist(pll a, pll b) {
-  return pow(a.fi-b.fi, 2)+pow(a.se-b.se, 2);
+  int dx = a.fi - b.fi;
+  int dy = a.se - b.se;
+  return dx*dx+dy*dy;
 }
 
 bool comp(pll a, pll b) {
@@ -37,9 +39,9 @@ int main() {
   for (int i = 0; i < n; i++) {
     cin>>x>>y>>c;
     if (c == 'Y') {
-      pll t = {y, x};
+      pll t = {x, y};
       a.push_back(t);
-      if (t < pivot) {
+      if (t.se < pivot.se || (t.se == pivot.se && t.fi < pivot.fi)) {
         idx = a.size()-1;
         pivot = t;
       }
