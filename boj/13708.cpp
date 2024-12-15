@@ -51,5 +51,5 @@ int main() {
     }
   }
   /*cout<<c.x<<" "<<c.y<<"\n"<<r<<"\n";*/
-  cout<<setprecision(3)<<2*sqrt(r)<<"\n";
+  cout<<fixed<<setprecision(2)<<2*sqrt(r)<<"\n";
 }
