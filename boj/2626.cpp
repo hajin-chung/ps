@@ -48,11 +48,12 @@ int main() {
     for (int j = 0; j < i; j++) if (dist(c, a[j]) > r) {
       c = get_circle(a[i], a[j]); r = dist(c, a[i]);
       for (int k = 0; k < j; k++) if (dist(c, a[k]) > r) {
-        c = get_circle(a[i], a[j], a[k]); r = dist(c, a[k]);
+        c = get_circle(a[i], a[j], a[k]); 
+        r = max(dist(c, a[k]), max(dist(c, a[i]), dist(c, a[j])));
       }
     }
   }
-  ll x = (int)(c.x*1000+0.5), y = (int)(c.y*1000+0.5);
+  ll x = llround(c.x*1000), y = llround(c.y*1000);
   cout<<fixed<<setprecision(3);
   cout<<(ld)x/1000<<" "<<(ld)y/1000<<"\n"<<r<<"\n";
 }
