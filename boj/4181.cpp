@@ -7,7 +7,7 @@ using namespace std;
 
 typedef long long int ll;
 typedef pair<ll, ll> pll;
-pll pivot = {INF, INF};
+pll pivot;
 int n;
 vector<pll> a;
 
@@ -19,8 +19,8 @@ ll ccw(pll a, pll b, pll c) {
 }
 
 ll dist(pll a, pll b) {
-  int dx = a.fi - b.fi;
-  int dy = a.se - b.se;
+  ll dx = a.fi - b.fi;
+  ll dy = a.se - b.se;
   return dx*dx+dy*dy;
 }
 
