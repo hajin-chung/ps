@@ -38,18 +38,12 @@ int main() {
   int idx;
   for (int i = 0; i < n; i++) {
     cin>>x>>y>>c;
-    if (c == 'Y') {
-      pll t = {x, y};
-      a.push_back(t);
-      if (t < pivot) {
-        idx = a.size()-1;
-        pivot = t;
-      }
-    } 
+    if (c == 'Y') a.push_back({x, y});
   }
-  swap(a[idx], a[0]);
-  sort(a.begin()+1, a.end(), comp);
   int n = a.size(), k = n-1;
+  for (int i = 1; i < n; i++) if (a[0] > a[i]) swap(a[0], a[i]);
+  pivot = a[0];
+  sort(a.begin()+1, a.end(), comp);
   while (k > 1 && ccw(a[0], a[k], a[k-1]) == 0) { k--; }
   reverse(a.begin()+k, a.end());
   cout<<n<<"\n";
