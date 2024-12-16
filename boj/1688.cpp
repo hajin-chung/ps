@@ -12,12 +12,6 @@ int ccw(pll a, pll b, pll c) {
   return res == 0 ? 0 : res > 0 ? 1 : -1;
 }
 
-ll dist(pll a, pll b) {
-  ll dy = a.se-b.se;
-  ll dx = a.fi-b.fi;
-  return dy*dy+dx*dx;
-}
-
 bool line_intersect(pll s1, pll e1, pll s2, pll e2) {
   return ccw(s1, e1, s2)*ccw(s1, e1, e2) < 0 && ccw(s2, e2, s1)*ccw(s2, e2, e1) < 0;
 }
