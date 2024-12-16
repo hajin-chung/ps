@@ -47,17 +47,11 @@ vector<pll> get_hull(vector<pll> &a) {
 bool hull_contains(vector<pll> &hull, pll p) {
   int n = hull.size(), l = 1, r = n-1;
   if (!(ccw(hull[0], hull[l], p) > 0 && ccw(hull[0], hull[r], p) < 0)) return false;
-  /*cout<<"hull_contians\n";*/
-  /*cout<<hull[0].fi<<" "<<hull[0].se<<"\n";*/
   while (l < r) {
     int m = (l+r)>>1;
-    /*cout<<l<<" "<<m<<" "<<r<<" ";*/
-    /*cout<<ccw(hull[0], hull[l], p)<<" "<<ccw(hull[0], hull[m], p)<<" ";*/
-    /*cout<<ccw(hull[0], hull[r], p)<<"\n";*/
     if (ccw(hull[0], hull[l], p) > 0 && ccw(hull[0], hull[m], p) < 0) r = m;
     else l = m+1;
   }
-  /*cout<<"bs: "<<l<<"\n";*/
   return ccw(hull[l-1], hull[l], p) > 0;
 }
 
@@ -69,14 +63,18 @@ int main() {
   for (auto &[x, y] : a) cin>>x>>y;
   while (true) {
     vector<pll> hull = get_hull(a);
+    /*cout<<hull.size()<<"\n";*/
+    /*for (auto [x, y] : hull) cout<<x<<" "<<y<<"\n";*/
+    /*cout<<endl;*/
     if (hull.size() < 3) break;
     if (hull_contains(hull, p)) ans++;
     else break;
+    set<pll> hull_set(hull.begin(), hull.end());
     vector<pll> na;
-    for (int i = 0, k = 0; i < n; i++) {
-      if (a[i] == hull[k]) k++;
-      else na.push_back(a[i]);
-    }
+    for (auto &pt : a)
+      if (hull_set.find(pt) == hull_set.end())
+        na.push_back(pt);
+    if (na.size() == 0) break;
     a = na;
   }
   cout<<ans<<"\n";
