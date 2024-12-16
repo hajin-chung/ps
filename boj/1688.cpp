@@ -12,22 +12,25 @@ int ccw(pll a, pll b, pll c) {
   return res == 0 ? 0 : res > 0 ? 1 : -1;
 }
 
-bool line_intersect(pll s1, pll e1, pll s2, pll e2) {
+// strictly intersect;
+bool intersect(pll s1, pll e1, pll s2, pll e2) {
   int c1 = ccw(s1, e1, s2)*ccw(s1, e1, e2);
   int c2 = ccw(s2, e2, s1)*ccw(s2, e2, e1);
-  if (c1 == 0 && c2 == 0) {
-    if (s1 > e1) swap(s1, e1);
-    if (s2 > e2) swap(s2, e2);
-    return s2 <= e1 && s1 <= e2;
-  }
-  return c1 <= 0 && c2 <= 0;
+  return c1 < 0 && c2 < 0;
+}
+
+bool online(pll s, pll e, pll p) {
+  if (s > e) swap(s, e);
+  int c = ccw(s, e, p);
+  return c == 0 && s <= p && p <= e;
 }
 
 bool hull_contains(vector<pll> &hull, pll p) {
   int cnt = 0, n = hull.size();
-  for (int i = 0; i < n; i++)
-    if (line_intersect(p, {INF,p.se+1}, hull[i], hull[(i+1)%n]))
-      cnt++;
+  for (int i = 0; i < n; i++) {
+    if (online(hull[i], hull[(i+1)%n], p)) return true;
+    if (intersect(p, {INF,p.se+1}, hull[i], hull[(i+1)%n])) cnt++;
+  }
   return cnt%2;
 }
 
