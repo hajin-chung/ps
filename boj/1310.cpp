@@ -48,14 +48,13 @@ int main() {
   }
   n = hull.size();
   ll ans = 0;
-  for (int u = 0, v = 1; u < n && v < n; u++) {
+  for (int u = 0, v = 1; u < n; u++) {
     while (ccw(
       {0, 0}, 
       sub(hull[(u+1)%n], hull[u]), 
       sub(hull[(v+1)%n], hull[v])) > 0) {
-      v++;
+      v = (v+1)%n;
     }
-    if (v >= n) break;
     ans = max(ans, dist(hull[u], hull[v]));
   }
   cout<<ans<<"\n";
