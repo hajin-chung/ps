@@ -52,7 +52,7 @@ bool hull_contains(vector<pll> &hull, pll p) {
     if (ccw(hull[0], hull[l], p) > 0 && ccw(hull[0], hull[m], p) < 0) r = m;
     else l = m+1;
   }
-  return ccw(hull[l-1], hull[l], p) > 0;
+  return ccw(hull[l-1], hull[l], p) >= 0;
 }
 
 int main() {
