@@ -13,7 +13,14 @@ int ccw(pll a, pll b, pll c) {
 }
 
 bool line_intersect(pll s1, pll e1, pll s2, pll e2) {
-  return ccw(s1, e1, s2)*ccw(s1, e1, e2) < 0 && ccw(s2, e2, s1)*ccw(s2, e2, e1) < 0;
+  int c1 = ccw(s1, e1, s2)*ccw(s1, e1, e2);
+  int c2 = ccw(s2, e2, s1)*ccw(s2, e2, e1);
+  if (c1 == 0 && c2 == 0) {
+    if (s1 > e1) swap(s1, e1);
+    if (s2 > e2) swap(s2, e2);
+    return s2 <= e1 && s1 <= e2;
+  }
+  return c1 <= 0 && c2 <= 0;
 }
 
 bool hull_contains(vector<pll> &hull, pll p) {
