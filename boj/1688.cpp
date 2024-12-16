@@ -1,4 +1,5 @@
 #include <bits/stdc++.h>
+#define INF 2000000000
 #define fi first
 #define se second
 using namespace std;
@@ -44,15 +45,16 @@ vector<pll> get_hull(vector<pll> &a) {
   return hull;
 }
 
+bool line_intersect(pll s1, pll e1, pll s2, pll e2) {
+  return ccw(s1, e1, s2)*ccw(s1, e1, e2) < 0 && ccw(s2, e2, s1)*ccw(s2, e2, e1) < 0;
+}
+
 bool hull_contains(vector<pll> &hull, pll p) {
-  int n = hull.size(), l = 1, r = n-1;
-  if (!(ccw(hull[0], hull[l], p) > 0 && ccw(hull[0], hull[r], p) < 0)) return false;
-  while (l < r) {
-    int m = (l+r)>>1;
-    if (ccw(hull[0], hull[l], p) > 0 && ccw(hull[0], hull[m], p) < 0) r = m;
-    else l = m+1;
-  }
-  return ccw(hull[l-1], hull[l], p) >= 0;
+  int cnt = 0, n = hull.size();
+  for (int i = 0; i < n; i++)
+    if (line_intersect(p, {INF,p.se+1}, hull[i], hull[(i+1)%n]))
+      cnt++;
+  return cnt%2;
 }
 
 int main() {
