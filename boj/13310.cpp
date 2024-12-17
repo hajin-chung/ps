@@ -83,10 +83,18 @@ int main() {
     ll ld = longest(la);
     auto ra = positions(a, r);
     ll rd = longest(ra);
+    /*cout<<s<<" "<<e<<"\n"<<l<<" "<<ld<<" "<<r<<" "<<rd<<"\n";*/
     if (rd < ld) s = l+1;
     else e = r-1;
   }
   auto aa = positions(a, s);
-  ll la = longest(aa);
-  cout<<s<<"\n"<<la<<"\n";
+  ll ad = longest(aa);
+  /*{*/
+  /*  auto na = positions(a, s+1);*/
+  /*  auto pa = positions(a, s-1);*/
+  /*  ll ld = longest(na);*/
+  /*  ll pd = longest(pa);*/
+  /*  cout<<pd<<" "<<ad<<" "<<ld<<"\n";*/
+  /*}*/
+  cout<<s<<"\n"<<ad<<"\n";
 }
