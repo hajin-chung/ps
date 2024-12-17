@@ -32,7 +32,8 @@ ll dist(pll a, pll b) {
 
 pll sub(pll a, pll b) { return {a.fi-b.fi, a.se-b.se}; }
 
-ll longest(vector<pll> &a) {
+ll farthest(vector<ppp> &o, int t) {
+  auto a = positions(o, t);
   int n = a.size();
   for (int i = 1; i < n; i++) if (a[i] > a[0]) swap(a[i], a[0]);
   sort(a.begin()+1, a.end(), [&](pll u, pll v) {
@@ -77,24 +78,22 @@ int main() {
     cin>>x>>y>>vx>>vy;
   }
   int s = 0, e = t; 
-  while (s < e) {
+  while (e - s >= 3) {
     int l = s+(e-s)/3, r = e-(e-s)/3; 
-    auto la = positions(a, l);
-    ll ld = longest(la);
-    auto ra = positions(a, r);
-    ll rd = longest(ra);
+    ll ld = farthest(a, l);
+    ll rd = farthest(a, l);
     /*cout<<s<<" "<<e<<"\n"<<l<<" "<<ld<<" "<<r<<" "<<rd<<"\n";*/
-    if (rd < ld) s = l+1;
-    else e = r-1;
+    if (rd < ld) s = l;
+    else e = r;
   }
-  auto aa = positions(a, s);
-  ll ad = longest(aa);
-  /*{*/
-  /*  auto na = positions(a, s+1);*/
-  /*  auto pa = positions(a, s-1);*/
-  /*  ll ld = longest(na);*/
-  /*  ll pd = longest(pa);*/
-  /*  cout<<pd<<" "<<ad<<" "<<ld<<"\n";*/
-  /*}*/
-  cout<<s<<"\n"<<ad<<"\n";
+  int ans;
+  ll mn = LONG_LONG_MAX;
+  for (int t = s; t <= e; t++) {
+    ll d = farthest(a, t);
+    if (d < mn) {
+      ans = t;
+      mn = d;
+    }
+  }
+  cout<<ans<<"\n"<<mn<<"\n";
 }
