@@ -56,6 +56,7 @@ ll farthest(vector<ppp> &o, int t) {
     hull.push_back(a[i]);
   }
   ll ret = 0;
+  n = hull.size();
   for (int u = 0, v = 1; u < n; u++) {
     while (ccw(
       {0, 0}, 
@@ -81,13 +82,13 @@ int main() {
   while (e - s >= 3) {
     int l = s+(e-s)/3, r = e-(e-s)/3; 
     ll ld = farthest(a, l);
-    ll rd = farthest(a, l);
+    ll rd = farthest(a, r);
     /*cout<<s<<" "<<e<<"\n"<<l<<" "<<ld<<" "<<r<<" "<<rd<<"\n";*/
     if (rd < ld) s = l;
     else e = r;
   }
   int ans;
-  ll mn = LONG_LONG_MAX;
+  ll mn = LLONG_MAX;
   for (int t = s; t <= e; t++) {
     ll d = farthest(a, t);
     if (d < mn) {
