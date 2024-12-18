@@ -21,8 +21,8 @@ void propagate(int node, int l, int r) {
   if (lazy[node] == 0) return;
   tree[node] += (r-l+1)*lazy[node];
   if (l != r) {
-    tree[node*2] += lazy[node];
-    tree[node*2+1] += lazy[node];
+    lazy[node*2] += lazy[node];
+    lazy[node*2+1] += lazy[node];
   }
   lazy[node] = 0;
 }
