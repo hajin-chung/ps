@@ -56,7 +56,7 @@ int find(int k) {
   while (l < r) {
     int m = (l+r)>>1;
     int v = query(1, 1, n, m);
-    if (v <= k) r = m;
+    if (v > k) r = m;
     else l = m+1;
   }
   return l;
@@ -70,11 +70,8 @@ int main() {
   vector<int> ans(n+1);
   for (int i = 1; i <= n; i++) {
     int idx = find(a[i]); 
-    cout<<idx<<"\n";
-    for (int j = 1; j <= n; j++) cout << query(1, 1, n, j) << " ";
-    cout<<"\n";
     ans[idx] = i;
     update(1, 1, n, idx, n);
   }
-  for (auto ai : ans) cout<<ai<<"\n";
+  for (int i = 1; i <= n; i++) cout<<ans[i]<<"\n";
 }
