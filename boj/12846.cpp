@@ -11,10 +11,10 @@ int main() {
   ll ans = 0;
   stack<int> s;
   for (int i = 0; i <= n; i++) {
-    while (!s.empty() && a[s.top()] > a[i]) {
-      ll sz = (ll)(i-s.top()) * a[s.top()];
-      ans = max(ans, sz);
-      s.pop();
+    while (!s.empty() && a[s.top()] >= a[i]) {
+      int k = s.top(); s.pop();
+      ll w = s.empty() ? i : i-k-1;
+      ans = max(ans, w * a[k]);
     }
     s.push(i);
   }
