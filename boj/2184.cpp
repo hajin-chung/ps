@@ -9,7 +9,6 @@ int main() {
   vector<ll> a(n);
   vector<bool> chk(n);
   for (auto &ai : a) cin>>ai;
-  sort(a.begin(), a.end());
   ll ans = 0, dist = 0;
   for (int i = 0; i < n; i++) {
     ll mn = LLONG_MAX; int idx;
