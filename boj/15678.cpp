@@ -9,12 +9,12 @@ int main() {
   for (auto &ai : a) cin>>ai;
   int ans = INT_MIN;
   for (int i = 0; i < n; i++) {
-    if (i > d) {
-      auto iter = s.find(dp[i-d-1]);
-      if (iter != s.end()) s.erase(iter);
-    }
     int mx = s.empty() ? 0 : max(0, *s.rbegin());
     dp[i] = mx + a[i];
+    if (i >= d) {
+      auto iter = s.find(dp[i-d]);
+      if (iter != s.end()) s.erase(iter);
+    }
     s.insert(dp[i]);
     ans = max(ans, dp[i]);
   }
