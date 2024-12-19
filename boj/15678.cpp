@@ -5,19 +5,15 @@ int main() {
   ios::sync_with_stdio(0); cin.tie(0);
   int n, d; cin>>n>>d;
   vector<int> a(n), dp(n); 
-  multiset<int> s;
   for (auto &ai : a) cin>>ai;
   int ans = INT_MIN;
+  priority_queue<pair<int, int>> pq;
   for (int i = 0; i < n; i++) {
-    int mx; if (!s.empty()) mx = *s.rbegin();
-    if (!s.empty() && mx >= 0) dp[i] = mx + a[i];
+    while (!pq.empty() && i - pq.top().second > d) pq.pop();
+    if (!pq.empty() && pq.top().first > 0) dp[i] = a[i] + pq.top().first;
     else dp[i] = a[i];
-    if (i >= d) {
-      auto iter = s.find(dp[i-d]);
-      if (iter != s.end()) s.erase(iter);
-    }
-    s.insert(dp[i]);
     ans = max(ans, dp[i]);
+    pq.push({dp[i], i});
   }
   cout<<ans<<"\n";
 }
