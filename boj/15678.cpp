@@ -7,7 +7,7 @@ int main() {
   vector<int> a(n), dp(n); 
   multiset<int> s;
   for (auto &ai : a) cin>>ai;
-  int ans = 0;
+  int ans = INT_MIN;
   for (int i = 0; i < n; i++) {
     int mx; if (!s.empty()) mx = *s.rbegin();
     if (!s.empty() && mx >= 0) dp[i] = mx + a[i];
