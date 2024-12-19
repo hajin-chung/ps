@@ -30,7 +30,7 @@ void update(vi &tree, int node, int l, int r, bool nx, int idx, int v) {
 
 int query(vi &tree, int node, int l, int r, int nl, int nr, bool nx) {
   if (nl > r || l > nr) return nx ? INT_MAX : INT_MIN;
-  if (l == r) return tree[node];
+  if (nl <= l && r <= nr) return tree[node];
   int m = (l+r)>>1;
   int lq = query(tree, node*2, l, m, nl, nr, nx);
   int rq = query(tree, node*2+1, m+1, r, nl, nr, nx);
