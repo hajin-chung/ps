@@ -7,8 +7,9 @@ typedef pair<int, pii> pip;
 int n;
 int dy[8] = {0, 1, 0, -1, 1, 1, -1, -1}, dx[8] = {1, 0, -1, 0, 1, -1, -1, 1};
 vector<string> s;
-int a[1005][1005], chk[1005][1005], adj[1010][1010], sz[1010];
-int k = 4;
+int a[1005][1005], chk[1005][1005];
+int k = 1;
+vector<int> sz(k);
 
 void floodfill(int u, int yy, int xx) {
   queue<pii> Q;
@@ -29,43 +30,85 @@ void floodfill(int u, int yy, int xx) {
 
 void dfs(int yy, int xx) {
   if (chk[yy][xx]) return;
-  if (a[yy][xx] == 0) floodfill(k++, yy, xx);
-  int u = a[yy][xx];
+  if (a[yy][xx] == 0) {
+    sz.push_back(0);
+    floodfill(k++, yy, xx);
+  }
   chk[yy][xx] = true;
   for (int i = 0; i < 8; i++) {
     int ty = yy+dy[i];
     int tx = xx+dx[i];
-    if (ty == -1) { adj[0][u] = adj[u][0] = 1; }
-    if (ty == n) { adj[1][u] = adj[u][1] = 1; }
-    if (tx == -1) { adj[2][u] = adj[u][2] = 1; }
-    if (tx == n) { adj[3][u] = adj[u][3] = 1; }
     if (ty == -1 || ty == n || tx == -1 || tx == n) continue;
     if (s[ty][tx] == '.') continue;
-    if (s[yy][xx] == s[ty][tx]) {
-      dfs(ty, tx);
-    } else {
-      dfs(ty, tx);
-      int v = a[ty][tx];
-      adj[u][v] = adj[v][u] = 1;
-    }
+    dfs(ty, tx);
   }
 }
 
-vector<int> dij(int u) {
-  vector<int> d(k, INF);
-  d[u] = 0;
-  priority_queue<pii, vector<pii>, greater<pii>> pq;
-  pq.push({0, u});
+int dij_top() {
+  int ret = INF;
+  priority_queue<pip, vector<pip>, greater<pip>> pq;
+  int d[1010][1010];
+  for (int i = 0; i < n; i++)
+    for (int j = 0; j < n; j++) {
+      if (i == 0 && j > 0) {
+        d[i][j] = sz[a[i][j]];
+        pq.push({d[i][j], {i, j}});
+      } else d[i][j] = INF;
+    }
   while (!pq.empty()) {
-    auto [dist, u] = pq.top(); pq.pop();
-    if (d[u] < dist) continue;
-    for (int v = 0; v < k; v++)
-      if (d[v] > d[u] + adj[u][v]) {
-        d[v] = d[u] + adj[u][v];
-        pq.push({d[v], v});
+    auto [dist, yx] = pq.top(); pq.pop();
+    auto [yy, xx] = yx;
+    if (dist > d[yy][xx]) continue; 
+    for (int i = 0; i < 8; i++) {
+      int ty = yy+dy[i];
+      int tx = xx+dx[i];
+      if ((ty == 0 && tx == 0) || (ty == n || tx == n)) continue;
+      if (ty < 0 || ty > n || tx < 0 || tx > n) continue;
+      int w = 0;
+      if (a[ty][tx] != a[yy][xx]) w = sz[a[ty][tx]];
+      if (d[ty][tx] > d[yy][xx] + w) {
+        d[ty][tx] = d[yy][xx] + w;
+        pq.push({d[ty][tx], {ty, tx}});
       }
+    }
   }
-  return d;
+  for (int i = 0; i < n-1; i++)
+    ret = min(ret, d[n-1][i]);
+  for (int i = 0; i < n-1; i++)
+    ret = min(ret, d[i][0]);
+  return ret;
+}
+
+int dij_left() {
+  int ret = INF;
+  priority_queue<pip, vector<pip>, greater<pip>> pq;
+  int d[1010][1010];
+  for (int i = 0; i < n; i++)
+    for (int j = 0; j < n; j++) {
+      if (j == 0 && i > 0) {
+        d[i][j] = sz[a[i][j]];
+        pq.push({d[i][j], {i, j}});
+      } else d[i][j] = INF;
+    }
+  while (!pq.empty()) {
+    auto [dist, yx] = pq.top(); pq.pop();
+    auto [yy, xx] = yx;
+    if (dist > d[yy][xx]) continue; 
+    for (int i = 0; i < 8; i++) {
+      int ty = yy+dy[i];
+      int tx = xx+dx[i]; if ((ty == 0 && tx == 0) || (ty == n || tx == n)) continue;
+      if (ty < 0 || ty > n || tx < 0 || tx > n) continue;
+      int w = 0;
+      if (a[ty][tx] != a[yy][xx]) w = sz[a[ty][tx]];
+      if (d[ty][tx] > d[yy][xx] + w) {
+        d[ty][tx] = d[yy][xx] + w;
+        pq.push({d[ty][tx], {ty, tx}});
+      }
+    }
+  }
+  for (int i = 0; i < n-1; i++)
+    ret = min(ret, d[i][n-1]);
+  return ret;
 }
 
 int main() {
@@ -73,16 +116,5 @@ int main() {
   cin>>n; s.resize(n);
   for (auto &si: s) cin>>si;
   dfs(0, 1);
-  for (int i = 0; i < k; i++)
-    for (int j = 0; j < k; j++) {
-      if (adj[i][j]) adj[i][j] = sz[j];
-      else adj[i][j] = INF;
-    }
-  int ans = INF;
-  vector<int> d0 = dij(0);
-  vector<int> d2 = dij(2);
-  ans = min(ans, d0[1]);
-  ans = min(ans, d0[2]);
-  ans = min(ans, d2[3]);
-  cout<<ans<<"\n";
+  cout<<min(dij_top(), dij_left())<<"\n";
 }
