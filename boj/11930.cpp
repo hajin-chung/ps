@@ -17,9 +17,15 @@ int main() {
   int n; cin>>n;
   vector<P> a(n);
   for (auto &[x, y, z] : a) cin>>x>>y>>z;
+  P u = {0, 0 ,0};
+  for (auto [x, y, z] : a) {
+    u.x += x;
+    u.y += y;
+    u.z += z;
+  }
+  u.x /= n; u.y /= n; u.z /= n;
   ld delta = 1.0;
-  P u = a[0];
-  int tries = 100000;
+  int tries = 1000000;
   while (tries--) {
     P v = a[0];
     ld d = 0;
@@ -33,7 +39,7 @@ int main() {
     u.x += (v.x - u.x + EPS) * delta; 
     u.y += (v.y - u.y + EPS) * delta; 
     u.z += (v.z - u.z + EPS) * delta; 
-    delta *= 0.95;
+    delta *= 0.999;
   }
   ld rad = 0;
   for (auto p : a) rad = max(rad, dist(u, p));
