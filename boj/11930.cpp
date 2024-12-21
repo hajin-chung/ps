@@ -25,7 +25,7 @@ int main() {
   }
   u.x /= n; u.y /= n; u.z /= n;
   ld delta = 1.0;
-  int tries = 1000000;
+  int tries = 100000;
   while (tries--) {
     P v = a[0];
     ld d = 0;
