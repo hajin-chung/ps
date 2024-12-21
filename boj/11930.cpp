@@ -1,13 +1,14 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-const double EPS = 1e-12;
-struct P { double x, y, z; };
+typedef long double ld;
+const ld EPS = 1e-12;
+struct P { ld x, y, z; };
 
-double dist(P a, P b) {
-  double dx = a.x - b.x;
-  double dy = a.y - b.y;
-  double dz = a.z - b.z;
+ld dist(P a, P b) {
+  ld dx = a.x - b.x;
+  ld dy = a.y - b.y;
+  ld dz = a.z - b.z;
   return dx*dx+dy*dy+dz*dz;
 }
 
@@ -16,14 +17,14 @@ int main() {
   int n; cin>>n;
   vector<P> a(n);
   for (auto &[x, y, z] : a) cin>>x>>y>>z;
-  double delta = 1.0;
+  ld delta = 1.0;
   P u = a[0];
-  int tries = 10000;
+  int tries = 100000;
   while (tries--) {
     P v = a[0];
-    double d = 0;
+    ld d = 0;
     for (auto p : a) {
-      double r = dist(u, p);
+      ld r = dist(u, p);
       if (d < r) {
         v = p;
         d = r;
@@ -34,7 +35,7 @@ int main() {
     u.z += (v.z - u.z + EPS) * delta; 
     delta *= 0.95;
   }
-  double rad = 0;
+  ld rad = 0;
   for (auto p : a) rad = max(rad, dist(u, p));
   cout<<fixed<<setprecision(2)<<sqrt(rad)<<"\n";
 }
