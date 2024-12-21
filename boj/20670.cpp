@@ -38,7 +38,7 @@ struct Polygon {
     reverse(t.begin(), t.end());
   }
   // 1 : up, -1 : down
-  int find(vector<pll> v, pll p) {
+  int find(vector<pll> &v, pll p) {
     int l = 0, r = v.size()-1;
     while (l < r) {
       ll m = (l+r)>>1;
