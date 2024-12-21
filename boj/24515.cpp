@@ -14,16 +14,20 @@ vector<int> sz(1);
 void floodfill(int u, int yy, int xx) {
   queue<pii> Q;
   Q.push({yy, xx});
+  sz[u]++;
+  a[yy][xx] = u;
   while (!Q.empty()) {
     auto [yy, xx] = Q.front(); Q.pop();
-    sz[u]++;
-    a[yy][xx] = u;
     for (int i = 0; i < 4; i++) {
       int ty = yy+dy[i];
       int tx = xx+dx[i];
       if (ty <= 0 || ty > n || tx <= 0 || tx > n) continue;
       if (s[yy-1][xx-1] != s[ty-1][tx-1]) continue;
-      if (a[ty][tx] == 0) Q.push({ty, tx});
+      if (a[ty][tx] == 0) {
+        a[ty][tx] = u;
+        sz[u]++;
+        Q.push({ty, tx});
+      }
     }
   }
 }
