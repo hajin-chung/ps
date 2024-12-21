@@ -9,7 +9,7 @@ int dy[8] = {0, 1, 0, -1, 1, 1, -1, -1}, dx[8] = {1, 0, -1, 0, 1, -1, -1, 1};
 vector<string> s;
 int a[1005][1005], chk[1005][1005];
 int k = 1;
-vector<int> sz(k);
+vector<int> sz(1);
 
 void floodfill(int u, int yy, int xx) {
   queue<pii> Q;
@@ -28,20 +28,13 @@ void floodfill(int u, int yy, int xx) {
   }
 }
 
-void dfs(int yy, int xx) {
-  if (chk[yy][xx]) return;
-  if (a[yy][xx] == 0) {
-    sz.push_back(0);
-    floodfill(k++, yy, xx);
-  }
-  chk[yy][xx] = true;
-  for (int i = 0; i < 8; i++) {
-    int ty = yy+dy[i];
-    int tx = xx+dx[i];
-    if (ty == -1 || ty == n || tx == -1 || tx == n) continue;
-    if (s[ty][tx] == '.') continue;
-    dfs(ty, tx);
-  }
+void color() {
+  for (int i = 0; i < n; i++)
+    for (int j = 0; j < n; j++)
+      if (s[i][j] != '.' && a[i][j] == 0) {
+        sz.push_back(0);
+        floodfill(k++, i, j);
+      }
 }
 
 int dij_top() {
@@ -115,6 +108,6 @@ int main() {
   ios::sync_with_stdio(0); cin.tie(0);
   cin>>n; s.resize(n);
   for (auto &si: s) cin>>si;
-  dfs(0, 1);
+  color();
   cout<<min(dij_top(), dij_left())<<"\n";
 }
