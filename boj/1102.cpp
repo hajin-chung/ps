@@ -16,7 +16,7 @@ int main() {
   }
   cin>>p;
   if (p == 0) {
-    cout<<"-1\n"; return 0;
+    cout<<"0\n"; return 0;
   } else if (__builtin_popcount(mask) >= p) {
     cout<<0<<"\n"; return 0;
   }
