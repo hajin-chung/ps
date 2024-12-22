@@ -2,7 +2,7 @@
 #define INF 1000000000
 using namespace std;
 
-int dp[1<<16], n, a[20][20], p, mask;
+int dp[1<<17], n, a[20][20], p, mask;
 
 int main() {
   ios::sync_with_stdio(0); cin.tie(0);
