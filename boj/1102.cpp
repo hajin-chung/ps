@@ -37,5 +37,6 @@ int main() {
           }
         }
       }
-  cout<<ans<<"\n";
+  if (ans == INF) cout<<"-1\n";
+  else cout<<ans<<"\n";
 }
