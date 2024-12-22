@@ -2,12 +2,19 @@ from random import *
 
 f = open("1.in", "w")
 
-n = 100
-t = 1000
-f.write(f"{n} {t}\n")
+n = 16
+f.write(f"{n}\n");
 for i in range(n):
-        y = randint(-10000, 10000)
-        x = randint(-10000, 10000)
-        vy = randint(-10000, 10000)
-        vx = randint(-10000, 10000)
-        f.write(f"{x} {y} {vx} {vy}\n")
+        for j in range(n):
+                x = randint(0, 35);
+                f.write(f"{x} ")
+        f.write("\n")
+
+mask = ""
+for i in range(n):
+        if randint(0, 10) > 5:
+                mask += "Y"
+        else:
+                mask += "N"
+f.write(f"{mask}\n")
+f.write(f"{n}\n")

@@ -2,7 +2,7 @@
 #define INF 1000000000
 using namespace std;
 
-int dp[1<<17], n, a[20][20], p, mask;
+int dp[1<<16], n, a[16][16], p, mask;
 
 int main() {
   ios::sync_with_stdio(0); cin.tie(0);
@@ -28,9 +28,9 @@ int main() {
       if ((i & (1<<j)) == 0) {
         int q = i | (1<<j), w = INF;
         for (int k = 0; k < n; k++) 
-          if ((i & 1<<k) != 0 && a[k][j] < w)
+          if ((i & (1<<k)) != 0 && a[k][j] < w)
             w = a[k][j];
-        if (dp[q] > dp[i] + a[i][j]) {
+        if (dp[q] > dp[i] + w) {
           dp[q] = dp[i] + w;
           if (__builtin_popcount(q) >= p && ans > dp[q]) {
             ans = dp[q];
