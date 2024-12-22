@@ -1,5 +1,5 @@
 #include <bits/stdc++.h>
-#define N 3072
+#define N 6144
 using namespace std;
 
 bool a[N+1][N+1];
