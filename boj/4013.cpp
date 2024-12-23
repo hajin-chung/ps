@@ -1,4 +1,5 @@
 #include <bits/stdc++.h>
+#define INF 1000000000
 #define N 500000
 using namespace std;
 
@@ -61,17 +62,16 @@ int main() {
         }
   n = scc.size();
   queue<int> q;
-  for (int i = 0; i < n; i++) {
-    dp[i] = cw[i];
-    if (ind[i] == 0) 
-      q.push(i);
-  }
+  for (int i = 0; i < n; i++) dp[i] = -INF;
+  dp[cidx[ss]] = cw[cidx[ss]];
+  q.push(cidx[ss]);
   while (!q.empty()) {
     int u = q.front(); q.pop();
     for (auto v : adj[u]) {
-      dp[v] = max(dp[v], dp[u] + cw[v]);
-      ind[v]--;
-      if (ind[v] == 0) q.push(v);
+      if (dp[v] < dp[u] + cw[v]) {
+        dp[v] = dp[u] + cw[v];
+        q.push(v);
+      }
     }
   }
   ll ans = 0;
