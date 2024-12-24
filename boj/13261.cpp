@@ -2,8 +2,8 @@
 using namespace std;
 
 typedef long long int ll;
-ll dp[8001][801];
-ll a[801], sum[801];
+ll dp[801][8001];
+ll a[8001], sum[8001];
 
 // solve for dp[t][s...e] where l <= j <= r
 void f(int t, int s, int e, int l, int r) {
