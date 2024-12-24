@@ -9,8 +9,8 @@ ll a[801], sum[801];
 void f(int t, int s, int e, int l, int r) {
   if (s > e) return;
   int m = (s+e)>>1;
-  int opt = l;
-  ll c = (sum[m]-sum[opt-1])*(m-opt+1);
+  int opt = -1;
+  ll c = 800*1e9;
   for (int i = l; i <= min(r, m); i++) {
     ll nc = (sum[m]-sum[i-1])*(m-i+1);
     if (dp[t-1][opt-1] + c > dp[t-1][i-1] + nc) {
