@@ -15,7 +15,7 @@ void traverse(int u) {
 }
 
 void update(int *bit, int idx, int v) {
-  while (idx < n) {
+  while (idx <= n) {
     bit[idx] += v;
     idx += idx&-idx; 
   }
