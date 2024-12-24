@@ -1,25 +1,25 @@
 #include <bits/stdc++.h>
-#define INF 8000*8000*1e9
 using namespace std;
 
 typedef long long int ll;
 ll dp[8001][801];
 ll a[801], sum[801];
+const ll INF = LLONG_MAX/2;
 
 // solve for dp[t][s...e] where l <= j <= r
 void f(int t, int s, int e, int l, int r) {
   if (s > e) return;
   int m = (s+e)>>1;
-  int opt = -1;
-  ll c = INF;
-  for (int i = l; i <= min(r, m); i++) {
-    ll nc = (sum[m]-sum[i-1])*(m-i+1);
-    if (dp[t-1][opt-1] + c > dp[t-1][i-1] + nc) {
+  int opt = l;
+  ll c = dp[t-1][opt-1] + (sum[m]-sum[l-1])*(m-l+1);
+  for (int i = l+1; i <= min(r, m); i++) {
+    ll nc = dp[t-1][i-1] + (sum[m]-sum[i-1])*(m-i+1);
+    if (c > nc) {
       opt = i;
       c = nc;
     }
   }
-  dp[t][m] = dp[t-1][opt-1] + c;
+  dp[t][m] = c;
   f(t, s, m-1, l, opt);
   f(t, m+1, e, opt, r);
 }
@@ -42,5 +42,8 @@ int main() {
     dp[1][i] = sum[i]*i;
   for (int i = 2; i <= g; i++)
     f(i, 1, l, 1, l);
-  cout<<dp[g][l]<<"\n";
+  ll ans = INF;
+  for (int i = 1; i <= g; i++)
+    ans = min(ans, dp[i][l]);
+  cout<<ans<<"\n";
 }
