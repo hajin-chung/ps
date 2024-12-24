@@ -1,4 +1,5 @@
 #include <bits/stdc++.h>
+#define INF 8000*8000*1e9
 using namespace std;
 
 typedef long long int ll;
@@ -10,7 +11,7 @@ void f(int t, int s, int e, int l, int r) {
   if (s > e) return;
   int m = (s+e)>>1;
   int opt = -1;
-  ll c = 800*1e9;
+  ll c = INF;
   for (int i = l; i <= min(r, m); i++) {
     ll nc = (sum[m]-sum[i-1])*(m-i+1);
     if (dp[t-1][opt-1] + c > dp[t-1][i-1] + nc) {
@@ -36,7 +37,7 @@ int main() {
   }
   for (int i = 1; i <= g; i++)
     for (int j = 1; j <= l; j++)
-      dp[i][j] = 800 * 1e9;
+      dp[i][j] = INF;
   for (int i = 1; i <= l; i++)
     dp[1][i] = sum[i]*i;
   for (int i = 2; i <= g; i++)
