@@ -41,7 +41,7 @@ int main() {
   for (int i = 1; i <= l; i++)
     dp[1][i] = sum[i]*i;
   for (int i = 2; i <= g; i++)
-    f(i, 1, l, 1, l);
+    f(i, i, l, i, l);
   ll ans = INF;
   for (int i = 1; i <= g; i++)
     ans = min(ans, dp[i][l]);
