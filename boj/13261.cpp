@@ -29,10 +29,7 @@ int main() {
     cin>>a[i];
     sum[i] = sum[i-1] + a[i];
   }
-  if (g >= l) {
-    cout<<sum[l]<<"\n";
-    return 0;
-  }
+  if (g >= l) g = l;
   for (int i = 1; i <= l; i++)
     dp[1][i] = sum[i]*i;
   for (int i = 2; i <= g; i++)
