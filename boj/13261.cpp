@@ -33,6 +33,6 @@ int main() {
   for (int i = 1; i <= l; i++)
     dp[1][i] = sum[i]*i;
   for (int i = 2; i <= g; i++)
-    f(i, 0, l, 0, l);
+    f(i, 1, l, 0, l);
   cout<<dp[g][l]<<"\n";
 }
