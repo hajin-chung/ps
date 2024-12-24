@@ -4,7 +4,6 @@ using namespace std;
 typedef long long int ll;
 ll dp[8001][801];
 ll a[801], sum[801];
-const ll INF = LLONG_MAX/2;
 
 // solve for dp[t][s...e] where l <= j <= r
 void f(int t, int s, int e, int l, int r) {
@@ -34,9 +33,6 @@ int main() {
     cout<<sum[l]<<"\n";
     return 0;
   }
-  for (int i = 1; i <= g; i++)
-    for (int j = 1; j <= l; j++)
-      dp[i][j] = INF;
   for (int i = 1; i <= l; i++)
     dp[1][i] = sum[i]*i;
   for (int i = 2; i <= g; i++)
