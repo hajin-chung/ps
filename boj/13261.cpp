@@ -30,6 +30,10 @@ int main() {
     cin>>a[i];
     sum[i] = sum[i-1] + a[i];
   }
+  if (g >= l) {
+    cout<<sum[l]<<"\n";
+    return 0;
+  }
   for (int i = 1; i <= g; i++)
     for (int j = 1; j <= l; j++)
       dp[i][j] = 800 * 1e9;
