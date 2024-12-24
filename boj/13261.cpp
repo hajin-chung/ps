@@ -10,16 +10,15 @@ const ll INF = LLONG_MAX/2;
 void f(int t, int s, int e, int l, int r) {
   if (s > e) return;
   int m = (s+e)>>1;
-  int opt = l;
-  ll c = dp[t-1][opt-1] + (sum[m]-sum[l-1])*(m-l+1);
-  for (int i = l+1; i <= min(r, m); i++) {
-    ll nc = dp[t-1][i-1] + (sum[m]-sum[i-1])*(m-i+1);
-    if (c > nc) {
+  int opt = -1;
+  ll &ans = dp[t][m];
+  for (int i = l; i <= min(r, m); i++) {
+    ll val = dp[t-1][i-1] + (sum[m]-sum[i-1])*(m-i+1);
+    if (opt == -1 || ans > val) {
       opt = i;
-      c = nc;
+      ans = val;
     }
   }
-  dp[t][m] = c;
   f(t, s, m-1, l, opt);
   f(t, m+1, e, opt, r);
 }
@@ -42,8 +41,5 @@ int main() {
     dp[1][i] = sum[i]*i;
   for (int i = 2; i <= g; i++)
     f(i, i, l, i, l);
-  ll ans = INF;
-  for (int i = 1; i <= g; i++)
-    ans = min(ans, dp[i][l]);
-  cout<<ans<<"\n";
+  cout<<dp[g][l]<<"\n";
 }
