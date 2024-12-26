@@ -2,9 +2,10 @@
 using namespace std;
 
 typedef pair<int, int> pii;
+typedef long long int ll;
 int n; 
 
-void count(vector<vector<pii>> &a, vector<int> &ch, vector<bool> &chk, int u, int d, int &sum) {
+void count(vector<vector<pii>> &a, vector<int> &ch, vector<bool> &chk, int u, int d, ll &sum) {
   chk[u] = 1;
   ch[u] = 1;
   sum += d;
@@ -15,7 +16,7 @@ void count(vector<vector<pii>> &a, vector<int> &ch, vector<bool> &chk, int u, in
     }
 }
 
-void traverse(vector<vector<pii>> &a, vector<int> &ch, vector<bool> &chk, int u, int s, int &mn) {
+void traverse(vector<vector<pii>> &a, vector<int> &ch, vector<bool> &chk, int u, ll s, ll &mn) {
   chk[u] = 1;
   mn = min(mn, s);
   for (auto [v, w] : a[u])
@@ -36,9 +37,9 @@ bool solve() {
   }
   vector<int> ch(n);
   vector<bool> chk(n);
-  int sum = 0;
+  ll sum = 0;
   count(a, ch, chk, 0, 0, sum);
-  int mn = sum;
+  ll mn = sum;
   for (int i = 0; i < n; i++) chk[i] = 0;
   traverse(a, ch, chk, 0, sum, mn);
   cout<<mn<<"\n";
