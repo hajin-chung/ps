@@ -21,7 +21,7 @@ void traverse(vector<vector<pil>> &a, vector<int> &ch, vector<bool> &chk, int u,
   mn = min(mn, s);
   for (auto [v, w] : a[u])
     if (!chk[v]) {
-      int ns = s - w*ch[v] + w*(n-ch[v]);
+      ll ns = s - w*ch[v] + w*(n-ch[v]);
       traverse(a, ch, chk, v, ns, mn);
     }
 }
