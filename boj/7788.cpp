@@ -27,7 +27,7 @@ double dist(pdd a, pdd b) {
 
 int main() {
   ios::sync_with_stdio(0); cin.tie(0);
-  int m, n, k; cin>>m>>n>>k;
+  double m, n; int k; cin>>m>>n>>k;
   vector<pdd> pillar(k);
   for (auto &[x, y] : pillar) cin>>x>>y;
   vector<pdp> a;
@@ -36,19 +36,26 @@ int main() {
       a.push_back({dist(pillar[i], pillar[j]), {i, j}});
   for (int i = 0; i < k; i++) {
     a.push_back({pillar[i].se, {i, k}});
-    a.push_back({(double)n - pillar[i].se, {i, k+1}});
+    a.push_back({n - pillar[i].se, {i, k+1}});
+    a.push_back({pillar[i].fi, {i, k+2}});
+    a.push_back({m - pillar[i].fi, {i, k+3}});
   }
-  a.push_back({(double)n, {k, k+1}});
-  k += 2;
+  a.push_back({n, {k, k+1}});
+  a.push_back({m, {k+2, k+3}});
+  k += 4;
   for (int i = 0; i < k; i++) p[i] = i;
   sort(a.begin(), a.end());
   double ans;
-  for (int i = 0; i < k; i++) {
+  for (int i = k-1; i >= 0; i--) {
     auto [d, uv] = a[i];
     auto [u, v] = uv;
     ans = d;
     if (find(u) != find(v)) merge(u, v);
-    if (find(k-1) == find(k-2)) break;
+    if (find(k-1) == find(k-2) 
+        && find(k-3) == find(k-4) 
+        && find(k-1) == find(k-3)) {
+      break;
+    }
   }
   cout<<fixed<<setprecision(8)<<ans/2<<"\n";
 }
