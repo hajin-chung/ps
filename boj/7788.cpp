@@ -49,6 +49,5 @@ int main() {
     if (find(u) != find(v)) merge(u, v);
     if (find(k-1) == find(k-2)) break;
   }
-  ans = min(ans, (double)m);
   cout<<fixed<<setprecision(8)<<ans/2<<"\n";
 }
