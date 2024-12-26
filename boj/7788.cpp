@@ -38,6 +38,7 @@ int main() {
     a.push_back({pillar[i].se, {i, k}});
     a.push_back({(double)n - pillar[i].se, {i, k+1}});
   }
+  a.push_back({(double)n, {k, k+1}});
   k += 2;
   for (int i = 0; i < k; i++) p[i] = i;
   sort(a.begin(), a.end());
