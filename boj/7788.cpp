@@ -46,7 +46,7 @@ int main() {
   for (int i = 0; i < k; i++) p[i] = i;
   sort(a.begin(), a.end());
   double ans;
-  for (int i = k-1; i >= 0; i--) {
+  for (int i = 0; i < a.size(); i--) {
     auto [d, uv] = a[i];
     auto [u, v] = uv;
     ans = d;
