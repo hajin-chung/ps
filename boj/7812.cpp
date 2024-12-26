@@ -1,11 +1,11 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-typedef pair<int, int> pii;
 typedef long long int ll;
+typedef pair<int, ll> pil;
 int n; 
 
-void count(vector<vector<pii>> &a, vector<int> &ch, vector<bool> &chk, int u, int d, ll &sum) {
+void count(vector<vector<pil>> &a, vector<int> &ch, vector<bool> &chk, int u, ll d, ll &sum) {
   chk[u] = 1;
   ch[u] = 1;
   sum += d;
@@ -16,7 +16,7 @@ void count(vector<vector<pii>> &a, vector<int> &ch, vector<bool> &chk, int u, in
     }
 }
 
-void traverse(vector<vector<pii>> &a, vector<int> &ch, vector<bool> &chk, int u, ll s, ll &mn) {
+void traverse(vector<vector<pil>> &a, vector<int> &ch, vector<bool> &chk, int u, ll s, ll &mn) {
   chk[u] = 1;
   mn = min(mn, s);
   for (auto [v, w] : a[u])
@@ -29,9 +29,9 @@ void traverse(vector<vector<pii>> &a, vector<int> &ch, vector<bool> &chk, int u,
 bool solve() {
   cin>>n;
   if (n == 0) return false;
-  vector<vector<pii>> a(n);
+  vector<vector<pil>> a(n);
   for (int i = 0; i < n-1; i++) {
-    int u, v, w; cin>>u>>v>>w;
+    int u, v; ll w; cin>>u>>v>>w;
     a[u].push_back({v, w});
     a[v].push_back({u, w});
   }
