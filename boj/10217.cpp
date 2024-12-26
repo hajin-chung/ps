@@ -19,10 +19,10 @@ void solve() {
     for (int j = 0; j <= k; j++)
       dp[i][j] = INF;
   dp[1][0] = 0;
-  priority_queue<ppi, vector<ppi>, greater<ppi>> pq;
+  queue<ppi> pq;
   pq.push({{0, 0}, 1});
   while (!pq.empty()) {
-    auto [dc, u] = pq.top(); pq.pop();
+    auto [dc, u] = pq.front(); pq.pop();
     auto [ud, uc] = dc;
     if (dp[u][uc] < ud) continue;
     for (auto [dc, v] : a[u]) {
