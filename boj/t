@@ -1,0 +1,17 @@
+  
+  for (int i = 0; i < n; i++)
+    for (int j = 0; j < m; j++)
+      cnt[i][j] = 0;
+
+  for (int si = 0; si < n; si++)
+    for (int ei = si; ei < n; ei++)
+      for (int sj = 0; sj < m; sj++)
+        for (int ej = sj; ej < m; ej++)
+          for (int i = si; i <= ei; i++)
+            for (int j = sj; j <= ej; j++)
+              cnt[i][j]++;
+  for (int i = 0; i < n; i++) {
+    for (int j = 0; j < m; j++)
+      cout<<cnt[i][j]<<" ";
+    cout<<"\n";
+  }

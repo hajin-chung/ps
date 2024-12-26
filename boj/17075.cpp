@@ -17,29 +17,38 @@ int main() {
       cnt[i][j] = (ii*(n+2)-ii*(ii+1))*(jj*(m+2)-jj*(jj+1));
       if (a[i][j] == 1) sum = (sum + cnt[i][j])%k;
     }
-  vector<pair<bool, set<pii>>> dp(k), ndp(k);
-  dp[sum].first = 1;
+  vector<bool> chk(k), tchk(k);
+  vector<pii> coord(k);
+  vector<int> path(k);
+  chk[sum] = 1;
   for (int i = 0; i < n; i++)
     for (int j = 0; j < m; j++)
       if (a[i][j] == -1) {
-        ndp = dp;
+        tchk = chk;
         for (int kk = 0; kk < k; kk++) {
           int nkk = (kk+cnt[i][j])%k;
-          if (ndp[kk].first && !ndp[nkk].first) {
-            ndp[nkk].first = true;
-            ndp[nkk].second = ndp[kk].second;
-            ndp[nkk].second.insert({i, j});
+          if (chk[kk] && !chk[nkk]) {
+            tchk[nkk] = true;
+            coord[nkk] = {i, j};
+            path[nkk] = kk;
           }
         }
-        dp = ndp;
+        chk = tchk;
       }
-  if (!dp[0].first) cout<<"-1\n";
+  if (!chk[0]) cout<<"-1\n";
   else {
+    set<pii> ans;
+    int kk = 0;
+    while (kk != sum) {
+      ans.insert(coord[kk]);
+      kk = path[kk];
+    }
+    cout<<"1\n";
     for (int i = 0; i < n; i++) {
       for (int j = 0; j < m; j++) {
         if (a[i][j] == 1 || a[i][j] == 0) cout<<a[i][j]<<" ";
         else {
-          if (dp[0].second.count({i, j})) cout<<"1 ";
+          if (ans.count({i, j})) cout<<"1 ";
           else cout<<"0 ";
         }
       }
