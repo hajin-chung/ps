@@ -37,25 +37,21 @@ int main() {
   for (int i = 0; i < k; i++) {
     a.push_back({pillar[i].se, {i, k}});
     a.push_back({n - pillar[i].se, {i, k+1}});
-    a.push_back({pillar[i].fi, {i, k+2}});
-    a.push_back({m - pillar[i].fi, {i, k+3}});
+    /*a.push_back({pillar[i].fi, {i, k+2}});*/
+    /*a.push_back({m - pillar[i].fi, {i, k+3}});*/
   }
   a.push_back({n, {k, k+1}});
-  a.push_back({m, {k+2, k+3}});
-  k += 4;
-  for (int i = 0; i < k; i++) p[i] = i;
+  /*a.push_back({m, {k+2, k+3}});*/
+  for (int i = 0; i < k+2; i++) p[i] = i;
   sort(a.begin(), a.end());
   double ans;
-  for (int i = 0; i < a.size(); i--) {
-    auto [d, uv] = a[i];
+  for (auto [d, uv] : a) {
     auto [u, v] = uv;
     ans = d;
     if (find(u) != find(v)) merge(u, v);
-    if (find(k-1) == find(k-2) 
-        && find(k-3) == find(k-4) 
-        && find(k-1) == find(k-3)) {
-      break;
-    }
+    if (find(k) == find(k+1)) break;
   }
   cout<<fixed<<setprecision(8)<<ans/2<<"\n";
 }
+
+
