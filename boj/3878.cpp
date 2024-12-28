@@ -51,12 +51,14 @@ vector<pii> get_hull(vector<pii> &a) {
 
 bool inside(vector<pii> &hull, pii p) {
   int n = hull.size(), l = 1, r = n-1;
-  while (l < r) {
+  if (ccw(hull[0], hull[1], p) < 0) return false;
+  if (ccw(hull[0], hull[n-1], p) > 0) return false;
+  while (l + 1 < r) {
     int m = (l+r)>>1;
-    if (ccw(hull[0], hull[m], p) > 0) r = m;
-    else l = m+1;
+    if (ccw(hull[0], hull[m], p) > 0) l = m;
+    else r = m;
   }
-  return ccw(hull[l], hull[l+1], p) < 0;
+  return ccw(hull[l], hull[r], p) >= 0;
 }
 
 bool solve() {
@@ -74,13 +76,13 @@ bool solve() {
       return true;
     }
   }
-  if (n == 2 && m == 2) return intersect(a[0], a[1], b[0], b[1]);
+  if (n == 2 && m == 2) return !intersect(a[0], a[1], b[0], b[1]);
   vector<pii> ahull = get_hull(a); 
   vector<pii> bhull = get_hull(b); 
   int flag = false;
   for (auto p : bhull) flag |= inside(ahull, p);
   for (auto p : ahull) flag |= inside(bhull, p);
-  return flag;
+  return !flag;
 }
 
 int main() {
