@@ -19,7 +19,7 @@ int main() {
     int cnt = 0;
     int yy = (sx+sy+s)/2;
     int xx = sx-yy+s/2;
-    if (yy < 0 || yy > m || xx < 0 || xx > n) return 0;
+    /*if (yy < 0 || yy > m || xx < 0 || xx > n) return 0;*/
     for (int k = 0; k < t; k++) 
       if (sx <= a[k].fi 
           && a[k].fi <= sx+s
