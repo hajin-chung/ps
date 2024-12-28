@@ -25,30 +25,17 @@ int main() {
         cnt++;
     return cnt;
   };
-  for (int i = 1; i < t; i++) 
-    for (int j = 0; j < i; j++) {
-      int c1 = f(a[i].fi, a[j].se);
-      int c2 = f(a[j].fi, a[i].se);
-      if (c1 > ans) {
-        ans = c1;
-        p = {a[i].fi, a[j].se};
-      }
-      if (c2 > ans) {
-        ans = c2;
-        p = {a[j].fi, a[i].se};
+  for (int i = 0; i < t; i++) 
+    for (int j = 0; j < t; j++) {
+      int c = f(a[i].fi, a[j].se);
+      if (c > ans) {
+        ans = c;
+        p = {a[i].fi+s/2, a[j].se+s/2};
       }
     }
-  for (int i = 0; i < t; i++) {
-    int c = f(a[i].fi, a[i].se);
-    if (c > ans) {
-      ans = c;
-      p = a[i];
-    }
-  }
   int xx = p.fi, yy = p.se;
   yy = (xx+yy)/2;
   xx = xx-yy;
-  yy += s/2;
   cout<<xx<<" "<<yy<<"\n";
   cout<<ans<<"\n";
 }
