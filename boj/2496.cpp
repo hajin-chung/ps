@@ -17,18 +17,25 @@ int main() {
   pii p;
   for (int i = 1; i < t; i++)
     for (int j = 0; j < i; j++) {
-      int xx = min(a[i].fi, a[j].fi);
-      int yy = min(a[i].se, a[j].se);
-      int cnt = 0;
-      for (int k = 0; k < t; k++) 
-        if (xx <= a[k].fi 
-            && a[k].fi <= xx+s
-            && yy <= a[k].se 
-            && a[k].se <= yy+s)
-          cnt++;
-      if (cnt > ans) {
-        ans = cnt;
-        p = {xx, yy};
+      auto f = [&](int sx, int sy) {
+        int cnt = 0;
+        for (int k = 0; k < t; k++) 
+          if (sx <= a[k].fi 
+              && a[k].fi <= sx+s
+              && sy <= a[k].se 
+              && a[k].se <= sy+s)
+            cnt++;
+        return cnt;
+      };
+      int c1 = f(a[i].fi, a[j].se);
+      int c2 = f(a[j].fi, a[i].se);
+      if (c1 > ans) {
+        ans = c1;
+        p = {a[i].fi, a[j].se};
+      }
+      if (c2 > ans) {
+        ans = c2;
+        p = {a[j].fi, a[i].se};
       }
     }
   int xx = p.fi, yy = p.se;
