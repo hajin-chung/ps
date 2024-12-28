@@ -17,6 +17,9 @@ int main() {
   pii p;
   auto f = [&](int sx, int sy) {
     int cnt = 0;
+    int yy = (sx+sy)/2-s/2;
+    int xx = sx-yy;
+    if (yy < 0 || yy > m || xx < 0 || xx > n) return 0;
     for (int k = 0; k < t; k++) 
       if (sx <= a[k].fi 
           && a[k].fi <= sx+s
