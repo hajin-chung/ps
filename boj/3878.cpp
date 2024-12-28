@@ -66,7 +66,10 @@ bool solve() {
   vector<pii> a(n), b(m);
   for (auto &[x, y] : a) cin>>x>>y;
   for (auto &[x, y] : b) cin>>x>>y;
-  if (n < m) swap(a, b);
+  if (n < m) {
+    swap(a, b);
+    swap(n, m);
+  }
 
   if (n == 1 && m == 1) return true;
   if (n == 2 && m == 1) {
@@ -77,11 +80,18 @@ bool solve() {
     }
   }
   if (n == 2 && m == 2) return !intersect(a[0], a[1], b[0], b[1]);
-  vector<pii> ahull = get_hull(a); 
-  vector<pii> bhull = get_hull(b); 
-  int flag = false;
-  for (auto p : bhull) flag |= inside(ahull, p);
-  for (auto p : ahull) flag |= inside(bhull, p);
+  bool flag = false;
+  if (n == 3 && m == 2)
+    for (int i = 0; i < n; i++) 
+      flag |= intersect(b[0], b[1], a[i], a[(i+1)%n]);
+  if (n >= 3) {
+    vector<pii> ahull = get_hull(a); 
+    for (auto p : b) flag |= inside(ahull, p);
+  }
+  if (m >= 3) {
+    vector<pii> bhull = get_hull(b); 
+    for (auto p : a) flag |= inside(bhull, p);
+  }
   return !flag;
 }
 
