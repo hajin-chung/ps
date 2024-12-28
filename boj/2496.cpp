@@ -18,13 +18,13 @@ int main() {
   for (int i = 1; i < t; i++)
     for (int j = 0; j < i; j++) {
       int xx = min(a[i].fi, a[j].fi);
-      int yy = max(a[i].se, a[j].se);
+      int yy = min(a[i].se, a[j].se);
       int cnt = 0;
       for (int k = 0; k < t; k++) 
         if (xx <= a[k].fi 
             && a[k].fi <= xx+s
-            && yy-s <= a[k].se 
-            && a[k].se <= yy)
+            && yy <= a[k].se 
+            && a[k].se <= yy+s)
           cnt++;
       if (cnt > ans) {
         ans = cnt;
@@ -34,7 +34,7 @@ int main() {
   int xx = p.fi, yy = p.se;
   yy = (xx+yy)/2;
   xx = xx-yy;
-  xx += s/2;
+  yy += s/2;
   cout<<xx<<" "<<yy<<"\n";
   cout<<ans<<"\n";
 }
