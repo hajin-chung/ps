@@ -2,19 +2,9 @@ from random import *
 
 f = open("1.in", "w")
 
-n = 16
-f.write(f"{n}\n");
+n = 750
+f.write(f"{n} {n}\n");
 for i in range(n):
         for j in range(n):
-                x = randint(0, 35);
-                f.write(f"{x} ")
+                f.write(f"1")
         f.write("\n")
-
-mask = ""
-for i in range(n):
-        if randint(0, 10) > 5:
-                mask += "Y"
-        else:
-                mask += "N"
-f.write(f"{mask}\n")
-f.write(f"{n}\n")
