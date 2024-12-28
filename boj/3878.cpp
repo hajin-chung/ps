@@ -3,141 +3,91 @@
 #define se second
 using namespace std;
 
-typedef long long int ll;
-typedef pair<ll, ll> pii;
-pii pivot;
+typedef pair<int, int> pii;
 
 int ccw(pii a, pii b, pii c) {
-  ll v = (b.fi-a.fi)*(c.se-a.se) - (b.se-a.se)*(c.fi-a.fi);
-  if (v == 0) return 0;
-  else return v > 0 ? 1 : -1;
+  int r = (b.fi-a.fi)*(c.se-a.se)-(b.se-a.se)*(c.fi-a.fi);
+  return r >= 0 ? r == 0 ? 0 : 1 : -1;
 }
 
-ll dist(pii a, pii b) {
-  ll dx = a.fi - b.fi;
-  ll dy = a.se - b.se;
-  return dx*dx+dy*dy; 
+int dist(pii a, pii b) {
+  int dx = a.fi-b.fi, dy = a.se-b.se;
+  return dx*dx+dy*dy;
 }
 
-bool cmp(pii a, pii b) {
-  int v = ccw(pivot, a, b);
-  if (v > 0) return true;
-  else if (v < 0) return false;
-  return dist(pivot, a) < dist(pivot, b);
-}
-
-bool inside(vector<pii> &hull, pii p) {
-  int n = hull.size();
-  for (int i = 0; i < n; i++) 
-    if (ccw(hull[i], hull[(i+1)%n], p) <= 0) 
-      return true;
-  return false;
-}
-
-vector<pii> make_hull(vector<pii> &a) {
-  vector<pii> hull;
-  sort(a.begin(), a.end());
-  pivot = a[0];
-  sort(a.begin(), a.end(), cmp);
-  vector<pii> s;
-  s.push_back(a[0]);
-  if (a.size() == 1) {
-    s.push_back(a[0]);
-    return s;
-  }
-  s.push_back(a[1]);
-  for (int i = 2; i < a.size(); i++) {
-    while (s.size() >= 2) {
-      pii se = s.back(); s.pop_back();
-      pii fi = s.back();
-      if (ccw(fi, se, a[i]) > 0) {
-        s.push_back(se);
-        break;
-      }
-    }
-    s.push_back(a[i]);
-  }
-  return s;
-}
-
-bool intersect(pii &a1, pii &a2, pii &b1, pii &b2) {
-  int c1 = ccw(a1, a2, b1) * ccw(a1, a2, b2);
-  int c2 = ccw(b1, b2, a1) * ccw(b1, b2, a2);
-  if (c1 == 0 && c2 == 0) return b1 <= a2 && a1 <= b2;
+bool intersect(pii s1, pii e1, pii s2, pii e2) {
+  if (s1 > e1) swap(s1, e1);
+  if (s2 > e2) swap(s2, e2);
+  int c1 = ccw(s1, e1, s2)*ccw(s1, e1, e2);
+  int c2 = ccw(s2, e2, s1)*ccw(s2, e2, e1);
+  if (c1 == 0 && c2 == 0) return s2 <= e1 && s1 <= e2;
   return c1 <= 0 && c2 <= 0;
 }
 
-/*bool line_point_chk(pii a1, pii a2, pii b) {*/
-/*  int v = ccw(a1, a2, b);*/
-/*  if (v != 0) return true;*/
-/*  return b.fi < min(a1.fi, a2.fi) || b.fi > max(a1.fi, a2.fi);*/
-/*}*/
+vector<pii> get_hull(vector<pii> &a) {
+  int n = a.size();
+  for (int i = 1; i < n; i++) if (a[0] > a[i]) swap(a[0], a[i]);
+  sort(a.begin()+1, a.end(), [&](pii u, pii v) {
+    int r = ccw(a[0], u, v);
+    if (r == 0) return dist(a[0], u) < dist(a[0], v);
+    return r > 0;
+  });
+  vector<pii> hull;
+  hull.push_back(a[0]);
+  hull.push_back(a[1]);
+  for (int i = 2; i < n; i++) {
+    while (!hull.empty()) {
+      pii se = hull.back(); hull.pop_back();
+      pii fi = hull.back();
+      if (ccw(fi, se, a[i]) > 0) {
+        hull.push_back(se);
+        break;
+      }
+    }
+    hull.push_back(a[i]);
+  }
+  return hull;
+}
 
-/*bool hull_line_chk(vector<pii> &a, vector<pii> &l) {*/
-/*  vector<pii> hull = make_hull(a);*/
-/*  bool flag = line_line_chk(hull.back(), hull.front(), l[0], l[1]);*/
-/*  for (int i = 1; i < hull.size(); i++)*/
-/*    flag &= line_line_chk(hull[i-1], hull[i], l[0], l[1]);*/
-/*  return flag;*/
-/*}*/
-
-/*bool hull_hull_chk(vector<pii> &a, vector<pii> &b) {*/
-/*  vector<pii> hull = make_hull(a);*/
-/*  for (auto p : b) */
-/*    if (inside(hull, p)) */
-/*      return false;*/
-/*  return true;*/
-/*}*/
+bool inside(vector<pii> &hull, pii p) {
+  int n = hull.size(), l = 1, r = n-1;
+  while (l < r) {
+    int m = (l+r)>>1;
+    if (ccw(hull[0], hull[m], p) > 0) r = m;
+    else l = m+1;
+  }
+  return ccw(hull[l], hull[l+1], p) < 0;
+}
 
 bool solve() {
-  int n, m;
-  ll x, y;
-  vector<pii> a, b, hull;
-  scanf("%d %d", &n, &m);
-  for (int i = 0; i < n; i++) {
-    scanf("%lld %lld", &x, &y);
-    a.push_back({x, y});
-  }
-  for (int i = 0; i < m; i++) {
-    scanf("%lld %lld", &x, &y);
-    b.push_back({x, y});
-  }
+  int n, m; cin>>n>>m;
+  vector<pii> a(n), b(m);
+  for (auto &[x, y] : a) cin>>x>>y;
+  for (auto &[x, y] : b) cin>>x>>y;
+  if (n < m) swap(a, b);
+
   if (n == 1 && m == 1) return true;
-
-  sort(a.begin(), a.end());
-  sort(b.begin(), b.end());
-
-  vector<pii> ca = make_hull(a);
-  vector<pii> cb = make_hull(b);
-  int can = ca.size(), cbn = cb.size();
-
-  for (int i = 0; i < ca.size(); i++) 
-    for (int j = 0; j < cb.size(); j++) 
-      if (intersect(ca[i], ca[(i+1)%can], cb[j], cb[(j+1)%cbn]))
-        return false;
-
-  for (auto p : a)
-    if (inside(cb, p)) 
-      return false;
-  for (auto p : b)
-    if (inside(ca, p)) 
-      return false;
-
-  /*if (n == 0 || m == 0) return true;*/
-  /*if (n == 1 && m == 1) return true;*/
-  /*if (n == 1 && m == 2) return line_point_chk(b[0], b[1], a[0]);*/
-  /*if (n == 1 && m >= 3) return hull_hull_chk(b, a);*/
-  /*if (n == 2 && m == 1) return line_point_chk(a[0], a[1], b[0]);*/
-  /*if (n == 2 && m == 2) return line_line_chk(a[0], a[1], b[0], b[1]);*/
-  /*if (n == 2 && m >= 3) return hull_line_chk(b, a) && hull_hull_chk(b, a);*/
-  /*if (n >= 3 && m == 1) return hull_hull_chk(a, b);*/
-  /*if (n >= 3 && m == 2) return hull_line_chk(a, b) && hull_hull_chk(a, b);*/
-  /*if (n >= 3 && m >= 3) return hull_hull_chk(a, b) && hull_hull_chk(b, a);*/
-  return true;
+  if (n == 2 && m == 1) {
+    if (ccw(a[0], a[1], b[0]) != 0) return true;
+    else {
+      if (min(a[0], a[1]) < b[0] && b[0] < max(a[0], a[1])) return false;
+      return true;
+    }
+  }
+  if (n == 2 && m == 2) return intersect(a[0], a[1], b[0], b[1]);
+  vector<pii> ahull = get_hull(a); 
+  vector<pii> bhull = get_hull(b); 
+  int flag = false;
+  for (auto p : bhull) flag |= inside(ahull, p);
+  for (auto p : ahull) flag |= inside(bhull, p);
+  return flag;
 }
 
 int main() {
-  int T; 
-  scanf("%d", &T);
-  while (T--) printf("%s\n", solve() ? "YES" : "NO");
+  ios::sync_with_stdio(0); cin.tie(0);
+  int t; cin>>t;
+  while (t--) {
+    if (solve()) cout<<"YES\n";
+    else cout<<"NO\n";
+  }
 }
