@@ -20,7 +20,7 @@ int main() {
       int xx = min(a[i].fi, a[j].fi);
       int yy = min(a[i].se, a[j].se);
       int cnt = 0;
-      for (int k = 0; k < n; k++) 
+      for (int k = 0; k < t; k++) 
         if (xx <= a[k].fi 
             && a[k].fi <= xx+s
             && yy <= a[k].se 
