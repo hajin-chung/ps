@@ -17,7 +17,6 @@ int intersect(pii s1, pii e1, pii s2, pii e2) {
   int c2 = ccw(s2, e2, s1) * ccw(s2, e2, e1);
   if (c1 == 0 && c2 == 0) {
     if (s2 < e1 && s1 < e2) return 2;
-    else if (s2 <= e1 && s1 <= e2) return 1;
     return 0;
   }
   return c1 <= 0 && c2 <= 0; 
