@@ -16,8 +16,13 @@ int intersect(pii s1, pii e1, pii s2, pii e2) {
   int c1 = ccw(s1, e1, s2) * ccw(s1, e1, e2);
   int c2 = ccw(s2, e2, s1) * ccw(s2, e2, e1);
   if (c1 == 0 && c2 == 0) {
-    if (s2 < e1 && s1 < e2) return 2;
-    return 0;
+    ll x_s1 = min(s1.fi, e1.fi), x_e1 = max(s1.fi, e1.fi);
+    ll x_s2 = min(s2.fi, e2.fi), x_e2 = max(s2.fi, e2.fi);
+    ll overlapStart = max(x_s1, x_s2);
+    ll overlapEnd   = min(x_e1, x_e2);
+    if (overlapStart > overlapEnd) return 0;
+    else if (overlapStart < overlapEnd) return 2;
+    return 1;
   }
   return c1 <= 0 && c2 <= 0; 
 }
@@ -28,26 +33,26 @@ int main() {
   cin>>s1.fi>>s1.se>>e1.fi>>e1.se>>s2.fi>>s2.se>>e2.fi>>e2.se;
   if (s1 > e1) swap(s1, e1);
   if (s2 > e2) swap(s2, e2);
-  if (s1 == s2 && e1 == e2) {
-    cout<<"1\n";
-    return 0;
-  } else if (s1 == e2) {
-    cout<<"1\n"<<s1.fi<<" "<<s1.se<<"\n";
-    return 0;
-  } else if (s2 == e1) {
-    cout<<"1\n"<<s2.fi<<" "<<s2.se<<"\n";
-    return 0;
-  } else if (s1 == s2) {
-    cout<<"1\n"<<s1.fi<<" "<<s1.se<<"\n";
-    return 0;
-  } else if (e1 == e2) {
-    cout<<"1\n"<<e1.fi<<" "<<e1.se<<"\n";
-    return 0;
-  }
   int inter =  intersect(s1, e1, s2, e2);
   if (inter == 2) cout<<"1\n";
   else if (inter == 0) cout<<"0\n";
   else {
+    if (s1 == s2 && e1 == e2) {
+      cout<<"1\n";
+      return 0;
+    } else if (s1 == e2) {
+      cout<<"1\n"<<s1.fi<<" "<<s1.se<<"\n";
+      return 0;
+    } else if (s2 == e1) {
+      cout<<"1\n"<<s2.fi<<" "<<s2.se<<"\n";
+      return 0;
+    } else if (s1 == s2) {
+      cout<<"1\n"<<s1.fi<<" "<<s1.se<<"\n";
+      return 0;
+    } else if (e1 == e2) {
+      cout<<"1\n"<<e1.fi<<" "<<e1.se<<"\n";
+      return 0;
+    }
     double x, y;
     ll dx1 = e1.fi-s1.fi;
     ll dy1 = e1.se-s1.se;
