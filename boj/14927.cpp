@@ -2,10 +2,9 @@
 #define INF 1000000000
 using namespace std;
 
-typedef unsigned int u32;
-u32 a[20], b[20], n;
+int a[20], b[20], n;
 
-void flip(int idx, u32 mask) {
+void flip(int idx, int mask) {
   for (int i = 0; i < n; i++)
     if (mask & (1<<i)) {
       b[idx] ^= (1<<i);
@@ -16,8 +15,8 @@ void flip(int idx, u32 mask) {
     }
 }
 
-u32 solve(u32 mask) {
-  u32 cnt = 0;
+int solve(int mask) {
+  int cnt = 0;
   for (int i = 0; i < n; i++) b[i] = a[i];
   for (int i = 0; i < n; i++) {
     cnt += __builtin_popcount(mask);
@@ -34,13 +33,13 @@ u32 solve(u32 mask) {
 int main() {
   ios::sync_with_stdio(0); cin.tie(0);
   cin>>n;
-  for (u32 i = 0; i < n; i++)
-    for (u32 j = 0; j < n; j++) {
-      u32 x; cin>>x;
+  for (int i = 0; i < n; i++)
+    for (int j = 0; j < n; j++) {
+      int x; cin>>x;
       if (x) a[i] += (1<<j);
     }
-  u32 ans = INF;
-  for (u32 i = 1; i < (1<<n); i++) ans = min(ans, solve(i));
+  int ans = INF;
+  for (int i = 1; i < (1<<n); i++) ans = min(ans, solve(i));
   if (ans == INF) cout<<"-1\n";
   else cout<<ans<<"\n";
 }
