@@ -39,7 +39,7 @@ int main() {
       if (x) a[i] += (1<<j);
     }
   int ans = INF;
-  for (int i = 1; i < (1<<n); i++) ans = min(ans, solve(i));
+  for (int i = 0; i < (1<<n); i++) ans = min(ans, solve(i));
   if (ans == INF) cout<<"-1\n";
   else cout<<ans<<"\n";
 }
