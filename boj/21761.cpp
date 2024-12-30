@@ -22,9 +22,12 @@ int main() {
     for (int i = 0; i < 4; i++)
       for (int j = i+1; j < 4; j++) 
         if (!card[i].empty() && !card[j].empty()) {
-          if (card[i].back()*a[j] > card[j].back()*a[i]) cnt[i]++;
-          else cnt[j]++;
+          ll ai = card[i].back()*a[j], aj = card[j].back()*a[i];
+          if (ai > aj) cnt[i]++;
+          else if (ai < aj)cnt[j]++;
         }
+    for (int i = 0; i < 4; i++) cout<<cnt[i]<<" ";
+    cout<<"\n";
     for (int i = 0; i < 4; i++) if (cnt[i] > cnt[idx]) idx = i;
     a[idx] += card[idx].back();
     ans.push_back({idx+'A', card[idx].back()});
