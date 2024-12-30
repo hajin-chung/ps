@@ -26,8 +26,6 @@ int main() {
           if (ai > aj) cnt[i]++;
           else if (ai < aj)cnt[j]++;
         }
-    for (int i = 0; i < 4; i++) cout<<cnt[i]<<" ";
-    cout<<"\n";
     for (int i = 0; i < 4; i++) if (cnt[i] > cnt[idx]) idx = i;
     a[idx] += card[idx].back();
     ans.push_back({idx+'A', card[idx].back()});
