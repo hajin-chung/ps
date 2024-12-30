@@ -14,12 +14,17 @@ int main() {
     card[c-'A'].push_back(x);
   }
   for (int i = 0; i < 4; i++)
-    sort(card[i].begin(), card[i].end());
+    if (!card[i].empty())
+      sort(card[i].begin(), card[i].end());
   vector<pair<char, ll>> ans;
   while (k--) {
     int idx = 0, ucnt = 0;
-    for (int i = 0; i < 4; i++) if (!card[i].empty()) ucnt++;
     vector<int> cnt(4);
+    for (int i = 0; i < 4; i++) 
+      if (!card[i].empty()) {
+        ucnt++;
+        cnt[i] = 1;
+      }
     for (int i = 0; i < 4; i++)
       for (int j = i+1; j < 4; j++) 
         if (!card[i].empty() && !card[j].empty()) {
@@ -27,7 +32,7 @@ int main() {
           if (ai > aj) cnt[i]++;
           else cnt[j]++;
         }
-    for (int i = 0; i < 4; i++) if (ucnt-1 == cnt[i]) idx = i;
+    for (int i = 0; i < 4; i++) if (ucnt == cnt[i]) idx = i;
     a[idx] += card[idx].back();
     ans.push_back({idx+'A', card[idx].back()});
     card[idx].pop_back();
