@@ -17,16 +17,17 @@ int main() {
     sort(card[i].begin(), card[i].end());
   vector<pair<char, ll>> ans;
   while (k--) {
-    int idx = 0;
+    int idx = 0, ucnt = 0;
+    for (int i = 0; i < 4; i++) if (!card[i].empty()) ucnt++;
     vector<int> cnt(4);
     for (int i = 0; i < 4; i++)
       for (int j = i+1; j < 4; j++) 
         if (!card[i].empty() && !card[j].empty()) {
           ll ai = card[i].back()*a[j], aj = card[j].back()*a[i];
           if (ai > aj) cnt[i]++;
-          else if (ai < aj)cnt[j]++;
+          else cnt[j]++;
         }
-    for (int i = 0; i < 4; i++) if (cnt[i] > cnt[idx]) idx = i;
+    for (int i = 0; i < 4; i++) if (ucnt-1 == cnt[i]) idx = i;
     a[idx] += card[idx].back();
     ans.push_back({idx+'A', card[idx].back()});
     card[idx].pop_back();
