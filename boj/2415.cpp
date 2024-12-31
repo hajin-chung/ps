@@ -39,13 +39,12 @@ int main() {
     return a.l < b.l;
   });
   ll ans = 0;
-  for (int i = 0, j; i < v.size(); ) {
+  for (int i = 0, j; i < v.size(); i++) {
     j = i+1;
     while (j < v.size() && v[i].l == v[j].l && v[i].x == v[j].x && v[i].y == v[j].y) {
       ans = max(ans, sz(i, j));
       j++;
     }
-    i = j;
   }
   cout<<ans/2<<"\n";
 }
