@@ -19,10 +19,9 @@ ll dist(pll a, pll b) {
 }
 
 ll sz(int p, int q) {
-  vector<pll> sq;  
-  ll w = dist(a[v[p].i], a[v[q].i]);
-  ll h = dist(a[v[p].i], a[v[q].j]);
-  return sqrt(w*h); 
+  pll p1 = a[v[p].i], p2 = a[v[p].j], p3 = a[v[q].i], p4 = a[v[q].j];
+  return abs(p1.fi*(p2.se-p3.se)+p2.fi*(p3.se-p1.se)+p3.fi*(p1.se-p2.se))
+       + abs(p1.fi*(p2.se-p4.se)+p2.fi*(p4.se-p1.se)+p4.fi*(p1.se-p2.se));
 }
 
 int main() {
@@ -48,5 +47,5 @@ int main() {
     }
     i = j;
   }
-  cout<<ans<<"\n";
+  cout<<ans/2<<"\n";
 }
