@@ -13,7 +13,7 @@ ll rec(vector<int> &v) {
     if (v[i] > v[0]) bt.push_back(v[i]);
     else st.push_back(v[i]);
   }
-  return bi[v.size()-1][st.size()]*rec(st)*rec(bt);
+  return (bi[v.size()-1][st.size()]*rec(st)*rec(bt))%MOD;
 }
 
 void solve() {
