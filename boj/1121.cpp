@@ -3,6 +3,7 @@
 using namespace std;
 
 typedef long long int ll;
+ll dp[10][2500005];
 
 int main() {
   ios::sync_with_stdio(0); cin.tie(0);
@@ -13,7 +14,6 @@ int main() {
   sort(a.begin(), a.end());
   sum[0] = a[0];
   for (int i = 1; i < n; i++) sum[i] = a[i] + sum[i-1];
-  vector<map<int, ll>> dp(k);
   dp[0][0] = 1;
   ll cnt = 0;
   for (int i = 0; i < n; i++) {
