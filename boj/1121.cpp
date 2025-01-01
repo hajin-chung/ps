@@ -20,11 +20,10 @@ int main() {
     if (i + 1 >= k)
       for (int j = a[i]+1; j <= MAX+1; j++)
         cnt += dp[k-1][j];
-    for (int kk = k-1; kk > 0; kk--)
-      for (int j = sum[i]; j >= a[i]; j--) {
-        int u = min(j, MAX+1), v = min(j-(int)a[i], MAX+1);
-        dp[kk][u] += dp[kk-1][v];
-      }
+    for (int kk = k-1; kk > 0; kk--) {
+      for (int j = a[i]; j <= MAX; j++) dp[kk][j] += dp[kk-1][j-a[i]];
+      dp[kk][MAX+1] += dp[kk-1][MAX+1];
+    }
   }
   cout<<cnt<<"\n";
 }
