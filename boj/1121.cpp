@@ -17,13 +17,23 @@ int main() {
   dp[0][0] = 1;
   ll cnt = 0;
   for (int i = 0; i < n; i++) {
-    if (i + 1 >= k)
+    if (i >= k - 1)
       for (int j = a[i]+1; j <= MAX+1; j++)
         cnt += dp[k-1][j];
     for (int kk = k-1; kk > 0; kk--) {
-      for (int j = a[i]; j <= MAX; j++) dp[kk][j] += dp[kk-1][j-a[i]];
-      dp[kk][MAX+1] += dp[kk-1][MAX+1];
+      for (int j = 0; j <= MAX; j++) 
+        if (dp[kk-1][j] > 0) {
+          if (j + a[i] > MAX) dp[kk][MAX+1] += dp[kk-1][j];
+          else dp[kk][j+a[i]] += dp[kk-1][j];
+        }
     }
+    /*for (int kk = 1; kk <= k-1; kk++) {*/
+    /*  for (int j = 0; j <= MAX+1; j++)*/
+    /*    if (dp[kk][j])*/
+    /*    cout<<dp[kk][j]<<","<<j<<" ";*/
+    /*  cout<<"\n";*/
+    /*}*/
+    /*cout<<"\n";*/
   }
   cout<<cnt<<"\n";
 }
