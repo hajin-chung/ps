@@ -9,12 +9,6 @@ ll gcd(ll a, ll b) {
   return gcd(b, a%b);
 }
 
-ll fact(int a) {
-  ll ret = 1;
-  for (int i = 1; i <= a; i++) ret *= (ll)i;
-  return ret;
-}
-
 int main() {
   ios::sync_with_stdio(0); cin.tie(0);
   int n, k; cin>>n>>k; 
@@ -22,9 +16,7 @@ int main() {
   for (int i = 2; i <= 20; i++)
     for (int j = 1; j <= i; j++)
       dp[i][j] = dp[i-1][j-1] + (i-1)*dp[i-1][j];
-  ll sum = 0;
-  for (int i = 1; i <= k; i++) sum += dp[n][i];
-  ll fn = fact(n);
-  ll g = gcd(sum, fn);
-  cout<<sum/g<<"/"<<fn<<"\n";
+  for (int i = 1; i <= n; i++) dp[n][i] += dp[n][i-1];
+  ll g = gcd(dp[n][k], dp[n][n]);
+  cout<<dp[n][k]/g<<"/"<<dp[n][n]/g<<"\n";
 }
