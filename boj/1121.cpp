@@ -13,7 +13,7 @@ int main() {
   sort(a.begin(), a.end());
   sum[0] = a[0];
   for (int i = 1; i < n; i++) sum[i] = a[i] + sum[i-1];
-  vector<vector<ll>> dp(k, vector<ll>(sum[n-1]+1));
+  vector<map<int, ll>> dp(k);
   dp[0][0] = 1;
   ll cnt = 0;
   for (int i = 0; i < n; i++) {
