@@ -17,7 +17,7 @@ int main() {
   for (int i = 0; i < n; i++) cin>>a[i].p;
   for (int i = 0; i < n; i++) cin>>a[i].r;
   sort(a.begin(), a.end(), [&](P &a, P &b) { 
-    return (double)a.r/a.p < (double)b.r/b.p; 
+    return a.r*b.p < b.r*a.p; 
   });
   for (int i = 0; i < n; i++) {
     for (int j = t; j >= a[i].r; j--)
