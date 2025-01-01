@@ -16,7 +16,9 @@ int main() {
   for (int i = 0; i < n; i++) cin>>a[i].m;
   for (int i = 0; i < n; i++) cin>>a[i].p;
   for (int i = 0; i < n; i++) cin>>a[i].r;
-  sort(a.begin(), a.end(), [&](P &a, P &b) { return a.f(t) > b.f(t); });
+  sort(a.begin(), a.end(), [&](P &a, P &b) { 
+    return (double)a.r/a.p < (double)b.r/b.p; 
+  });
   for (int i = 0; i < n; i++) {
     for (int j = t; j >= a[i].r; j--)
       dp[j] = max(dp[j], a[i].m-j*a[i].p+dp[j-a[i].r]);
