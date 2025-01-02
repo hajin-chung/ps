@@ -1,5 +1,4 @@
 #include <bits/stdc++.h>
-#define INF 1000000000
 using namespace std;
 
 typedef long long int ll;
