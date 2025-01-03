@@ -53,6 +53,7 @@ bool solve() {
   }
   vector<int> hull;
   hull.push_back(0);
+  set<pair<int, int>> chk;
   ld lang = -1.0;
   while (1) {
     ld mn = 3*PI; int v, u = hull.back();
@@ -63,10 +64,13 @@ bool solve() {
         v = i; mn = uvang;
       }
     }
-    if (v == 0) break;
+    if (chk.count({u, v})) break;
+    chk.insert({u, v});
     hull.push_back(v);
     lang = mn;
   }
+  hull.pop_back();
+  hull.pop_back();
   ld ans = 0; n = hull.size();
   for (int i = 1; i < n; i++) {
     ld d = dist(a[hull[i]], a[hull[(i+1)%n]]);
