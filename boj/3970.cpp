@@ -25,6 +25,7 @@ ld atan(C &a, C &b) {
 ld ang(C &a, C &b) {
   ld p = asin((a.r-b.r)/dist(a, b));
   ld q = atan(a, b);
+  /*if (p+q<0) return p+q+2*PI;*/
   return p+q;
 }
 
@@ -80,7 +81,6 @@ void solve() {
   ld theta = ang(a[hull[n-1]], a[hull[0]])-ang(a[hull[0]], a[hull[1]]);
   ans += a[hull[0]].r*(2*PI-theta);
   cout<<ans<<"\n";
-  cout<<endl;
 }
 
 int main() {

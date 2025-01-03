@@ -18,15 +18,14 @@ ld atan(C &a, C &b) {
   ld ret = atan(dy/dx);
   if (dx < 0 && dy > 0) ret += PI;
   if (dx < 0 && dy < 0) ret += PI;
-  if (dx > 0 && dy < 0) ret += 2*PI;
   return ret;
 }
 
 ld ang(C &a, C &b) {
-  ld p = asin((a.r-b.r)/dist(a, b));
-  ld q = atan(a, b);
-  if (p+q<0) return p+q+2*PI;
-  return p+q;
+  ld ret = asin((a.r-b.r)/dist(a, b)) + atan(a, b);
+  if (ret < 0) ret += 2*PI;
+  if (ret >= 2*PI) ret -= 2*PI;
+  return ret;
 }
 
 bool solve() {
