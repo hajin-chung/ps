@@ -1,12 +1,8 @@
 #include <bits/stdc++.h>
-#define fi first
-#define se second
 using namespace std;
 
 typedef long long int ll;
-typedef pair<ll, ll> pll;
 typedef pair<ll, int> pli;
-typedef pair<int, int> pii;
 
 int main() {
   ios::sync_with_stdio(0); cin.tie(0);
@@ -26,7 +22,7 @@ int main() {
   pq.push({a[r], r});
   while (!pq.empty()) {
     auto [aa, u] = pq.top(); pq.pop();
-    if (aa > ans) break; 
+    if (aa > ans) continue; 
     chk[u] = 1;
     ans += b[u];
     for (auto v : g[u]) 
