@@ -16,18 +16,20 @@ int main() {
     g[u].push_back(v);
     g[v].push_back(u);
   }
-  vector<bool> chk(n);
+  vector<bool> chk(n), inh(n);
   priority_queue<pli, vector<pli>, greater<pli>> pq;
   ll ans = 0;
   pq.push({a[r], r});
   while (!pq.empty()) {
     auto [aa, u] = pq.top(); pq.pop();
-    if (aa > ans) continue; 
+    if (aa > ans) break; 
     chk[u] = 1;
     ans += b[u];
     for (auto v : g[u]) 
-      if (!chk[v])
+      if (!chk[v] && !inh[v]) {
+        inh[v] = 1;
         pq.push({a[v], v});
+      }
   }
   cout<<ans<<"\n";
 }
