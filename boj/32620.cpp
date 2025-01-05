@@ -1,3 +1,5 @@
+// 중복 push를 조심하자
+
 #include <bits/stdc++.h>
 using namespace std;
 
