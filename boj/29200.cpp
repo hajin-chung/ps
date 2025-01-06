@@ -15,7 +15,13 @@ int main() {
     cin>>a[i];
     sum[i] = a[i]^sum[i-1];
   }
-  for (int i = 1; i <= n; i++)
+  if (n == 1) {
+    cout<<a[1]<<"\n";
+    return 0;
+  }
+  dp[1][1] = a[1];
+  dp[2][2] = a[1]^a[2];
+  for (int i = 3; i <= n; i++)
     for (int j = 1; j <= min(i, 4); j++) {
       ll xr = i == j ? sum[i] : sum[i]^sum[i-j], mx = 0;
       for (int k = 1; k <= 4; k++) {
