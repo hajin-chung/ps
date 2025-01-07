@@ -34,14 +34,26 @@ int main() {
   a.resize(n+1); depth.resize(n+1); chk.resize(n+1); sz.resize(n+1);
   for (int i = 1; i <= n; i++) cin>>a[i];
   f(0);
+  vector<bool> cc(n+1);
+  queue<int> q;
+  q.push(0);
+  while (!q.empty()) {
+    int u = q.front(); q.pop();
+    cc[u] = 1;
+    sort(ch[u].begin(), ch[u].end(), [&](int u, int v) { return a[u] < a[v]; });
+    for (auto v : ch[u])
+      if (!cc[v]) {
+        cc[v] = 1;
+        q.push(v);
+      }
+  }
   for (int i = 0; i <= n; i++)
-    sort(ch[i].begin(), ch[i].end(), [&](int u, int v) { return a[u] < a[v]; });
+  if (sz[0] < k) {
+    cout<<"-1\n";
+    return 0;
+  }
   int u = 0;
   while (k && ch[u].size()) {
-    if (sz[u] < k) {
-      cout<<"-1\n";
-      return 0;
-    }
     ll sum = 0;
     for (auto v : ch[u]) {
       if (sz[v] + sum >= k) {
