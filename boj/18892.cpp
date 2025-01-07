@@ -32,6 +32,7 @@ int main() {
   ios::sync_with_stdio(0); cin.tie(0);
   cin>>n>>k;
   a.resize(n+1); depth.resize(n+1); chk.resize(n+1); sz.resize(n+1), idx.resize(n+1);
+  a[0] = 0;
   for (int i = 1; i <= n; i++) {
     cin>>a[i];
     idx[a[i]] = i;
