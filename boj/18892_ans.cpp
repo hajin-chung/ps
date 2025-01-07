@@ -6,6 +6,11 @@ const int INF = 1e9 + 7, N = 500;
 ll dp[N+1], cnt[N+1];
 int idx[N+1];
 
+void add(ll &x, ll y) {
+  if (x + y > INF) x = INF;
+  else x += y;
+}
+
 int main() {
   ios::sync_with_stdio(0); cin.tie(0);
   int n, k; cin>>n>>k;
@@ -23,7 +28,7 @@ int main() {
         mx = dp[j];
         cnt[i] = cnt[j];
       } else if (mx == dp[j]) {
-        cnt[i] += cnt[j];
+        add(cnt[i], cnt[j]);
       }
     }
     dp[i] = mx+1;
