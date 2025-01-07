@@ -1,12 +1,11 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-typedef long long int ll;
 const int INF = 1e9 + 7, N = 500;
-ll dp[N+1], cnt[N+1];
+int dp[N+1], cnt[N+1];
 int idx[N+1];
 
-void add(ll &x, ll y) {
+void add(int &x, int y) {
   if (x + y > INF) x = INF;
   else x += y;
 }
@@ -41,7 +40,7 @@ int main() {
   vector<int> ans;
   while (k) {
     bool flag = 0;
-    ll sum = 0;
+    int sum = 0;
     for (int i = u+1; i <= n; i++) {
       if (idx[i] < idx[u] || dp[idx[i]] != dp[idx[u]]-1) continue;
       if (cnt[idx[i]] + sum >= k) {
