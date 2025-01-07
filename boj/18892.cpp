@@ -1,19 +1,20 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+typedef long long int ll;
 int n, k;
-vector<int> a, depth, chk, ch[505], sz, idx;
-vector<int> ans;
+vector<ll> a, depth, chk, ch[505], sz, idx;
+vector<ll> ans;
 bool flag = false;
 
-int f(int u) {
+ll f(int u) {
   if (chk[u]) return depth[u]; 
   chk[u] = 1;
-  int mx = 0;
+  ll mx = 0;
   for (int i = a[u]+1; i <= n; i++)
     if (u < idx[i]) {
-      int v = idx[i];
-      int vd = f(v);
+      ll v = idx[i];
+      ll vd = f(v);
       if (mx == vd) {
         ch[u].push_back(v);
         sz[u] += sz[v];
@@ -44,7 +45,7 @@ int main() {
   }
   int u = 0;
   while (k && ch[u].size()) {
-    int sum = 0;
+    ll sum = 0;
     for (auto v : ch[u]) {
       if (sz[v] + sum >= k) {
         ans.push_back(v);
