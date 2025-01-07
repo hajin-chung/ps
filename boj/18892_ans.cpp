@@ -18,20 +18,16 @@ int main() {
     int mx = 0;
     cnt[i] = 1;
     for (int j = i+1; j <= n; j++) {
-      if (a[i] > a[j]) continue;
+      if (a[i] >= a[j]) continue;
       if (mx < dp[j]) {
         mx = dp[j];
-        cnt[i] = 1;
+        cnt[i] = cnt[j];
       } else if (mx == dp[j]) {
         cnt[i] += cnt[j];
       }
     }
     dp[i] = mx+1;
   }
-  for (int i = 0; i <= n; i++) cout<<dp[i]<<" ";
-  cout<<"\n";
-  for (int i = 0; i <= n; i++) cout<<cnt[i]<<" ";
-  cout<<"\n";
   if (cnt[0] < k) {
     cout<<"-1\n";
     return 0;
@@ -42,10 +38,10 @@ int main() {
     bool flag = 0;
     ll sum = 0;
     for (int i = u+1; i <= n; i++) {
-      if (idx[i] < u || dp[idx[i]] != dp[u]-1) continue;
+      if (idx[i] < idx[u] || dp[idx[i]] != dp[idx[u]]-1) continue;
       if (cnt[idx[i]] + sum >= k) {
         k -= sum;
-        u = idx[i];
+        u = i;
         ans.push_back(i);
         flag = 1;
         break;
