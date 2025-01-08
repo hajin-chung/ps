@@ -23,7 +23,6 @@ int main() {
   for (int l = 3; l <= 100; l++) {
     for (int i = 0; i < n; i++)
       for (int j = 0; j < n; j++) {
-        if (i == j) continue;
         for (int c = 0; c < 26; c++)
           for (auto u : g[i][c])
             for (auto v : g[j][c])
