@@ -6,7 +6,7 @@ int main() {
   int n, t; cin>>n>>t;
   vector<int> a(n);
   for (auto &i : a) cin>>i;
-  map<int, int> mp[100];
+  unordered_map<int, int> mp[100];
   if (n == 1) return 0;
   mp[0][a[0]] = -10;
   mp[1][a[0] - a[1]] = -a[1];
