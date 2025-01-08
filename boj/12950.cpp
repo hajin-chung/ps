@@ -20,6 +20,10 @@ int main() {
     for (int c = 0; c < 26; c++)
       for (auto j : g[i][c])
         dp[2][i][j] = 1;
+  if (dp[2][0][1]) {
+    cout<<"1\n";
+    return 0;
+  }
   for (int l = 3; l <= 100; l++) {
     for (int i = 0; i < n; i++)
       for (int j = 0; j < n; j++) {
