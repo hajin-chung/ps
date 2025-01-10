@@ -60,10 +60,10 @@ int main() {
   for (int u = 0; u < n; u++) {
     while (ccw(
       {0, 0}, 
-      {a[(u+1)%n].fi-a[u].fi, a[(u+1)%n].se-a[u].se}, 
-      {a[(v+1)%n].fi-a[v].fi, a[(v+1)%n].se-a[v].se}) > 0
+      {hull[(u+1)%n].fi-hull[u].fi, hull[(u+1)%n].se-hull[u].se}, 
+      {hull[(v+1)%n].fi-hull[v].fi, hull[(v+1)%n].se-hull[v].se}) > 0
     ) v = (v+1)%n;
-    ans = min(ans, area(a[u], a[(u+1)%n], a[v])/dist(a[u], a[(u+1)%n])*2.0);
+    ans = min(ans, area(hull[u], hull[(u+1)%n], hull[v])/dist(hull[u], hull[(u+1)%n])*2.0);
   }
   cout<<fixed<<setprecision(20)<<ans<<"\n";
 }
