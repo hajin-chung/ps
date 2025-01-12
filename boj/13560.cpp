@@ -4,12 +4,24 @@ using namespace std;
 int main() {
   ios::sync_with_stdio(0); cin.tie(0);
   int n; cin>>n;
-  int sum = 0, cnt = 0;
-  for (int i = 0; i < n; i++) {
-    int x; cin>>x;
-    sum += x;
-    if (x == n-1) cnt++;
+  vector<int> a(n), s(n, 0);
+  int sum = 0;
+  for (auto &i : a) {
+    cin>>i;
+    sum += i;
   }
-  if (sum != n*(n-1)/2 || cnt > 1) cout<<"-1\n";
-  else cout<<"1\n";
+  if (sum != n*(n-1)/2) {
+    cout<<"-1\n";
+    return 0;
+  }
+  sort(a.begin(), a.end(), greater<int>());
+  for (int i = 0; i < n; i++) {
+    int win = a[i]-s[i], k = n-win;
+    if (k <= i) {
+      cout<<"-1\n";
+      return 0;
+    }
+    for (int j = i+1; j < k; j++) s[j]++;
+  }
+  cout<<"1\n";
 } 
