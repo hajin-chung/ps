@@ -19,10 +19,11 @@ int main() {
     if (c1 == c2) return u.fi < v.fi;
     return c1 < c2;
   });
-  ll t = 0;
+  ll t = 0, ans = 0;
   for (int i = 0; i < n; i++) {
-    t += (fire[i].fi*t+fire[i].se)%MOD;
-    t %= MOD;
+    ll ft = (fire[i].fi*t+fire[i].se)%MOD;
+    ans = (ans+ft)%MOD;
+    t = (ans+ft)%MOD;
   }
   cout<<t<<"\n";
 }
