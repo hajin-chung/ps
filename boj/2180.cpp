@@ -18,6 +18,6 @@ int main() {
   });
   ll t = 0;
   for (int i = 0; i < n; i++)
-    t = fire[i].fi*t+fire[i].se;
+    t = (fire[i].fi*t+fire[i].se)%MOD;
   cout<<t%MOD<<"\n";
 }
