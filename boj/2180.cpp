@@ -17,7 +17,9 @@ int main() {
     return v.fi*u.se < u.fi*v.se;
   });
   ll t = 0;
-  for (int i = 0; i < n; i++)
-    t = (fire[i].fi*t+fire[i].se)%MOD;
-  cout<<t%MOD<<"\n";
+  for (int i = 0; i < n; i++) {
+    t += fire[i].fi*t+fire[i].se;
+    t %= MOD;
+  }
+  cout<<t<<"\n";
 }
