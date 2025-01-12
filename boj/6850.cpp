@@ -52,6 +52,6 @@ int main() {
   n = hull.size();
   ld sum = 0;
   for (int i = 1; i < n-1; i++)
-    sum += area(a[0], a[i], a[i+1]);
+    sum += area(hull[0], hull[i], hull[i+1]);
   cout<<(int)(sum/50.0f)<<"\n";
 }
