@@ -29,9 +29,7 @@ vector<pll> get_hull(vector<pll> &a) {
     return c > 0;
   });
   vector<pll> hull;
-  hull.push_back(a[0]); 
-  hull.push_back(a[1]);
-  for (int i = 2; i < n; i++) {
+  for (int i = 0; i < n; i++) {
     while (hull.size() >= 2) {
       pll y = hull.back(); hull.pop_back();
       pll x = hull.back();
@@ -51,9 +49,9 @@ int main() {
   vector<pll> a(n), b(m), pt;
   for (auto &[x, y] : a) cin>>x>>y;
   for (auto &[x, y] : b) cin>>x>>y;
-  for (auto [ax, ay] : a)
-    for (auto [bx, by] : b)
-      pt.push_back({ax+bx, ay+by});
+  for (int i = 0; i < n; i++)
+    for (int j = 0; j < m; j++)
+      pt.push_back({a[i].fi+b[j].fi, a[i].se+b[j].se});
   auto hull = get_hull(pt);
   cout<<hull.size()<<"\n";
   for (auto [x, y] : hull)
