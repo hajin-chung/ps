@@ -15,13 +15,13 @@ int dfs(int u, int p) {
     return 1;
   } else if (h.size() == 1 && *h.rbegin() == k) {
     ans++;
-    return -k+1;
+    return 0;
   } else if (h.size() >= 2) {
     auto h1 = prev(h.end());
     auto h2 = prev(h1);
     if (*h1 + *h2 >= k) {
       ans++;
-      return -k+1;
+      return 0;
     }
   }
   return *h.rbegin()+1;
