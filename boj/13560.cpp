@@ -17,7 +17,7 @@ int main() {
   sort(a.begin(), a.end(), greater<int>());
   for (int i = 0; i < n; i++) {
     int win = a[i]-s[i], k = n-win;
-    if (k <= i) {
+    if (k <= i || k < 0 || k > n) {
       cout<<"-1\n";
       return 0;
     }
