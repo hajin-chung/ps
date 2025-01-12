@@ -14,11 +14,14 @@ int main() {
   for (auto &[a, b] : fire)
     cin>>a>>b;
   sort(fire.begin(), fire.end(), [](pll &u, pll &v) {
-    return v.fi*u.se < u.fi*v.se;
+    ll c1 = v.fi*u.se;
+    ll c2 = u.fi*v.se; 
+    if (c1 == c2) return u.fi < v.fi;
+    return c1 < c2;
   });
   ll t = 0;
   for (int i = 0; i < n; i++) {
-    t += fire[i].fi*t+fire[i].se;
+    t += (fire[i].fi*t+fire[i].se)%MOD;
     t %= MOD;
   }
   cout<<t<<"\n";
