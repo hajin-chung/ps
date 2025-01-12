@@ -18,7 +18,7 @@ int main() {
   });
   ll ans = 0, t = 0;
   for (int i = 0; i < n; i++) {
-    ans += fire[i].fi*t+fire[i].se;
+    ans += fire[i].fi*ans+fire[i].se;
     ans %= MOD;
   }
   cout<<ans<<"\n";
