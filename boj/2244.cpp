@@ -14,7 +14,7 @@ ll dist(pll a, pll b) {
 }
 
 int ccw(pll a, pll b, pll c) {
-  int r = (b.fi-a.fi)*(c.se-a.se)-(c.fi-a.fi)*(b.se-a.se);
+  ll r = (b.fi-a.fi)*(c.se-a.se)-(c.fi-a.fi)*(b.se-a.se);
   return r < 0 ? -1 : r > 0;
 }
 
