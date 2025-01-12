@@ -1,27 +1,24 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+int solve() {
+  int n; cin>>n;
+  int sum = 0;
+  vector<int> a(n);
+  for (auto &i : a) {
+    cin>>i; sum += i;
+  }
+  if (sum != n*(n-1)/2) return -1;
+  sort(a.begin(), a.end());
+  sum = 0;
+  for (int i = 0; i < n; i++) {
+    sum += a[i];  
+    if (sum < i*(i+1)/2) return -1;
+  }
+  return 1;
+}
+
 int main() {
   ios::sync_with_stdio(0); cin.tie(0);
-  int n; cin>>n;
-  vector<int> a(n), s(n, 0);
-  int sum = 0;
-  for (auto &i : a) {
-    cin>>i;
-    sum += i;
-  }
-  if (sum != n*(n-1)/2) {
-    cout<<"-1\n";
-    return 0;
-  }
-  sort(a.begin(), a.end(), greater<int>());
-  for (int i = 0; i < n; i++) {
-    int win = a[i]-s[i], k = n-win;
-    if (k <= i || k < 0 || k > n) {
-      cout<<"-1\n";
-      return 0;
-    }
-    for (int j = i+1; j < k; j++) s[j]++;
-  }
-  cout<<"1\n";
+  cout<<solve()<<"\n";
 } 
