@@ -14,6 +14,9 @@ int main() {
   for (auto &[a, b] : fire)
     cin>>a>>b;
   sort(fire.begin(), fire.end(), [](pll &u, pll &v) -> bool {
+    if(u.se == 0 && v.se == 0) return 1;
+    if(u.se == 0) return 1;
+    if(v.se == 0) return 0;
     return u.fi * v.se > v.fi * u.se;
   });
   ll t = 0, ans = 0;
@@ -22,5 +25,5 @@ int main() {
     ans = (ans+ft)%MOD;
     t = ans;
   }
-  cout<<ans<<"\n";
+  cout<<t<<"\n";
 }
