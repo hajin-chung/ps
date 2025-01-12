@@ -6,29 +6,31 @@ int n;
 int main() {
   ios::sync_with_stdio(0); cin.tie(0);
   int x; cin>>n;
-  priority_queue<int, vector<int>, greater<int>> pq;
+  multiset<int> ms;
   for (int i = 0; i < n; i++) {
     cin>>x;
-    pq.push(x);
+    ms.insert(x);
   }
   vector<int> ans;
-  int f = pq.top(); pq.pop();
-  ans.push_back(f);
-  while (!pq.empty()) {
-    int f = ans.back();
-    int s = pq.top(); pq.pop();
-    if (f+1 == s) {
-      if (pq.empty()) {
-        int f = ans.back(); ans.pop_back();
-        ans.push_back(s);
-        ans.push_back(f);
-        continue;
+  while (!ms.empty()) {
+    if (*ms.begin() + 1 == *ms.rbegin()) {
+      for (auto it = ms.rbegin(); it != ms.rend(); it++)
+        ans.push_back(*it);
+      ms.clear();
+    } else {
+      if (ans.empty()) {
+        ans.push_back(*ms.begin());
+        ms.erase(ms.begin());
+      } else if (ans.back() + 1 == *ms.begin()) {
+        auto next = ms.upper_bound(ans.back()+1);
+        if (next == ms.end()) __builtin_unreachable();
+        ans.push_back(*next);
+        ms.erase(next);
       } else {
-        int t = pq.top(); pq.pop();
-        ans.push_back(t);
+        ans.push_back(*ms.begin());
+        ms.erase(ms.begin());
       }
     }
-    ans.push_back(s);
   }
   for (auto i : ans) 
     cout<<i<<" ";
