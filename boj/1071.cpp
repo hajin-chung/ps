@@ -1,14 +1,12 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int n;
-
 int main() {
   ios::sync_with_stdio(0); cin.tie(0);
-  int x; cin>>n;
+  int n; cin>>n;
   multiset<int> ms;
   for (int i = 0; i < n; i++) {
-    cin>>x;
+    int x; cin>>x;
     ms.insert(x);
   }
   vector<int> ans;
