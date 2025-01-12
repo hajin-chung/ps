@@ -12,16 +12,16 @@ int dfs(int u, int p) {
     if (v != p)
       h.insert(dfs(v, u));
   if (h.size() == 0) {
-    return 0;
-  } else if (h.size() == 1 && *h.rbegin() + 1 == k) {
+    return 1;
+  } else if (h.size() == 1 && *h.rbegin() == k) {
     ans++;
-    return 0;
+    return -k+1;
   } else if (h.size() >= 2) {
-    int h1 = *h.rbegin(); h.erase(--h.end());
-    int h2 = *h.rbegin();
-    if (h1 + h2 + 2 > k) {
+    auto h1 = prev(h.end());
+    auto h2 = prev(h1);
+    if (*h1 + *h2 >= k) {
       ans++;
-      return 0;
+      return -k+1;
     }
   }
   return *h.rbegin()+1;
