@@ -20,6 +20,7 @@ int ccw(pll a, pll b, pll c) {
 
 vector<pll> get_hull(vector<pll> &a) {
   int n = a.size();
+  a.erase(unique(a.begin(), a.end()), a.end());
   for (int i = 1; i < n; i++) if (a[i] < a[0]) swap(a[i], a[0]);
   sort(a.begin(), a.end(), [&](pll u, pll v) {
     int c = ccw(a[0], u, v);
