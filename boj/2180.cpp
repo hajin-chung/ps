@@ -13,11 +13,11 @@ int main() {
   vector<pll> fire(n);
   for (auto &[a, b] : fire)
     cin>>a>>b;
-  sort(fire.begin(), fire.end(), [](pll &u, pll &v) {
-    ll c1 = v.fi*u.se;
-    ll c2 = u.fi*v.se; 
-    if (c1 == c2) return u.fi < v.fi;
-    return c1 < c2;
+  sort(fire.begin(), fire.end(), [](pll &u, pll &v) -> bool {
+    if(u.se == 0 && v.se == 0) return 0;
+    if(u.se == 0) return 1;
+    if(v.se == 0) return 0;
+    return (double)u.fi / u.se > (double)v.fi / v.se;
   });
   ll t = 0, ans = 0;
   for (int i = 0; i < n; i++) {
@@ -25,5 +25,5 @@ int main() {
     ans = (ans+ft)%MOD;
     t = (ans+ft)%MOD;
   }
-  cout<<t<<"\n";
+  cout<<ans<<"\n";
 }
