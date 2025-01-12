@@ -23,7 +23,7 @@ int main() {
   for (int i = 0; i < n; i++) {
     ll ft = (fire[i].fi*t+fire[i].se)%MOD;
     ans = (ans+ft)%MOD;
-    t = (ans+ft)%MOD;
+    t = ans;
   }
   cout<<ans<<"\n";
 }
