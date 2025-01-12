@@ -14,10 +14,7 @@ int main() {
   for (auto &[a, b] : fire)
     cin>>a>>b;
   sort(fire.begin(), fire.end(), [](pll &u, pll &v) -> bool {
-    if(u.se == 0 && v.se == 0) return 0;
-    if(u.se == 0) return 1;
-    if(v.se == 0) return 0;
-    return (double)u.fi / u.se > (double)v.fi / v.se;
+    return u.fi * v.se > v.fi * u.se;
   });
   ll t = 0, ans = 0;
   for (int i = 0; i < n; i++) {
