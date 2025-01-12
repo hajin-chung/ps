@@ -16,7 +16,7 @@ int main() {
     ll v, c, k; cin>>v>>c>>k;
     for (int ki = 1; ki <= k; ki++)
       for (int j = v*ki; j <= m; j++)
-        if (dp[j-v*ki] != -1 && dp[j] < dp[j-v*ki]+c*ki) {
+        if (dp[j-v*ki] != -1 && tmp[j] < dp[j-v*ki]+c*ki) {
           tmp[j] = dp[j-v*ki] + c*ki;
           ans = max(ans, tmp[j]);
         }
