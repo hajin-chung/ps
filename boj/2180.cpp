@@ -1,11 +1,11 @@
 #include <bits/stdc++.h>
-#define MOD 40000
 #define fi first
 #define se second
 using namespace std;
 
-typedef long long int ll;
+typedef unsigned long long int ll;
 typedef pair<ll, ll> pll;
+const ll MOD = 40000;
 
 int main() {
   ios::sync_with_stdio(0); cin.tie(0);
