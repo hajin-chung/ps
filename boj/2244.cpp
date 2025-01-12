@@ -1,45 +1,38 @@
 #include <bits/stdc++.h>
+#define fi first
+#define se second
 using namespace std;
 
 typedef long long int ll;
 typedef long double ld;
-struct P {
-  int x, y;
-  bool operator<(P &rhs) {
-    if (x == rhs.x) return y < rhs.y;
-    return x < rhs.x;
-  }
-  P operator+(const P &rhs) {
-    return {x+rhs.x, y+rhs.y};
-  }
-};
+typedef pair<ll, ll> pll;
 
-ll dist(P a, P b) {
-  ll dx = a.x-b.x;
-  ll dy = a.y-b.y;
+ll dist(pll a, pll b) {
+  ll dx = a.fi-b.fi;
+  ll dy = a.se-b.se;
   return dx*dx+dy*dy;
 }
 
-int ccw(P a, P b, P c) {
-  int r = (b.x-a.x)*(c.y-a.y)-(c.x-a.x)*(b.y-a.y);
+int ccw(pll a, pll b, pll c) {
+  int r = (b.fi-a.fi)*(c.se-a.se)-(c.fi-a.fi)*(b.se-a.se);
   return r < 0 ? -1 : r > 0;
 }
 
-vector<P> get_hull(vector<P> &a) {
+vector<pll> get_hull(vector<pll> &a) {
   int n = a.size();
   for (int i = 1; i < n; i++) if (a[i] < a[0]) swap(a[i], a[0]);
-  sort(a.begin(), a.end(), [&](P u, P v) {
+  sort(a.begin(), a.end(), [&](pll u, pll v) {
     int c = ccw(a[0], u, v);
     if (c == 0) return dist(a[0], u) < dist(a[0], v);
     return c > 0;
   });
-  vector<P> hull;
+  vector<pll> hull;
   hull.push_back(a[0]); 
   hull.push_back(a[1]);
   for (int i = 2; i < n; i++) {
     while (hull.size() >= 2) {
-      P y = hull.back(); hull.pop_back();
-      P x = hull.back();
+      pll y = hull.back(); hull.pop_back();
+      pll x = hull.back();
       if (ccw(x, y, a[i]) > 0) {
         hull.push_back(y);
         break;
@@ -53,7 +46,7 @@ vector<P> get_hull(vector<P> &a) {
 int main() {
   ios::sync_with_stdio(0); cin.tie(0);
   int n, m; cin>>n>>m;
-  vector<P> a(n), b(m), pt;
+  vector<pll> a(n), b(m), pt;
   for (auto &[x, y] : a) cin>>x>>y;
   for (auto &[x, y] : b) cin>>x>>y;
   for (auto [ax, ay] : a)
