@@ -36,9 +36,9 @@ void update(int node, int l, int r, int idx, ll v) {
 }
 void update(int s, int e, ll v) {
   update(s, v); update(e+1, -v);
-  ll ns = sum(s), ne = sum(e);
+  ll ns = sum(s)-sum(s-1), ne = sum(e+1)-sum(e);
   update(1, 1, n, s, abs(ns));
-  update(1, 1, n, e, abs(ne));
+  update(1, 1, n, e+1, abs(ne));
 }
 
 ll query(int node, int l, int r, int s, int e) {
@@ -53,7 +53,7 @@ ll query(int node, int l, int r, int s, int e) {
   else if (qr != -1) ret = qr;
   return ret;
 }
-ll query(int s, int e) { return query(1, 1, n, s, e); }
+ll query(int s, int e) { return gcd(sum(s), query(1, 1, n, s, e)); }
 
 int main() {
   ios::sync_with_stdio(0); cin.tie(0);  
