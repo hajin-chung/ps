@@ -47,13 +47,16 @@ ll query(int node, int l, int r, int s, int e) {
   int m = (l+r)>>1;
   ll ql = query(node*2, l, m, s, e);
   ll qr = query(node*2+1, m+1, r, s, e);
-  ll ret = 0;
-  if (ql != -1 && qr != -1) ret = gcd(ql, qr);
-  else if (ql != -1) ret = ql;
-  else if (qr != -1) ret = qr;
+  if (ql != -1 && qr != -1) return gcd(ql, qr);
+  else if (ql != -1) return ql;
+  else if (qr != -1) return qr;
+  return -1;
+}
+ll query(int s, int e) { 
+  ll ret = sum(s);
+  if (s < e) ret = gcd(ret, query(1, 1, n, s+1, e));
   return ret;
 }
-ll query(int s, int e) { return gcd(sum(s), query(1, 1, n, s, e)); }
 
 int main() {
   ios::sync_with_stdio(0); cin.tie(0);  
@@ -70,11 +73,3 @@ int main() {
   }
 }
 
-/*
- * gcd(a, b, ..) = gcd(a, |b-a|, |c-b|, |d-c|, ...)
- * bit: sum over a1-0, a2-a1, a3-a2, ...
- * => b1 +..+b3 = a3
- * seg: gcd seg |b1|, ... |bn|
- * on update: bit update a_s + v, a_e+1 - v
- * seg update |b_s|, |b_e+1|
-* */
