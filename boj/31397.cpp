@@ -53,7 +53,7 @@ int main() {
     vector<pll> p;
     p.push_back(s); 
     int i = sidx;
-    while (i != eidx) {
+    while (i != eidx%n) {
       p.push_back(a[i]);
       i = (i+1)%n;
     }
