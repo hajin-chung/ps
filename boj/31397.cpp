@@ -23,42 +23,49 @@ ld area(vector<pll> &p) {
     ret += p[i].fi*p[(i+1)%n].se-p[i].se*p[(i+1)%n].fi;
   return abs(ret);
 }
-
-ld relerr(ld t, ld a) { return (t-a)/a; }
+pair<ld,int> getl(ld l){
+  int i=0;
+  while(1){
+    if(l>=d[i]&&l<d[i+1]) break; 
+    i++; 
+  }
+  ld a = l-d[i], b = d[(i+1)%n]-l; 
+  return {a/(a+b),i}; 
+}
 
 int main() {
   ios::sync_with_stdio(0); cin.tie(0);
   cout<<fixed<<setprecision(12);
-  cin>>n; a.resize(n); d.resize(n, 0);
+  cin>>n; a.resize(n); d.resize(n+1, 0);
   for (int i = 0; i < n; i++) {
     cin>>a[i].fi>>a[i].se;
     if (i > 0) d[i] = d[i-1] + dist(a[i-1], a[i]);
   }
+  d[n] = d[n-1] + dist(a[n-1], a[0]);
   ld c = 0;
   for (int i = 0; i < n; i++) c += dist(a[i], a[(i+1)%n]);
   ld l = 0, r = c/2, tarea = area(a);
   ld st, et, pa;
-  int sidx, eidx;
-  int trial = 100;
+  int si, ei;
+  int trial = 10;
   while (trial--) {
     ld offset = (l+r)/2;
-    sidx = upper_bound(d.begin(), d.end(), offset)-d.begin();
-    st = (offset-d[sidx-1])/dist(a[sidx%n], a[sidx-1]);
-    pll s = {a[sidx-1].fi*(1-st)+a[sidx%n].fi*st, a[sidx-1].se*(1-st)+a[sidx%n].se*st};
-    eidx = upper_bound(d.begin(), d.end(), offset+c/2)-d.begin();
-    et = (offset+c/2-d[eidx-1])/dist(a[eidx%n], a[eidx-1]);
-    pll e = {a[eidx-1].fi*(1-et)+a[eidx%n].fi*et, a[eidx-1].se*(1-et)+a[eidx%n].se*et};
+    auto [sii, stt] = getl(offset);
+    si = sii, st = stt;
+    auto [eii, ett] = getl(offset+c/2);
+    ei = eii, et = ett;
+    pll s = {a[si].fi*(1-st)+a[(si+1)%n].fi*st, a[si].se*(1-st)+a[(si+1)%n].se*st};
+    pll e = {a[ei].fi*(1-et)+a[(ei+1)%n].fi*et, a[ei].se*(1-et)+a[(ei+1)%n].se*et};
     vector<pll> p;
     p.push_back(s); 
-    int i = sidx;
-    assert(sidx<eidx);
-    for (int i = sidx; i < eidx; i++) p.push_back(a[i]);
+    for (int i = si+1; i <= ei; i++) p.push_back(a[i]);
     p.push_back(e);
     pa = area(p);
+    cout<<pa<<" "<<tarea/2<<endl;
     if (pa < tarea/2) l = offset;
     else if(pa > tarea/2) r = offset;
   }
   cout<<"YES\n";
-  cout<<sidx<<" "<<st<<"\n";
-  cout<<eidx<<" "<<et<<"\n";
+  cout<<si<<" "<<st<<"\n";
+  cout<<ei<<" "<<et<<"\n";
 }
