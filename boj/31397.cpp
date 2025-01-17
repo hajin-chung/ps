@@ -41,7 +41,7 @@ int main() {
   ld l = 0, r = c/2, tarea = area(a);
   ld st, et, pa;
   int sidx, eidx;
-  int trial = 30;
+  int trial = 60;
   while (trial--) {
     ld offset = (l+r)/2;
     sidx = upper_bound(d.begin(), d.end(), offset)-d.begin();
@@ -58,8 +58,9 @@ int main() {
     if (pa < tarea/2) l = offset;
     else if(pa > tarea/2) r = offset;
   }
-  if (abs(pa*2-tarea)>EPS && abs(relerr(pa*2, tarea))>EPS) cout<<"NO\n";
-  else {
+  if (abs(pa-tarea/2)>EPS && abs(relerr(pa, tarea/2))>EPS) {
+    cout<<"NO\n";
+  } else {
     cout<<"YES\n";
     cout<<sidx<<" "<<st<<"\n";
     cout<<eidx<<" "<<et<<"\n";
