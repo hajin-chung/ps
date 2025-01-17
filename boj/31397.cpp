@@ -39,10 +39,11 @@ int main() {
   ld c = 0;
   for (int i = 0; i < n; i++) c += dist(a[i], a[(i+1)%n]);
   ld l = 0, r = c/2, tarea = area(a);
-  ld st, et, a1, a2;
+  ld st, et, pa;
   int sidx, eidx;
-  int trial = 100;
-  while (trial--) {
+  int trial = 0;
+  while (l < r && abs(r-l)>EPS) {
+    trial++;
     ld offset = (l+r)/2;
     sidx = upper_bound(d.begin(), d.end(), offset)-d.begin();
     st = (offset-d[sidx-1])/dist(a[sidx], a[sidx-1]);
@@ -50,28 +51,16 @@ int main() {
     eidx = upper_bound(d.begin(), d.end(), offset+c/2)-d.begin();
     et = (offset+c/2-d[eidx-1])/dist(a[eidx%n], a[eidx-1]);
     pll e = {a[eidx-1].fi*(1-et)+a[eidx%n].fi*et, a[eidx-1].se*(1-et)+a[eidx%n].se*et};
-    vector<pll> p1, p2;
-    p1.push_back(s); 
-    for (int i = sidx; i < eidx; i++) p1.push_back(a[i]);
-    p1.push_back(e);
-    p2.push_back(e); 
-    for (int i = eidx; i < n; i++) p2.push_back(a[i]);
-    for (int i = 0; i < sidx; i++) p2.push_back(a[i]);
-    p2.push_back(s);
-    /*cout<<"\n";*/
-    /*cout<<offset<<" "<<offset+c/2<<" "<<c<<"\n";*/
-    /*cout<<sidx<<" "<<eidx<<"\n";*/
-    /*cout<<s.fi<<" "<<s.se<<" "<<e.fi<<" "<<e.se<<"\n";*/
-    /*cout<<"p1\n";*/
-    /*for (auto [x, y] : p1) cout<<x<<" "<<y<<"\n";*/
-    /*cout<<"p2\n";*/
-    /*for (auto [x, y] : p2) cout<<x<<" "<<y<<"\n";*/
-    a1 = area(p1), a2 = area(p2);
-    if (a1 < a2) l = offset;
-    else if(a1 > a2) r = offset;
-    if (abs(a1-a2)<EPS) break;
+    vector<pll> p;
+    p.push_back(s); 
+    for (int i = sidx; i < eidx; i++) p.push_back(a[i]);
+    p.push_back(e);
+    pa = area(p);
+    if (pa < tarea/2) l = offset;
+    else if(pa > tarea/2) r = offset;
+    if (abs(2*pa-tarea/2)<EPS) break;
   }
-  if (abs(a1-a2)>EPS || abs(a1*2-tarea)>EPS) cout<<"NO\n";
+  if (abs(pa*2-tarea)>EPS) cout<<"NO\n";
   else {
     cout<<"YES\n";
     cout<<sidx<<" "<<st<<"\n";
