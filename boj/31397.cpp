@@ -26,6 +26,8 @@ ld area(vector<pll> &p) {
   return ret;
 }
 
+ld relerr(ld t, ld a) { return (t-a)/a; }
+
 int main() {
   ios::sync_with_stdio(0); cin.tie(0);
   cout<<fixed<<setprecision(10);
@@ -56,7 +58,7 @@ int main() {
     if (pa < tarea/2) l = offset;
     else if(pa > tarea/2) r = offset;
   }
-  if (abs(pa*2-tarea)>EPS) cout<<"NO\n";
+  if (abs(pa*2-tarea)>EPS && abs(relerr(pa*2, tarea))>EPS) cout<<"NO\n";
   else {
     cout<<"YES\n";
     cout<<sidx<<" "<<st<<"\n";
