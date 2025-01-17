@@ -62,7 +62,7 @@ int main() {
   ld l = 0, r = c/2, tarea = area(a);
   bool flag = true;
   if (f(l) > tarea/2) flag = false;
-  int trial = 450;
+  int trial = 100;
   while (trial--) {
     ld m = (l+r)/2;
     ld pa = f(m);
