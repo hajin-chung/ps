@@ -26,10 +26,10 @@ ld area(vector<pll> &p) {
 pair<ld,int> getl(ld l){
   int i=0;
   while(1){
-    if(l>=d[i]&&l<d[i+1]) break; 
+    if(d[i] <= l && l < d[i+1]) break; 
     i++; 
   }
-  ld a = l-d[i], b = d[(i+1)%n]-l; 
+  ld a = l-d[i], b = d[i+1]-l; 
   return {a/(a+b),i}; 
 }
 
@@ -60,15 +60,21 @@ int main() {
   ld c = 0;
   for (int i = 0; i < n; i++) c += dist(a[i], a[(i+1)%n]);
   ld l = 0, r = c/2, tarea = area(a);
+  bool flag = true;
+  if (f(l) > tarea/2) flag = false;
   int trial = 450;
   while (trial--) {
     ld m = (l+r)/2;
     ld pa = f(m);
-    cout<<pa<<" "<<tarea/2<<endl;
-    if (pa < tarea/2) l = m;
-    else if(pa > tarea/2) r = m;
+    if (pa > tarea/2) {
+      if (flag) r = m;
+      else l = m;
+    } else {
+      if (flag) l = m;
+      else r = m;
+    }
   }
   cout<<"YES\n";
-  cout<<si<<" "<<st<<"\n";
-  cout<<ei<<" "<<et<<"\n";
+  cout<<si+1<<" "<<st<<"\n";
+  cout<<ei+1<<" "<<et<<"\n";
 }
