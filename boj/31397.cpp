@@ -16,14 +16,12 @@ ld dist(pll a, pll b) {
   return sqrt(dx*dx+dy*dy);
 }
 
-ld area(pll a, pll b, pll c) {
-  return abs(a.fi*b.se+b.fi*c.se+c.fi*a.se-a.se*b.fi-b.se*c.fi-c.se*a.fi)/2; }
-
 ld area(vector<pll> &p) {
   ld ret = 0;
-  for (int i = 1; i < p.size()-1; i++)
-    ret += area(p[0], p[i], p[i+1]);
-  return ret;
+  int n = p.size();
+  for (int i = 0; i < p.size(); i++)
+    ret += p[i].fi*p[(i+1)%n].se-p[i].se*p[(i+1)%n].fi;
+  return abs(ret);
 }
 
 ld relerr(ld t, ld a) { return (t-a)/a; }
