@@ -50,9 +50,9 @@ int main() {
   int trial = 10;
   while (trial--) {
     ld offset = (l+r)/2;
-    auto [sii, stt] = getl(offset);
+    auto [stt, sii] = getl(offset);
     si = sii, st = stt;
-    auto [eii, ett] = getl(offset+c/2);
+    auto [ett, sii] = getl(offset+c/2);
     ei = eii, et = ett;
     pll s = {a[si].fi*(1-st)+a[(si+1)%n].fi*st, a[si].se*(1-st)+a[(si+1)%n].se*st};
     pll e = {a[ei].fi*(1-et)+a[(ei+1)%n].fi*et, a[ei].se*(1-et)+a[(ei+1)%n].se*et};
