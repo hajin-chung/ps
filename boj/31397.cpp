@@ -30,7 +30,7 @@ ld relerr(ld t, ld a) { return (t-a)/a; }
 
 int main() {
   ios::sync_with_stdio(0); cin.tie(0);
-  cout<<fixed<<setprecision(10);
+  cout<<fixed<<setprecision(12);
   cin>>n; a.resize(n); d.resize(n);
   for (int i = 0; i < n; i++) {
     cin>>a[i].fi>>a[i].se;
@@ -58,11 +58,7 @@ int main() {
     if (pa < tarea/2) l = offset;
     else if(pa > tarea/2) r = offset;
   }
-  if (abs(pa-tarea/2)>EPS && abs(relerr(pa, tarea/2))>EPS) {
-    cout<<"NO\n";
-  } else {
-    cout<<"YES\n";
-    cout<<sidx<<" "<<st<<"\n";
-    cout<<eidx<<" "<<et<<"\n";
-  }
+  cout<<"YES\n";
+  cout<<sidx<<" "<<st<<"\n";
+  cout<<eidx<<" "<<et<<"\n";
 }
