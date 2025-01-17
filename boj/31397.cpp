@@ -31,7 +31,7 @@ ld relerr(ld t, ld a) { return (t-a)/a; }
 int main() {
   ios::sync_with_stdio(0); cin.tie(0);
   cout<<fixed<<setprecision(12);
-  cin>>n; a.resize(n); d.resize(n);
+  cin>>n; a.resize(n); d.resize(n, 0);
   for (int i = 0; i < n; i++) {
     cin>>a[i].fi>>a[i].se;
     if (i > 0) d[i] = d[i-1] + dist(a[i-1], a[i]);
@@ -57,6 +57,10 @@ int main() {
     pa = area(p);
     if (pa < tarea/2) l = offset;
     else if(pa > tarea/2) r = offset;
+  }
+  if (fabs(pa * 2 - tarea) > 1e-6 && fabs(relerr(pa * 2, tarea)) > 1e-6) {
+    cout << "NO\n";
+    return 0;
   }
   cout<<"YES\n";
   cout<<sidx<<" "<<st<<"\n";
