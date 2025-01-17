@@ -55,7 +55,6 @@ int main() {
     pa = area(p);
     if (pa < tarea/2) l = offset;
     else if(pa > tarea/2) r = offset;
-    if (abs(2*pa-tarea)<EPS) break;
   }
   if (abs(pa*2-tarea)>EPS) cout<<"NO\n";
   else {
