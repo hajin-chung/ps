@@ -45,8 +45,8 @@ int main() {
   while (trial--) {
     ld offset = (l+r)/2;
     sidx = upper_bound(d.begin(), d.end(), offset)-d.begin();
-    st = (offset-d[sidx-1])/dist(a[sidx], a[sidx-1]);
-    pll s = {a[sidx-1].fi*(1-st)+a[sidx].fi*st, a[sidx-1].se*(1-st)+a[sidx].se*st};
+    st = (offset-d[sidx-1])/dist(a[sidx%n], a[sidx-1]);
+    pll s = {a[sidx-1].fi*(1-st)+a[sidx%n].fi*st, a[sidx-1].se*(1-st)+a[sidx%n].se*st};
     eidx = upper_bound(d.begin(), d.end(), offset+c/2)-d.begin();
     et = (offset+c/2-d[eidx-1])/dist(a[eidx%n], a[eidx-1]);
     pll e = {a[eidx-1].fi*(1-et)+a[eidx%n].fi*et, a[eidx-1].se*(1-et)+a[eidx%n].se*et};
