@@ -32,18 +32,14 @@ int main() {
   cin>>n; a.resize(n); d.resize(n);
   for (int i = 0; i < n; i++) {
     cin>>a[i].fi>>a[i].se;
-    if (i > 0) {
-      d[i] = d[i-1] + dist(a[i-1], a[i]);
-    }
+    if (i > 0) d[i] = d[i-1] + dist(a[i-1], a[i]);
   }
   ld c = 0;
   for (int i = 0; i < n; i++) c += dist(a[i], a[(i+1)%n]);
   ld l = 0, r = c/2, tarea = area(a);
   ld st, et, pa;
   int sidx, eidx;
-  int trial = 0;
-  while (l < r && abs(r-l)>EPS) {
-    trial++;
+  while (l < r) {
     ld offset = (l+r)/2;
     sidx = upper_bound(d.begin(), d.end(), offset)-d.begin();
     st = (offset-d[sidx-1])/dist(a[sidx], a[sidx-1]);
@@ -58,7 +54,7 @@ int main() {
     pa = area(p);
     if (pa < tarea/2) l = offset;
     else if(pa > tarea/2) r = offset;
-    if (abs(2*pa-tarea/2)<EPS) break;
+    if (abs(2*pa-tarea)<EPS) break;
   }
   if (abs(pa*2-tarea)>EPS) cout<<"NO\n";
   else {
