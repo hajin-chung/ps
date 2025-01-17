@@ -39,7 +39,8 @@ int main() {
   ld l = 0, r = c/2, tarea = area(a);
   ld st, et, pa;
   int sidx, eidx;
-  while (l < r) {
+  int trial = 30;
+  while (trial--) {
     ld offset = (l+r)/2;
     sidx = upper_bound(d.begin(), d.end(), offset)-d.begin();
     st = (offset-d[sidx-1])/dist(a[sidx], a[sidx-1]);
