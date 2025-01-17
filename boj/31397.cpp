@@ -33,6 +33,21 @@ pair<ld,int> getl(ld l){
   return {a/(a+b),i}; 
 }
 
+ld st, et; int si, ei;
+ld f(ld m) {
+  auto [stt, sii] = getl(m);
+  si = sii, st = stt;
+  auto [ett, eii] = getl(m+d[n]/2);
+  ei = eii, et = ett;
+  pll s = {a[si].fi*(1-st)+a[(si+1)%n].fi*st, a[si].se*(1-st)+a[(si+1)%n].se*st};
+  pll e = {a[ei].fi*(1-et)+a[(ei+1)%n].fi*et, a[ei].se*(1-et)+a[(ei+1)%n].se*et};
+  vector<pll> p;
+  p.push_back(s); 
+  for (int i = si+1; i <= ei; i++) p.push_back(a[i]);
+  p.push_back(e);
+  return area(p);
+}
+
 int main() {
   ios::sync_with_stdio(0); cin.tie(0);
   cout<<fixed<<setprecision(12);
@@ -45,25 +60,13 @@ int main() {
   ld c = 0;
   for (int i = 0; i < n; i++) c += dist(a[i], a[(i+1)%n]);
   ld l = 0, r = c/2, tarea = area(a);
-  ld st, et, pa;
-  int si, ei;
-  int trial = 10;
+  int trial = 450;
   while (trial--) {
-    ld offset = (l+r)/2;
-    auto [stt, sii] = getl(offset);
-    si = sii, st = stt;
-    auto [ett, sii] = getl(offset+c/2);
-    ei = eii, et = ett;
-    pll s = {a[si].fi*(1-st)+a[(si+1)%n].fi*st, a[si].se*(1-st)+a[(si+1)%n].se*st};
-    pll e = {a[ei].fi*(1-et)+a[(ei+1)%n].fi*et, a[ei].se*(1-et)+a[(ei+1)%n].se*et};
-    vector<pll> p;
-    p.push_back(s); 
-    for (int i = si+1; i <= ei; i++) p.push_back(a[i]);
-    p.push_back(e);
-    pa = area(p);
+    ld m = (l+r)/2;
+    ld pa = f(m);
     cout<<pa<<" "<<tarea/2<<endl;
-    if (pa < tarea/2) l = offset;
-    else if(pa > tarea/2) r = offset;
+    if (pa < tarea/2) l = m;
+    else if(pa > tarea/2) r = m;
   }
   cout<<"YES\n";
   cout<<si<<" "<<st<<"\n";
