@@ -53,10 +53,8 @@ int main() {
     vector<pll> p;
     p.push_back(s); 
     int i = sidx;
-    while (i != eidx%n) {
-      p.push_back(a[i]);
-      i = (i+1)%n;
-    }
+    assert(sidx<eidx);
+    for (int i = sidx; i < eidx; i++) p.push_back(a[i]);
     p.push_back(e);
     pa = area(p);
     if (pa < tarea/2) l = offset;
