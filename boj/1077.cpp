@@ -12,16 +12,18 @@ int ccw(pll a, pll b, pll c) {
   return r < 0 ? -1 : r > 0;
 }
 
+ld dist(pll a, pll b) {
+  ld dx = a.fi-b.fi;
+  ld dy = a.se-b.se; 
+  return (dx*dx+dy*dy);
+}
+
 bool inside(vector<pll> &a, pll p) {
-  int n = a.size(), l = 1, r = n-1;
-  if (ccw(a[0], a[1], p) < 0) return false;
-  if (ccw(a[0], a[n-1], p) > 0) return false;
-  while (l + 1 < r) {
-    int m = (l+r)>>1;
-    if (ccw(a[0], a[m], p) > 0) l = m;
-    else r = m;
-  }
-  return ccw(a[l], a[r], p) >= 0;
+  int n = a.size();
+  for (int i = 0; i < n; i++)
+    if (ccw(a[i], a[(i+1)%n], p) < 0)
+      return false;
+  return true;
 }
 
 void intersect(set<pll> &arr, pll a, pll b, pll c, pll d) {
@@ -69,9 +71,15 @@ int main() {
   vector<pll> c;
   for (auto p : overlap) c.push_back(p);
   int cn = c.size();
+  if (cn <= 2) {
+    cout<<"0.0\n";
+    return 0;
+  }
   for (int i = 1; i < cn; i++) if (c[0] > c[i]) swap(c[0], c[i]);
   sort(c.begin()+1, c.end(), [&](pll a, pll b) {
-    return ccw(c[0], a, b) == 1;
+    int r = ccw(c[0], a, b);
+    if (r == 0) return dist(c[0], a) < dist(c[0], b);
+    return r > 0;
   });
   cout<<fixed<<setprecision(17)<<area(c)<<"\n";
 }
