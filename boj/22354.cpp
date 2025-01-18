@@ -15,12 +15,10 @@ int main() {
       v[v.size()-1] = max(v.back(), a[i]);
     else v.push_back(a[i]);
   }
+  v[0] = v[n-1] = 0;
   n = v.size();
-  if (n == 1) { cout<<v[0]<<"\n"; return 0; }
-  if (n == 2) { cout<<max(v[0], v[1])<<"\n"; return 0; }
-  vector<ll> dp(n);
-  dp[0] = v[0]; dp[1] = v[1]; dp[2] = (ll)v[2]+(ll)v[0];
-  for (int i = 3; i < n-1; i++)
-    dp[i] = (ll)v[i] + max(dp[i-2], dp[i-3]);
-  cout<<*max_element(dp.begin(), dp.end())<<"\n";
+  sort(v.begin(), v.end(), greater<int>());
+  ll sum = 0;
+  for (int i = 0; i < (n-1)/2; i++) sum += (ll)v[i];
+  cout<<sum<<"\n";
 }
