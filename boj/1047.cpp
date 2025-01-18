@@ -47,6 +47,6 @@ int main() {
       }
       if (sum >= cir && ans > cut) ans = cut;
     }
-  if (ans == INF) cout<<n-1<<"\n";
+  if (ans == INF || ans == n) cout<<n-1<<"\n";
   else cout<<ans<<"\n";
 }
