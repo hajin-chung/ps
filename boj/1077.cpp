@@ -8,7 +8,7 @@ typedef pair<ld, ld> pll;
 set<pll> overlap;
 
 int ccw(pll a, pll b, pll c) {
-  int r = (b.fi-a.fi)*(c.se-a.se)-(b.se-a.se)*(c.fi-a.fi);
+  ld r = (b.fi-a.fi)*(c.se-a.se)-(b.se-a.se)*(c.fi-a.fi);
   return r < 0 ? -1 : r > 0;
 }
 
