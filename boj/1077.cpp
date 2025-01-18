@@ -27,22 +27,22 @@ bool inside(vector<pll> &a, pll p) {
 void intersect(set<pll> &arr, pll a, pll b, pll c, pll d) {
   double xi, yi;
   if(ccw(a,b,c)*ccw(a,b,d)<0 && ccw(c,d,a)*ccw(c,d,b)<0) {
-		if(a.fi==b.fi) {
-			xi=a.fi;
-			yi=(d.se-c.se)/(d.fi-c.fi)*(xi-c.fi)+c.se;
-			arr.insert({xi,yi});
-		} else if(c.fi==d.fi) {
-			xi=c.fi;
-			yi=(b.se-a.se)/(b.fi-a.fi)*(xi-a.fi)+a.se;
-			arr.insert({xi,yi});
-		} else {
-			double m1=(b.se-a.se)/(b.fi-a.fi);
-			double m2=(d.se-c.se)/(d.fi-c.fi);
-			xi=((m1*a.fi-a.se)-(m2*c.fi-c.se))/(m1-m2);
-			yi=m1*xi-m1*a.fi+a.se;
-			arr.insert({xi,yi});
-		}
-	}
+    if(a.fi==b.fi) {
+      xi=a.fi;
+      yi=(d.se-c.se)/(d.fi-c.fi)*(xi-c.fi)+c.se;
+      arr.insert({xi,yi});
+    } else if(c.fi==d.fi) {
+      xi=c.fi;
+      yi=(b.se-a.se)/(b.fi-a.fi)*(xi-a.fi)+a.se;
+      arr.insert({xi,yi});
+    } else {
+      double m1=(b.se-a.se)/(b.fi-a.fi);
+      double m2=(d.se-c.se)/(d.fi-c.fi);
+      xi=((m1*a.fi-a.se)-(m2*c.fi-c.se))/(m1-m2);
+      yi=m1*xi-m1*a.fi+a.se;
+      arr.insert({xi,yi});
+    }
+  }
 }
 
 ld area(vector<pll> &a) {
