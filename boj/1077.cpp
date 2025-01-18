@@ -90,9 +90,10 @@ int main() {
   vector<pll> c;
   for (auto p : a) if (inside(b, p)) c.push_back(p);
   for (auto p : b) if (inside(a, p)) c.push_back(p);
+  int an = a.size(), bn = b.size();
   a.push_back(a[0]); b.push_back(b[0]);
-  for (int i = 0; i < n; i++)
-    for (int j = 0; j < m; j++) 
+  for (int i = 0; i < an; i++)
+    for (int j = 0; j < bn; j++) 
       intersect(c, a[i], a[i+1], b[j], b[j+1]);
   int cn = c.size();
   if (cn <= 2) {
