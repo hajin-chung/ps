@@ -27,7 +27,7 @@ bool inside(vector<pll> &a, pll p) {
 }
 
 void intersect(set<pll> &arr, pll a, pll b, pll c, pll d) {
-  double xi, yi;
+  ld xi, yi;
   if(ccw(a,b,c)*ccw(a,b,d)<0 && ccw(c,d,a)*ccw(c,d,b)<0) {
     if(a.fi==b.fi) {
       xi=a.fi;
@@ -38,8 +38,8 @@ void intersect(set<pll> &arr, pll a, pll b, pll c, pll d) {
       yi=(b.se-a.se)/(b.fi-a.fi)*(xi-a.fi)+a.se;
       arr.insert({xi,yi});
     } else {
-      double m1=(b.se-a.se)/(b.fi-a.fi);
-      double m2=(d.se-c.se)/(d.fi-c.fi);
+      ld m1=(b.se-a.se)/(b.fi-a.fi);
+      ld m2=(d.se-c.se)/(d.fi-c.fi);
       xi=((m1*a.fi-a.se)-(m2*c.fi-c.se))/(m1-m2);
       yi=m1*xi-m1*a.fi+a.se;
       arr.insert({xi,yi});
@@ -56,12 +56,39 @@ ld area(vector<pll> &a) {
   return abs(ret)/2;
 }
 
+vector<pll> get_hull(vector<pll> &a) {
+  int n = a.size();
+  for (int i = 1; i < n; i++) if (a[i] < a[0]) swap(a[i], a[0]);
+  sort(a.begin()+1, a.end(), [&](pll u, pll v) {
+    int r = ccw(a[0], u, v);
+    if (r == 0) return dist(a[0], u) < dist(a[0], v);
+    return r > 0;
+  });
+  vector<pll> hull;
+  hull.push_back(a[0]);
+  hull.push_back(a[1]);
+  for (int i = 2; i < n; i++) {
+    while (hull.size() >= 2) {
+      auto se = hull.back(); hull.pop_back();
+      auto fi = hull.back();
+      if (ccw(fi, se, a[i]) > 0) {
+        hull.push_back(se);
+        break;
+      }
+    }
+    hull.push_back(a[i]);
+  }
+  return hull;
+}
+
 int main() {
   ios::sync_with_stdio(0); cin.tie(0);
   int n, m; cin>>n>>m;
-  vector<pll> a(n), b(m); 
-  for (auto &[x, y] : a) cin>>x>>y;
-  for (auto &[x, y] : b) cin>>x>>y;
+  vector<pll> ta(n), tb(m); 
+  for (auto &[x, y] : ta) cin>>x>>y;
+  for (auto &[x, y] : tb) cin>>x>>y;
+  auto a = get_hull(ta);
+  auto b = get_hull(tb);
   for (auto p : a) if (inside(b, p)) overlap.insert(p);
   for (auto p : b) if (inside(a, p)) overlap.insert(p);
   a.push_back(a[0]); b.push_back(b[0]);
