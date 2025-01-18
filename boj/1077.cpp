@@ -37,8 +37,7 @@ pair<bool, pll> intersect(pll a, pll b, pll c, pll d) {
       if (a > b) swap(a, b);
       if (c > d) swap(c, d);
       intersect = a <= d && c <= b;
-    }
-    intersect = true;
+    } else intersect = true;
   }
   if (!intersect) return {false, {0, 0}};
   ld x1 = a.fi, y1 = a.se;
