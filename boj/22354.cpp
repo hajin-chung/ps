@@ -15,8 +15,8 @@ int main() {
       v[v.size()-1] = max(v.back(), a[i]);
     else v.push_back(a[i]);
   }
-  v[0] = v[n-1] = 0;
   n = v.size();
+  v[0] = v[n-1] = 0;
   sort(v.begin(), v.end(), greater<int>());
   ll sum = 0;
   for (int i = 0; i < (n-1)/2; i++) sum += (ll)v[i];
