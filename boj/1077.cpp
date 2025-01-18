@@ -5,7 +5,6 @@ using namespace std;
 
 typedef long double ld;
 typedef pair<ld, ld> pll;
-set<pll> overlap;
 
 int ccw(pll a, pll b, pll c) {
   ld r = (b.fi-a.fi)*(c.se-a.se)-(b.se-a.se)*(c.fi-a.fi);
@@ -26,23 +25,23 @@ bool inside(vector<pll> &a, pll p) {
   return true;
 }
 
-void intersect(set<pll> &arr, pll a, pll b, pll c, pll d) {
+void intersect(vector<pll> &arr, pll a, pll b, pll c, pll d) {
   ld xi, yi;
   if(ccw(a,b,c)*ccw(a,b,d)<0 && ccw(c,d,a)*ccw(c,d,b)<0) {
     if(a.fi==b.fi) {
       xi=a.fi;
       yi=(d.se-c.se)/(d.fi-c.fi)*(xi-c.fi)+c.se;
-      arr.insert({xi,yi});
+      arr.push_back({xi,yi});
     } else if(c.fi==d.fi) {
       xi=c.fi;
       yi=(b.se-a.se)/(b.fi-a.fi)*(xi-a.fi)+a.se;
-      arr.insert({xi,yi});
+      arr.push_back({xi,yi});
     } else {
       ld m1=(b.se-a.se)/(b.fi-a.fi);
       ld m2=(d.se-c.se)/(d.fi-c.fi);
       xi=((m1*a.fi-a.se)-(m2*c.fi-c.se))/(m1-m2);
       yi=m1*xi-m1*a.fi+a.se;
-      arr.insert({xi,yi});
+      arr.push_back({xi,yi});
     }
   }
 }
@@ -50,9 +49,8 @@ void intersect(set<pll> &arr, pll a, pll b, pll c, pll d) {
 ld area(vector<pll> &a) {
   ld ret = 0;
   int n = a.size();
-  a.push_back(a[0]);
-  for (int i = 0; i < n; i++) ret += a[i].fi*a[i+1].se-a[i].se*a[i+1].fi;
-  a.pop_back();
+  for (int i = 0; i < n; i++) 
+    ret += a[i].fi*a[(i+1)%n].se-a[i].se*a[(i+1)%n].fi;
   return abs(ret)/2;
 }
 
@@ -89,24 +87,18 @@ int main() {
   for (auto &[x, y] : tb) cin>>x>>y;
   auto a = get_hull(ta);
   auto b = get_hull(tb);
-  for (auto p : a) if (inside(b, p)) overlap.insert(p);
-  for (auto p : b) if (inside(a, p)) overlap.insert(p);
+  vector<pll> c;
+  for (auto p : a) if (inside(b, p)) c.push_back(p);
+  for (auto p : b) if (inside(a, p)) c.push_back(p);
   a.push_back(a[0]); b.push_back(b[0]);
   for (int i = 0; i < n; i++)
     for (int j = 0; j < m; j++) 
-      intersect(overlap, a[i], a[i+1], b[j], b[j+1]);
-  vector<pll> c;
-  for (auto p : overlap) c.push_back(p);
+      intersect(c, a[i], a[i+1], b[j], b[j+1]);
   int cn = c.size();
   if (cn <= 2) {
     cout<<"0.0\n";
     return 0;
   }
-  for (int i = 1; i < cn; i++) if (c[0] > c[i]) swap(c[0], c[i]);
-  sort(c.begin()+1, c.end(), [&](pll a, pll b) {
-    int r = ccw(c[0], a, b);
-    if (r == 0) return dist(c[0], a) < dist(c[0], b);
-    return r > 0;
-  });
-  cout<<fixed<<setprecision(17)<<area(c)<<"\n";
+  auto cc = get_hull(c);
+  cout<<fixed<<setprecision(17)<<area(cc)<<"\n";
 }
