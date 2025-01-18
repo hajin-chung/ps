@@ -1,0 +1,33 @@
+if(ccw(a,b,c)*ccw(a,b,d)<0 && ccw(c,d,a)*ccw(c,d,b)<0) {
+
+		if(a.x==b.x) {
+
+			xi=a.x;
+
+			yi=(d.y-c.y)/(d.x-c.x)*(xi-c.x)+c.y;
+
+			arr.push_back(p(xi,yi));
+
+		} else if(c.x==d.x) {
+
+			xi=c.x;
+
+			yi=(b.y-a.y)/(b.x-a.x)*(xi-a.x)+a.y;
+
+			arr.push_back(p(xi,yi));
+
+		} else {
+
+			double m1=(b.y-a.y)/(b.x-a.x);
+
+			double m2=(d.y-c.y)/(d.x-c.x);
+
+			xi=((m1*a.x-a.y)-(m2*c.x-c.y))/(m1-m2);
+
+			yi=m1*xi-m1*a.x+a.y;
+
+			arr.push_back(p(xi,yi));
+
+		}
+
+	}

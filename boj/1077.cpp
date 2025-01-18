@@ -24,31 +24,25 @@ bool inside(vector<pll> &a, pll p) {
   return ccw(a[l], a[r], p) >= 0;
 }
 
-pair<bool, pll> intersect(pll a, pll b, pll c, pll d) {
-  bool intersect = false;
-  long long ccw1 = ccw(a, b, c);
-  long long ccw2 = ccw(a, b, d);
-  long long ccw3 = ccw(c, d, a);
-  long long ccw4 = ccw(c, d, b);
-  long long ccwA = ccw1 * ccw2;
-  long long ccwB = ccw3 * ccw4;
-  if (ccwA <= 0 && ccwB <= 0) {
-    if (ccwA == 0 && ccwB == 0) {
-      if (a > b) swap(a, b);
-      if (c > d) swap(c, d);
-      intersect = a <= d && c <= b;
-    } else intersect = true;
-  }
-  if (!intersect) return {false, {0, 0}};
-  ld x1 = a.fi, y1 = a.se;
-  ld x2 = b.fi, y2 = b.se;
-  ld x3 = c.fi, y3 = c.se;
-  ld x4 = d.fi, y4 = d.se;
-  double x = (x1 * y2 - y1 * x2) * (x3 - x4)  - (x1 - x2) * (x3 * y4 - y3 * x4);
-  x /= (x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4);
-  double y = (x1 * y2 - y1 * x2) * (y3 - y4)  - (y1 - y2) * (x3 * y4 - y3 * x4);
-  y /= (x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4);
-  return {true, {x, y}};
+void intersect(set<pll> &arr, pll a, pll b, pll c, pll d) {
+  double xi, yi;
+  if(ccw(a,b,c)*ccw(a,b,d)<0 && ccw(c,d,a)*ccw(c,d,b)<0) {
+		if(a.fi==b.fi) {
+			xi=a.fi;
+			yi=(d.se-c.se)/(d.fi-c.fi)*(xi-c.fi)+c.se;
+			arr.insert({xi,yi});
+		} else if(c.fi==d.fi) {
+			xi=c.fi;
+			yi=(b.se-a.se)/(b.fi-a.fi)*(xi-a.fi)+a.se;
+			arr.insert({xi,yi});
+		} else {
+			double m1=(b.se-a.se)/(b.fi-a.fi);
+			double m2=(d.se-c.se)/(d.fi-c.fi);
+			xi=((m1*a.fi-a.se)-(m2*c.fi-c.se))/(m1-m2);
+			yi=m1*xi-m1*a.fi+a.se;
+			arr.insert({xi,yi});
+		}
+	}
 }
 
 ld area(vector<pll> &a) {
@@ -70,10 +64,8 @@ int main() {
   for (auto p : b) if (inside(a, p)) overlap.insert(p);
   a.push_back(a[0]); b.push_back(b[0]);
   for (int i = 0; i < n; i++)
-    for (int j = 0; j < m; j++) {
-      auto [ok, p] = intersect(a[i], a[i+1], b[j], b[j+1]);
-      if (ok) overlap.insert(p);
-    }
+    for (int j = 0; j < m; j++) 
+      intersect(overlap, a[i], a[i+1], b[j], b[j+1]);
   vector<pll> c;
   for (auto p : overlap) c.push_back(p);
   int cn = c.size();
