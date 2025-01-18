@@ -66,13 +66,15 @@ int main() {
   for (int i = 0; i < k; i++) {
     int u, d;
     queue<pii> q;
+    vector<int> chk(k, 0);
     q.push({order[i], 0});
+    chk[order[i]] = 1;
     while (!q.empty()) {
       u = q.front().fi, d = q.front().se; q.pop();
       if (d >= ans) break;
       for (auto v : g[u])
-        if (chk[v] < i+2) {
-          chk[v]++;
+        if (!chk[v]) {
+          chk[v] = 1;
           q.push({v, d+1});
         }
     }
