@@ -4,7 +4,7 @@
 using namespace std;
 
 typedef pair<int, int> pii;
-const int N = 150000;
+const int N = 150005;
 pii dp[N][20];
 
 int main() {
@@ -37,6 +37,12 @@ int main() {
     ss.insert({a[i].fi, i});
     ls.insert({a[i].se, i});
   }
+  for (auto it = ls.begin(); it != ls.end();) {
+    auto [se, idx] = *it;
+    it = ls.erase(it);
+    dp[idx][0].se = n-1;
+    ss.erase({a[idx].fi, idx});
+  }
   for (int j = 1; j < 20; j++)
     for (int i = 0; i < n; i++) {
       dp[i][j].fi = dp[dp[i][j-1].fi][j-1].fi;
@@ -52,7 +58,7 @@ int main() {
   while (q--) {
     int u, v; cin>>u>>v; u--; v--;
     u = idx[u]; v = idx[v];
-    if (a[u] > a[v]) swap(u, v);
+    if (a[u].fi > a[v].fi) swap(u, v);
     int ans = 0;
     for (int i = 19; i >= 0; i--) {
       if (a[dp[u][i].fi].fi <= a[v].fi && a[v].se <= a[dp[u][i].se].se)
@@ -67,3 +73,4 @@ int main() {
     }
   }
 }
+
