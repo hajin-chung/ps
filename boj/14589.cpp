@@ -26,11 +26,11 @@ int main() {
   set<pii> ss;
   for (int i = 0; i < n; i++) {
     for (auto it = ss.begin(); it != ss.end();) {
-      auto &[x, idx] = *it;
-      if (a[idx].se < a[i].fi) it = ss.erase(it);
-      else {
-        if (dp[idx][0].se == -1 || a[dp[idx][0].se].se < a[i].se)
-          dp[idx][0].se = i;
+      auto [x, idx] = *it;
+      if (a[idx].se < a[i].fi) {
+        dp[idx][0].se = i-1;
+        it = ss.erase(it);
+      } else {
         it++;
       }
     }
