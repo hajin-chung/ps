@@ -8,7 +8,7 @@ int main() {
   for (auto &i : a) cin>>i;
   int l = 0, r = 0;
   for (int i = 1; i < n; i++) r = max(r, abs(a[i]-a[i-1]));
-  vector<int> ta;
+  vector<int> ta, ans;
   while (l < r) {
     int m = (l+r)>>1;
     int cnt = 0;
@@ -18,22 +18,17 @@ int main() {
         cnt += ta[i]-ta[i-1]-m;
         ta[i] = ta[i-1] + m;
       }
-    for (int i = n-1; i >= 1; i--) 
-      if (ta[i-1]-ta[i] > m) {
-        cnt += ta[i-1]-ta[i]-m;
-        ta[i-1] = ta[i] + m;
+    for (int i = n-2; i >= 0; i--) 
+      if (ta[i]-ta[i+1] > m) {
+        cnt += ta[i]-ta[i+1]-m;
+        ta[i] = ta[i+1] + m;
       }
     if (cnt > t) l = m+1;
-    else r = m;
+    else {
+      r = m;
+      ans = ta;
+    }
   }
-  int m = l;
-  ta = a;
-  for (int i = 1; i < n; i++) 
-    if (ta[i]-ta[i-1] > m)
-      ta[i] = ta[i-1] + m;
-  for (int i = n-1; i >= 1; i--) 
-    if (ta[i-1]-ta[i] > m) 
-      ta[i-1] = ta[i] + m;
-  for (auto i : ta) cout<<i<<" ";
+  for (auto i : ans) cout<<i<<" ";
   cout<<"\n";
 }
