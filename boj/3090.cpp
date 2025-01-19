@@ -26,11 +26,14 @@ int main() {
         ta[i-1] = ta[i] + m;
       }
     if (cnt > t) l = m+1;
-    else {
-      r = m;
-      ans = ta;
-    }
+    else r = m;
   }
-  for (auto i : ans) cout<<i<<" ";
+  for (int i = 1; i < n; i++)
+    if (a[i]-a[i-1]>l)
+      a[i] = a[i-1]+l;
+  for (int i = n-1; i >= 1; i--)
+    if (a[i-1]-a[i]>l)
+      a[i-1] = a[i]+l;
+  for (auto i : a) cout<<i<<" ";
   cout<<"\n";
 }
