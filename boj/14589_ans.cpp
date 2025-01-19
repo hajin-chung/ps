@@ -42,19 +42,27 @@ int main() {
   for (int j = 1; j < 20; j++)
     for (int i = 0; i < n; i++) 
       dp[i][j] = dp[dp[i][j-1]][j-1];
+  /*for (int i = 0; i < n; i++) {*/
+  /*  cout<<i<<": ";*/
+  /*  for (int j = 0; j < 5; j++)*/
+  /*    cout<<dp[i][j]<<" ";*/
+  /*  cout<<"\n";*/
+  /*}*/
   int q; cin>>q;
   while (q--) {
     int u, v; cin>>u>>v;
     u = idx[u-1]; v = idx[v-1];
-    if (a[u] > a[v]) swap(u, v);
+    if (u > v) swap(u, v);
     int ans = 0;
     for (int i = 19; i >= 0; i--) {
       if (a[dp[u][i]].se >= a[v].se) continue;
       ans += 1<<i; 
       u = dp[u][i];
     }
-    if (u == v) cout<<ans<<"\n";
-    else if (a[dp[u][0]].se >= a[v].se) cout<<ans+1<<"\n";
-    else cout<<"-1\n";
+    if (ans > n) {
+      cout<<"-1\n";
+      continue;
+    }
+    cout<<ans+1<<"\n";
   }
 }
