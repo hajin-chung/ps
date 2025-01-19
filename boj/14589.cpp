@@ -23,19 +23,19 @@ int main() {
   for (int i = 0; i < n; i++)
     for (int j = 0; j < 20; j++)
       dp[i][j] = j == 0 ? make_pair(i, i) : make_pair(-1, -1);
-  set<pii> ss;
+  set<pii> ss, ls;
   for (int i = 0; i < n; i++) {
-    for (auto it = ss.begin(); it != ss.end();) {
-      auto [x, idx] = *it;
-      if (a[idx].se < a[i].fi) {
+    for (auto it = ls.begin(); it != ls.end();) {
+      auto [se, idx] = *it;
+      if (se < a[i].fi) {
+        it = ls.erase(it);
         dp[idx][0].se = i-1;
-        it = ss.erase(it);
-      } else {
-        it++;
-      }
+        ss.erase({a[idx].fi, idx});
+      } else break; 
     }
     if (!ss.empty()) dp[i][0].fi = ss.begin()->se;
     ss.insert({a[i].fi, i});
+    ls.insert({a[i].se, i});
   }
   for (int j = 1; j < 20; j++)
     for (int i = 0; i < n; i++) {
