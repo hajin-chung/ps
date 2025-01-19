@@ -6,13 +6,13 @@ typedef long long int ll;
 int main() {
   ios::sync_with_stdio(0); cin.tie(0);
   int n; ll t; cin>>n>>t;
-  vector<int> a(n);
+  vector<ll> a(n);
   for (auto &i : a) cin>>i;
-  int l = 0, r = 0;
+  ll l = 0, r = 0;
   for (int i = 1; i < n; i++) r = max(r, abs(a[i]-a[i-1]));
-  vector<int> ta, ans;
+  vector<ll> ta, ans;
   while (l < r) {
-    int m = (l+r)>>1;
+    ll m = (l+r)>>1;
     ll cnt = 0;
     ta = a;
     for (int i = 1; i < n; i++) 
