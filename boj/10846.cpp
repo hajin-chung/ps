@@ -35,7 +35,7 @@ bool solve2(ll bit, int l, int r) {
   for (int i = 1; i <= n; i++)
     for (int j = 1; j <= min(i, r); j++)
       for (int k = 0; k < i; k++)
-        if (dp[k][j-1] && (sum[i]-sum[k] | bit) == bit) {
+        if (dp[k][j-1] && ((sum[i]-sum[k]) | bit) == bit) {
           dp[i][j] = 1;
           if (i == n && j >= l) return true;
         }
