@@ -3,7 +3,7 @@ using namespace std;
 
 typedef long long int ll;
 const int N = 2000;
-const ll INF = LLONG_MAX/2;
+ll INF;
 int n;
 ll a[N+1], sum[N+1];
 
@@ -26,21 +26,29 @@ void solve1(int mx) {
   cout<<bit<<"\n";
 }
 
-ll dp[N+1][N+1]; 
+bool solve2(ll bit, int l, int r) {
+  // dp[i][j] : can seperate 1~i in j groups with value in bit
+  // dp[i][j] = dp[k][j-1] && sum[i]-sum[k] | bit == bit
+  bool dp[105][105]; 
+  memset(dp, 0, sizeof(dp));
+  dp[0][0] = 1;
+  for (int i = 1; i <= n; i++)
+    for (int j = 1; j <= min(i, r); j++)
+      for (int k = 0; k < i; k++)
+        if (dp[k][j-1] && (sum[i]-sum[k] | bit) == bit) {
+          dp[i][j] = 1;
+          if (i == n && j >= l) return true;
+        }
+  return false;
+}
+
 void solve2(int l, int r) {
-  // dp[i][j] = min value of j'th element ending i'th bundle
-  // dp[i][j] = min(dp[i-1][k] | sum[j]-sum[k]) (i-1 <= k < j, j <= i)
-  for (int i = 1; i <= r; i++)
-    for (int j = 1; j <= n; j++)
-      dp[i][j] = INF;
-  for (int i = 1; i <= r; i++)
-    for (int j = i; j <= n; j++)
-      for (int k = i-1; k < j; k++)
-        dp[i][j] = min(dp[i][j], dp[i-1][k]|(sum[j]-sum[k]));
-  ll ans = INF;
-  for (int i = l; i <= r; i++)
-    ans = min(ans, dp[i][n]);
-  cout<<ans<<"\n";
+  ll bit = (1LL<<41)-1;
+  for (int i = 40; i >= 0; i--) {
+    bit -= (1LL<<i);
+    if (!solve2(bit, l, r)) bit += (1LL<<i);
+  }
+  cout<<bit<<"\n";
 }
 
 int main() {
@@ -48,6 +56,7 @@ int main() {
   int l, r; cin>>n>>l>>r;
   for (int i = 1; i <= n; i++) cin>>a[i];
   for (int i = 1; i <= n; i++) sum[i] = a[i] + sum[i-1];
+  INF = sum[n]*2;
   if (l == 1) solve1(r);
   else solve2(l, r);
 }
