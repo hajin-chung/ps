@@ -3,7 +3,7 @@ using namespace std;
 
 typedef long long int ll;
 const int N = 2000;
-const int INF = 1e9;
+const ll INF = LLONG_MAX/2;
 int n;
 ll a[N+1], sum[N+1];
 
