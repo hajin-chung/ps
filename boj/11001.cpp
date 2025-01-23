@@ -8,7 +8,7 @@ ll v[N], t[N], ans[N];
 
 void f(int l, int r, int s, int e) {
   int m = (l+r)>>1, ns = e;
-  int qs = max(m+1, s), qe = min(s+d, e);
+  int qs = max(m, s), qe = min(m+d, e);
   for (int i = qs; i <= qe; i++) {
     ll c = v[m]+(ll)(i-m)*t[i];
     if (ans[m] < c) {
