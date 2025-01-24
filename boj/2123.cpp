@@ -16,7 +16,11 @@ int main() {
     a[i] = {w, s};
     sum += w;
   }
-  sort(a.begin(), a.end(), [](pll u, pll v) { return u.fi+u.se > v.fi+v.se; });
+  sort(a.begin(), a.end(), [](pll u, pll v) { 
+    ll us = u.fi+u.se, vs = v.fi+v.se;
+    if (us == vs) return u.fi > v.fi;
+    return us > vs;
+  });
   ll mx = 0;
   for (auto [w, s] : a) {
     mx = max(mx, sum-w-s);
