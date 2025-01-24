@@ -33,7 +33,7 @@ int main() {
   }
   d[1] = 0;
   for (int i = 0; i < n; i++) relax();
-  if (relax()) cout<<"-2\n";
-  else if (d[n] >= INF)  cout<<"-1\n";
+  if (relax()) cout<<"-1\n";
+  else if (d[n] >= INF)  cout<<"-2\n";
   else cout<<d[n]<<"\n";
 }
