@@ -18,8 +18,8 @@ int main() {
   }
   sort(a.begin(), a.end(), [](pll u, pll v) { 
     ll us = u.fi+u.se, vs = v.fi+v.se;
-    if (us == vs) return u.fi > v.fi;
-    return us > vs;
+    if (u.fi == v.fi) return us > vs;
+    return u.fi > v.fi;
   });
   ll mx = 0;
   for (auto [w, s] : a) {
