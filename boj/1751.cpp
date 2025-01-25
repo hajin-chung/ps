@@ -9,6 +9,8 @@ ll sum1[N+5][N+5], sum2[N+5][N+5];
 ll hi = 2, hj = 3;
 int n, m; 
 
+ll mmod(int x) { return (x%MOD+MOD)%MOD; }
+
 ll pow(ll x, int n) {
   ll ret = 1;
   while (n > 0) {
@@ -22,10 +24,10 @@ ll pow(ll x, int n) {
 ll mhash(int i, int j) { return (pow(hi, i-1)*pow(hj, j-1))%MOD; }
 
 bool chk(int i, int j, int k) {
-  ll h1 = (sum1[i+k][j+k]-sum1[i-1][j+k]-sum1[i+k][j-1]+sum1[i-1][j-1])%MOD;
+  ll h1 = mmod(sum1[i+k][j+k]-sum1[i-1][j+k]-sum1[i+k][j-1]+sum1[i-1][j-1])%MOD;
   int oi = i, oj = j;
   i = n-i+1-k; j = m-j+1-k;
-  ll h2 = (sum2[i+k][j+k]-sum2[i-1][j+k]-sum2[i+k][j-1]+sum2[i-1][j-1])%MOD;
+  ll h2 = mmod(sum2[i+k][j+k]-sum2[i-1][j+k]-sum2[i+k][j-1]+sum2[i-1][j-1])%MOD;
   int dx = i-oi, dy = j-oj;
   if (dx < 0) h2 = h2*pow(hi, -dx)%MOD;
   else h1 = h1*pow(hi, dx)%MOD;
@@ -45,10 +47,10 @@ int main() {
     }
   for (int i = 1; i <= n; i++)
     for (int j = 1; j <= m; j++)
-      sum1[i][j] = (((ll)a[i][j]*mhash(i, j))+sum1[i-1][j]+sum1[i][j-1]-sum1[i-1][j-1])%MOD;
+      sum1[i][j] = mmod(((ll)a[i][j]*mhash(i, j))+sum1[i-1][j]+sum1[i][j-1]-sum1[i-1][j-1])%MOD;
   for (int i = 1; i <= n; i++)
     for (int j = 1; j <= m; j++)
-      sum2[i][j] = (((ll)b[i][j]*mhash(i, j))+sum2[i-1][j]+sum2[i][j-1]-sum2[i-1][j-1])%MOD;
+      sum2[i][j] = mmod(((ll)b[i][j]*mhash(i, j))+sum2[i-1][j]+sum2[i][j-1]-sum2[i-1][j-1])%MOD;
   int ans = 0;
   for (int i = 1; i <= n; i++)
     for (int j = 1; j <= m; j++)
