@@ -57,5 +57,6 @@ int main() {
       for (int k = 0; k < min(n-i+1, m-j+1); k++)
         if (k > ans && chk(i, j, k))
           ans = k;
-  cout<<ans+1<<"\n";
+  if (ans == 0) cout<<"-1\n";
+  else cout<<ans+1<<"\n";
 }
