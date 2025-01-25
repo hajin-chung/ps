@@ -9,7 +9,7 @@ ll sum1[N+5][N+5], sum2[N+5][N+5];
 ll hi = 2, hj = 3;
 int n, m; 
 
-ll mmod(int x) { return (x%MOD+MOD)%MOD; }
+ll mmod(ll x) { return (x%MOD+MOD)%MOD; }
 
 ll pow(ll x, int n) {
   ll ret = 1;
