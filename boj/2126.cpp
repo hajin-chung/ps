@@ -29,17 +29,18 @@ bool chk(ld k) {
   sort(edges.begin(), edges.end(), [&](E &a, E &b) {
     return (ld)a.c+k*a.t < (ld)b.c+k*b.t;
   });
-  int cnt = 1;
+  int cnt = 0;
   ll csum = 0, tsum = 0;
   for (auto [u, v, c, t] : edges) {
     if (find(u) != find (v)) {
       merge(u, v);
       cnt++;
       csum+=c; tsum+=t;
+      if (cnt-1 == n) break;
     }
-    if (cnt == n) break;
   }
-  return (ld)(f-csum)/(ld)tsum >= k;
+  if (cnt < n-1) return 0;
+  return (ld)csum+k*tsum<=(ld)f;
 }
 
 int main() {
