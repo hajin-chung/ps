@@ -48,8 +48,8 @@ int main() {
   cin>>n>>m>>f;
   edges.resize(m);
   for (auto &[u, v, c, t] : edges) cin>>u>>v>>c>>t;
-  ld l = 0, r = 2e9;
-  int iter = 2000;
+  ld l = 0, r = f;
+  int iter = 100;
   while (iter--) {
     ld k = (l+r)/2;
     if (chk(k)) l = k;
