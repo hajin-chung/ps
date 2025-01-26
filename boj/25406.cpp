@@ -20,8 +20,8 @@ int main() {
     cnt[a[i]]++;
   }
   for (int i = 1; i <= n; i++) {
-    if (cnt[a[i]])
-      cset.insert({cnt[a[i]], a[i]});
+    if (cnt[i])
+      cset.insert({cnt[i], i});
     iset.insert({a[i], i});
   }
   if (2*cset.rbegin()->fi > n+1) {
