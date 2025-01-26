@@ -8,6 +8,9 @@ struct E {
   ll c, t;
 };
 const int N = 400;
+int n, m; 
+ll f; 
+vector<E> edges;
 int p[N+1];
 
 int find(int u) {
@@ -21,32 +24,35 @@ void merge(int u, int v) {
   else p[u] =v;
 }
 
+bool chk(ld k) {
+  for (int i = 1; i <= n; i++) p[i] = i;
+  sort(edges.begin(), edges.end(), [&](E &a, E &b) {
+    return (ld)a.c+k*a.t < (ld)b.c+k*b.t;
+  });
+  int cnt = 1;
+  ll csum = 0, tsum = 0;
+  for (auto [u, v, c, t] : edges) {
+    if (find(u) != find (v)) {
+      merge(u, v);
+      cnt++;
+      csum+=c; tsum+=t;
+    }
+    if (cnt == n) break;
+  }
+  return (ld)(f-csum)/(ld)tsum >= k;
+}
+
 int main() {
   ios::sync_with_stdio(0); cin.tie(0);
-  int n, m; ll f; cin>>n>>m>>f;
-  vector<E> edges(m);
+  cin>>n>>m>>f;
+  edges.resize(m);
   for (auto &[u, v, c, t] : edges) cin>>u>>v>>c>>t;
-  for (int i = 1; i <= n; i++) p[i] = i;
-  vector<bool> chk(m, 0);
-  ll csum = 0, tsum = 0; n--;
-  while (n--) {
-    vector<E> e;
-    for (int i = 0; i < m; i++)
-      if (!chk[i]) e.push_back(edges[i]);
-    sort(e.begin(), e.end(), [&](E &a, E &b) {
-      ld ae = (ld)(f-(csum+a.c))/(tsum+a.t);
-      ld be = (ld)(f-(csum+b.c))/(tsum+b.t);
-      return ae > be;
-    });
-    for (int i = 0; i < e.size(); i++) {
-      auto [u, v, c, t] = e[i];
-      if (find(u) != find(v)) {
-        merge(u, v);
-        csum += c; tsum += t;
-        chk[i] = 1;
-        break;
-      }
-    }
+  ld l = 0, r = f;
+  int iter = 1000;
+  while (iter--) {
+    ld k = (l+r)/2;
+    if (chk(k)) l = k;
+    else r = k;
   }
-  cout<<fixed<<setprecision(10)<<(ld)(f-csum)/tsum<<"\n";
+  cout<<fixed<<setprecision(10)<<(l+r)/2<<"\n";
 }
