@@ -49,10 +49,7 @@ int main() {
   edges.resize(m);
   for (auto &[u, v, c, t] : edges) cin>>u>>v>>c>>t;
   ld l = 0, r = f;
-  int iter = 100;
-  while (1) {
-    ll li = (l*10000), ri = (r*10000);
-    if (li == ri) break;
+  while (abs(r-l)<(ld)0.00001) {
     ld k = (l+r)/2;
     if (chk(k)) l = k;
     else r = k;
