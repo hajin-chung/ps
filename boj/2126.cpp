@@ -55,5 +55,5 @@ int main() {
     if (chk(k)) l = k;
     else r = k;
   }
-  cout<<fixed<<setprecision(10)<<(l+r)/2<<"\n";
+  cout<<fixed<<setprecision(4)<<(l+r)/2<<"\n";
 }
