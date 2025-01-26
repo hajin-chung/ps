@@ -3,7 +3,7 @@ using namespace std;
 
 void solve() {
   int n; string t, s; cin>>n>>t;
-  bool flag = false, flag2 = true;
+  bool flag = false, flag2 = true, flag3 = true;
   int cnt = 0, ocnt = 0, zcnt = 0;
   for (int i = 0; i < (int)t.size(); i++) {
     if (t[i] == '0') zcnt++;
@@ -12,7 +12,8 @@ void solve() {
       s.push_back(t[i]);
       if (t[i] == '0') flag2 = false;
       if (flag2 && t[i] == '1') cnt++;
-      if (!flag2 && t[i] == '0') ocnt++;
+      if (!flag2 && flag3 && t[i] == '0') ocnt++;
+      if (!flag2 && flag3 && t[i] == '1') flag3 = false;
     }
   }
   if (s.size() == 0) cout<<"0\n";
@@ -23,11 +24,10 @@ void solve() {
   } else if (ocnt == 0 && zcnt != 0) {
     cout<<s<<"\n";
   }else {
-    int st = max(0, cnt-ocnt);
+    int j = max(0, cnt-ocnt);
     for (int i = 0; i < (int)s.size(); i++) {
-      int j = i-st-cnt;
       if (i < cnt) cout<<s[i];
-      else cout<<(s[i]!=s[j]);
+      else cout<<(s[i]!=s[j++]);
     }
     cout<<"\n";
   }
