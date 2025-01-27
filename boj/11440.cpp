@@ -20,7 +20,7 @@ t4i pow(t4i a, ll n) {
   t4i res = {1, 0, 0, 1};
   while (n>0) {
     if (n&1) res = mult(res, a);
-    res = mult(res, res);
+    a = mult(a, a);
     n>>=1;
   }
   return res;
@@ -29,6 +29,10 @@ t4i pow(t4i a, ll n) {
 int main() {
   ios::sync_with_stdio(0); cin.tie(0);
   ll n; cin>>n;
+  /*if (n == 1) {*/
+  /*  cout<<"1\n";*/
+  /*  return 0;*/
+  /*}*/
   t4i a = {1, 1, 1, 0};
   auto [fn, fm, x, y] = pow(a, n);
   cout<<fn*fm%MOD<<"\n";
