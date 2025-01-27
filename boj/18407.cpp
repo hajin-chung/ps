@@ -25,6 +25,7 @@ void update(int node, int l, int r, int ql, int qr, int v) {
       lazy[node*2] = max(lazy[node*2], v);
       lazy[node*2+1] = max(lazy[node*2+1], v);
     }
+    return;
   }
   int m = (l+r)>>1;
   update(node*2, l, m, ql, qr, v);
