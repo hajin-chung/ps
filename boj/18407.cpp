@@ -20,16 +20,14 @@ void update(int node, int l, int r, int ql, int qr, int v) {
   propagate(node, l, r);
   if (r < ql || qr < l) return;
   if (ql <= l && r <= qr) {
-    seg[node] = max(seg[node], v);
-    if (l != r) {
-      lazy[node*2] = max(lazy[node*2], v);
-      lazy[node*2+1] = max(lazy[node*2+1], v);
-    }
+    lazy[node] = max(lazy[node], v);
+    propagate(node, l, r);
     return;
   }
   int m = (l+r)>>1;
   update(node*2, l, m, ql, qr, v);
   update(node*2+1, m+1, r, ql, qr, v);
+  seg[node] = max(seg[node*2], seg[node*2+1]);
 }
 
 int query(int node, int l, int r, int ql, int qr) {
@@ -55,16 +53,10 @@ int main() {
   for (auto &[s, e] : a) {
     s = lower_bound(all(v), s)-v.begin()+1;
     e = lower_bound(all(v), e)-v.begin()+1;
-    cout<<s<<" "<<e<<endl;
   }
-  cout<<v.size()<<endl;
-  int ans = 0;
   for (auto [s, e] : a) {
-    int mx = query(1, 1, v.size(), s, e)+1;
-    ans = max(ans, mx);
-    cout<<v.size()<<" "<<s<<" "<<e<<" "<<mx<<"hi"<<endl;
-    update(1, 1, v.size(), s, e, mx);
-    cout<<mx<<endl;
+    int mx = query(1, 1, v.size(), s, e);
+    update(1, 1, v.size(), s, e, mx+1);
   }
-  cout<<ans<<"\n";
+  cout<<query(1, 1, v.size(), 1, v.size())<<"\n";
 }
