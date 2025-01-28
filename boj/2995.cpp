@@ -32,7 +32,6 @@ int main() {
       idx[i] = it-v.begin();
     }
   }
-  for (auto [s, e] : a) cout<<s<<" "<<e<<"\n";
   int len = v.size();
   cout<<len<<"\n";
   vector<B> ans;
