@@ -12,8 +12,8 @@ int main() {
     cnt[x/10]++; cnt[x%10]++;
   }
   d[0] = 1;
-  for (int i = 2; i <= 8; i++) d[i] = (i-1)*d[i-2];
+  for (int i = 2; i <= 8; i+=2) d[i] = (i-1)*d[i-2];
   ll ans = 1;
-  for (int i = 1; i < 10; i++) ans *= d[cnt[i]];
+  for (int i = 0; i < 10; i++) ans *= d[cnt[i]];
   cout<<ans<<"\n";
 }
