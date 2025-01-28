@@ -20,7 +20,7 @@ int main() {
   int n; cin>>n;
   vector<B> a(n);
   for (auto &[s, e] : a) cin>>s>>e;
-  sort(all(a));
+  sort(all(a), comp);
   for (auto [s, e] : a) cout<<s<<" "<<e<<"\n";
   vector<B> v;
   vector<int> idx(n);
