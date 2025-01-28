@@ -9,19 +9,16 @@ typedef pair<int, int> pii;
 int main() {
   ios::sync_with_stdio(0); cin.tie(0);
   int n, x; cin>>n;
-  vector<pii> a(n), t;
+  vector<pii> a(n);
   for (auto &[s, e] : a) cin>>x>>s>>e;
   sort(all(a), [](pii &u, pii &v) {
     if (u.se == v.se) return u.fi > v.fi;
     return u.se < v.se;
   });
-  t.push_back(a[0]);
-  for (int i = 1; i < n; i++)
-    if (a[i] != a[i-1])
-      t.push_back(a[i]);
+  a.erase(unique(all(a)), a.end());
   vector<int> v;
-  reverse(all(t));
-  for (auto [s, e] : t) {
+  reverse(all(a));
+  for (auto [s, e] : a) {
     int i = lower_bound(all(v), s)-v.begin();
     if (i == (int)v.size()) v.push_back(s);
     else v[i] = s;
