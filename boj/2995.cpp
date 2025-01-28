@@ -6,32 +6,28 @@ using namespace std;
 
 struct B {
   int s, e;
-  bool operator<(B b) { return b.s <= s && e <= b.e; }
+  bool operator<(B v) { 
+    if (e == v.e) return s > v.s;
+    return e < v.e;
+  }
 };
 const int N = 200000;
-
-bool comp(B &u, B &v) {
-  if (u.e == v.e) return u.s > v.s;
-  return u.e < v.e;
-}
 
 int main() {
   ios::sync_with_stdio(0); cin.tie(0);
   int n; cin>>n;
   vector<B> a(n);
   for (auto &[s, e] : a) cin>>s>>e;
-  sort(all(a), comp);
-  for (auto [s, e] : a) cout<<s<<" "<<e<<"\n";
-  vector<B> v;
-  vector<int> idx(n);
+  sort(all(a));
+  vector<int> v, idx(n);
   for (int i = 0; i < n; i++) {
-    auto b = a[i];
-    auto it = lower_bound(all(v), b);
+    auto [s, e] = a[i];
+    auto it = lower_bound(all(v), -s);
     if (it == v.end()) {
-      v.push_back(b);
+      v.push_back(-s);
       idx[i] = v.size()-1;
     } else {
-      *it = b;
+      *it = -s;
       idx[i] = it-v.begin();
     }
   }
