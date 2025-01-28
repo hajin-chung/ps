@@ -19,24 +19,28 @@ int main() {
   vector<B> a(n);
   for (auto &[s, e] : a) cin>>s>>e;
   sort(all(a));
+  reverse(all(a));
   vector<int> v, idx(n);
   for (int i = 0; i < n; i++) {
     auto [s, e] = a[i];
-    auto it = lower_bound(all(v), -s);
+    auto it = upper_bound(all(v), s);
     if (it == v.end()) {
-      v.push_back(-s);
+      v.push_back(s);
       idx[i] = v.size()-1;
     } else {
-      *it = -s;
+      *it = s;
       idx[i] = it-v.begin();
     }
   }
+  for (auto [s, e] : a) cout<<s<<" "<<e<<"\n";
   int len = v.size();
   cout<<len<<"\n";
-  for (int i = n-1; i >= 0 && len > 0; i--) {
+  vector<B> ans;
+  for (int i = n-1; i >= 0 && len > 0; i--)
     if (idx[i] == len-1) {
-      cout<<a[i].s<<" "<<a[i].e<<"\n";
+      ans.push_back(a[i]);
       len--;
     }
-  }
+  reverse(all(ans));
+  for (auto [s, e] : ans) cout<<s<<" "<<e<<"\n";
 }
