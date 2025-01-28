@@ -19,7 +19,7 @@ int main() {
   vector<int> v;
   reverse(all(a));
   for (auto [s, e] : a) {
-    int i = lower_bound(all(v), s)-v.begin();
+    int i = upper_bound(all(v), s)-v.begin();
     if (i == (int)v.size()) v.push_back(s);
     else v[i] = s;
   }
