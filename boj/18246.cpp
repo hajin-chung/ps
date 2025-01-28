@@ -23,6 +23,14 @@ void init(XT *node, int l, int r, int pos) {
   node->v = max(node->l->v, node->r->v);
 }
 
+void init(XT *node, int l, int r, XT *lt, XT *rt) {
+  node->v = max(lt->v, rt->v);
+  if (l == r) return;
+  int m = (l+r)>>1;
+  node->l = new XT(); init(node->l, l, m, lt->l, rt->l);
+  node->r = new XT(); init(node->r, m+1, r, lt->r, rt->r);
+}
+
 void init(YT *node, int l, int r) {
   if (l == r) {
     init(node->v, 0, MAX, l);
@@ -31,10 +39,10 @@ void init(YT *node, int l, int r) {
   int m = (l+r)>>1;
   node->l = new YT(); init(node->l, l, m);
   node->r = new YT(); init(node->r, m+1, r);
+  init(node->v, 0, MAX, node->l->v, node->r->v);
 }
 
 int query(XT *node, int l, int r, int x1, int x2) {
-  cout<<"xq: "<<l<<" "<<r<<" "<<x1<<" "<<x2<<endl;
   if (x2 < l || r < x1) return 0;
   if (x1 <= l && r <= x2) return node->v;
   int m = (l+r)>>1;
@@ -44,7 +52,6 @@ int query(XT *node, int l, int r, int x1, int x2) {
 }
 
 int query(YT *node, int l, int r, int y1, int y2, int x1, int x2) {
-  cout<<"yq: "<<l<<" "<<r<<" "<<y1<<" "<<y2<<endl;
   if (y2 < l || r < y1) return 0;
   if (y1 <= l && r <= y2) return query(node->v, 0, MAX, x1, x2);
   int m = (l+r)>>1;
@@ -58,8 +65,8 @@ int main() {
   int n, m; cin>>n>>m;
   while (n--) {
     int y1, x1, y2, x2; cin>>y1>>x1>>y2>>x2;
-    a[y1][x1] = 1; a[y1][x2] = -1;
-    a[y2][x1] = -1; a[y2][x2] = 1;
+    a[y1][x1] += 1; a[y1][x2] -= 1;
+    a[y2][x1] -= 1; a[y2][x2] += 1;
   }
   for (int i = 0; i <= MAX; i++) {
     for (int j = 1; j <= MAX; j++)
@@ -72,6 +79,6 @@ int main() {
   init(seg, 0, MAX);
   while (m--) {
     int y1, x1, y2, x2; cin>>y1>>x1>>y2>>x2;
-    cout<<query(seg, 0, MAX, y1, y2, x1, x2)<<"\n";
+    cout<<query(seg, 0, MAX, y1, y2-1, x1, x2-1)<<"\n";
   }
 }
