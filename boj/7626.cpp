@@ -34,23 +34,27 @@ int main() {
   for (int i = 0; i < n; i++) {
     int x1, y1, x2, y2; cin>>x1>>x2>>y1>>y2;
     ys.push_back(y1); ys.push_back(y2);
-    a[i] = {{x1, 1}, {y1, y2-1}};
-    a[i+n] = {{x2, -1}, {y1, y2-1}};
+    a[i] = {{x1, 1}, {y1, y2}};
+    a[i+n] = {{x2, -1}, {y1, y2}};
   }
   sort(all(ys));
   ys.erase(unique(all(ys)), ys.end());
+  ys.push_back(ys.back());
+  int range = ys.size() > 1 ? ys.size()-2:0;
   sort(all(a));
   for (auto &[xv, yy] : a) {
     auto &[y1, y2] = yy;
-    y1 = lower_bound(all(ys), y1)-ys.begin();
-    y2 = lower_bound(all(ys), y2)-ys.begin();
+    y1 = upper_bound(all(ys), y1)-ys.begin()-1;
+    y2 = upper_bound(all(ys), y2)-ys.begin()-1;
+    y1 = max(0, y1);
+    y2 = min(range, y2);
   }
   int lx = 0; ll ans = 0;
   for (int i = 0; i < 2*n; i++) {
     auto [xv, yy] = a[i];
     auto [x, v] = xv; auto [y1, y2] = yy;
     if (i) ans += (ll)(x-lx)*seg[1];
-    update(1, 0, MAX, y1, y2, v);
+    update(1, 0, MAX, y1, y2-1, v);
     lx = x;
   }
   cout<<ans<<"\n";
