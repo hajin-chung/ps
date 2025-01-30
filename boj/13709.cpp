@@ -9,17 +9,21 @@ int main() {
   int n; cin>>n;
   vector<ll> a(n);
   for (auto &x : a) cin>>x;
+  sort(all(a)); reverse(all(a));
+  vector<ll> b(61, 0);
   ll ans = 0;
-  for (int i = 60; i >= 0; i--) {
-    ll mx = -1;
-    for (int j = 0; j < n; j++)
-      if ((a[j]&(1ll<<i)) && a[j] > mx)
-        mx = a[j];
-    if (mx == -1) continue;
-    ans ^= mx;
-    for (auto &x : a)
-      if (x&(1ll<<i))
-        x ^= mx;
+  for (ll x : a) {
+    for (int i = 60; i >= 0; i--)
+      if ((x>>i)&1) {
+        if (!b[i]) {
+          b[i] = x;
+          break;
+        }
+        x ^= b[i];
+      }
   }
+  for (int i = 60; i >= 0; i--)
+    if (b[i] && (ans^b[i])>ans)
+      ans ^= b[i];
   cout<<ans<<"\n";
 }
