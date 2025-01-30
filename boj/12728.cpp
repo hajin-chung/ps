@@ -24,7 +24,7 @@ ld pow(ld x, int n) {
 int main() {
   ios::sync_with_stdio(0); cin.tie(0);
   int t; cin>>t;
-  ld y = 3.0-sqrt(5);
+  ld y = (ld)3.0-sqrt((ld)5);
   ld x = (ld)4.0/y;
   cout<<fixed<<setprecision(100);
   for (int i = 1; i <= t; i++) {
