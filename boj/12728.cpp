@@ -22,10 +22,17 @@ ld pow(ld x, int n) {
 }
 
 int main() {
-  int t; scanf("%d", &t);
-  ld x = 3.0+sqrt(5);
-  while (t--) {
+  ios::sync_with_stdio(0); cin.tie(0);
+  int t; cin>>t;
+  /*ld x = 3.0+sqrt(5);*/
+  ld y = 3.0-sqrt(5);
+  for (int i = 1; i <= t; i++) {
     int n; cin>>n;
-    printf("%03d\n", (int)pow(x, n)%1000);
+    int ans = (int)pow(4, n)/pow(y, n);
+    ans %= 1000;
+    cout<<"Case #"<<i<<": ";
+    if (ans < 100) cout<<"0";
+    if (ans < 10) cout<<"0";
+    cout<<ans<<"\n";
   }
 }
