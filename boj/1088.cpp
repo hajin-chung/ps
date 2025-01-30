@@ -17,7 +17,7 @@ int main() {
     for (int j = 1; j < n; j++) {
       int k1 = min((int)floor(a[j]/div), cnt+1);
       int k2 = min((int)floor(a[j]/div)+1, cnt+1);
-      if (abs(div-a[j]/k1) < abs(div-a[j]/k2)) {
+      if (abs(mx-a[j]/k1) < abs(mx-a[j]/k2)) {
         cnt -= (k1-1);
         mn = min(mn, a[j]/k1);
         mx = max(mx, a[j]/k1);
@@ -27,7 +27,6 @@ int main() {
         mx = max(mx, a[j]/k2);
       }
     }
-    if (ans < mx-mn) break;
     ans = min(ans, mx-mn);
   }
   cout<<fixed<<setprecision(10);
