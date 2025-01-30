@@ -3,6 +3,10 @@ using namespace std;
 
 const double INF = 1e9;
 
+double diff(double mn, double mx, double t) {
+  return max(mx, t)-min(mn, t);
+}
+
 int main() {
   ios::sync_with_stdio(0); cin.tie(0);
   int n, m; cin>>n;
@@ -17,7 +21,7 @@ int main() {
     for (int j = 1; j < n; j++) {
       int k1 = min((int)floor(a[j]/div), cnt+1);
       int k2 = min((int)floor(a[j]/div)+1, cnt+1);
-      if (abs(mx-a[j]/k1) < abs(mx-a[j]/k2)) {
+      if (diff(mn, mx, a[j]/k1) < diff(mn, mx, a[j]/k2)) {
         cnt -= (k1-1);
         mn = min(mn, a[j]/k1);
         mx = max(mx, a[j]/k1);
