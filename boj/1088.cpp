@@ -11,7 +11,6 @@ int main() {
   cin>>m;
   sort(a.begin(), a.end());
   double ans = INF;
-  cout<<fixed<<setprecision(5);
   for (int i = 1; i <= m; i++) {
     int cnt = m-(i-1);
     double mn = a[0]/i, mx = a[0]/i, div = a[0]/i;
@@ -31,5 +30,6 @@ int main() {
     if (ans < mx-mn) break;
     ans = min(ans, mx-mn);
   }
+  cout<<fixed<<setprecision(10);
   cout<<ans<<"\n";
 }
