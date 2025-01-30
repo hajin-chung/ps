@@ -25,9 +25,8 @@ int main() {
   ios::sync_with_stdio(0); cin.tie(0);
   int t; cin>>t;
   ld y = 3.0-sqrt(5);
-  ld x = 3.0+sqrt(5);
+  ld x = (ld)4.0/y;
   cout<<fixed<<setprecision(100);
-  cout<<x<<"\n"<<(ld)4.0/y<<"\n";
   for (int i = 1; i <= t; i++) {
     int n; cin>>n;
     /*int ans = (int)pow(4, n)/pow(y, n);*/
