@@ -1,38 +1,30 @@
 #include <bits/stdc++.h>
+#define fi first
+#define se second
 using namespace std;
 
-const double INF = 1e9;
-
-double diff(double mn, double mx, double t) {
-  return max(mx, t)-min(mn, t);
-}
+typedef long double ld;
+typedef pair<ld, int> pli;
+const ld INF = 1e9;
 
 int main() {
   ios::sync_with_stdio(0); cin.tie(0);
   int n, m; cin>>n;
-  vector<double> a(n);
-  for (auto &x : a) cin>>x;
-  cin>>m;
-  sort(a.begin(), a.end());
-  double ans = INF;
-  for (int i = 1; i <= m; i++) {
-    int cnt = m-(i-1);
-    double mn = a[0]/i, mx = a[0]/i, div = a[0]/i;
-    for (int j = 1; j < n; j++) {
-      int k1 = min((int)floor(a[j]/div), cnt+1);
-      int k2 = min((int)floor(a[j]/div)+1, cnt+1);
-      if (diff(mn, mx, a[j]/k1) < diff(mn, mx, a[j]/k2)) {
-        cnt -= (k1-1);
-        mn = min(mn, a[j]/k1);
-        mx = max(mx, a[j]/k1);
-      } else {
-        cnt -= (k2-1);
-        mn = min(mn, a[j]/k2);
-        mx = max(mx, a[j]/k2);
-      }
-    }
-    ans = min(ans, mx-mn);
+  vector<pli> a(n);
+  for (int i = 0; i < n; i++) {
+    ld x; cin>>x;
+    a[i] = {x, 1};
   }
-  cout<<fixed<<setprecision(10);
+  cin>>m;
+  ld ans = INF;
+  while (m--) {
+    sort(a.begin(), a.end());
+    auto [x, cnt] = a.back();
+    ans = min(ans, a.back().fi-a.begin()->fi);
+    a.back() = {x*cnt/(cnt+1), cnt+1};
+  }
+  sort(a.begin(), a.end());
+  ans = min(ans, a.back().fi-a.begin()->fi);
+  cout<<fixed<<setprecision(15);
   cout<<ans<<"\n";
 }
