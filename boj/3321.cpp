@@ -6,15 +6,24 @@
 using namespace std;
 
 typedef pair<int, int> pii;
-int a[N+1][M+1], d[N+1][M+1];
+vector<vector<int>> a;
+int d[N+1][M+1];
 
 void solve() {
   int n, m; cin>>n>>m;
+  a.resize(n);
   for (int i = 0; i < n; i++) {
     string s; cin>>s;
-    for (int j = 0; j < m; j++)
-      a[i][j] = (s[j] == '1');
+    a[i].resize(m);
+    for (int j = 0; j < m; j++) a[i][j] = (s[j] == '1');
   }
+  sort(a.begin(), a.end(), [&](vector<int> &u, vector<int> &v) {
+    for (int i = 0; i < m; i++) {
+      if (u[i] && !v[i]) return 1;
+      if (!u[i] && v[i]) return 0;
+    }
+    return 0;
+  });
   for (int j = 0; j < m; j++) {
     d[0][j] = a[0][j];
     for (int i = 1; i < n; i++) {
