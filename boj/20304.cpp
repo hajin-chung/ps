@@ -3,12 +3,14 @@ using namespace std;
 
 typedef pair<int, int> pii;
 const int INF = 1e9;
+const int N = 1000000;
+int d[N+1];
 
 int main() {
   ios::sync_with_stdio(0); cin.tie(0);
   int mx, n; cin>>mx>>n;
-  vector<int> d(mx+1, INF);
   queue<int> q;
+  for (int i = 0; i <= mx; i++) d[i] = INF;
   while (n--) {
     int s; cin>>s;
     d[s] = 0;
@@ -24,5 +26,5 @@ int main() {
       }
     }
   }
-  cout<<*max_element(d.begin(), d.begin()+mx+1)<<"\n";
+  cout<<*max_element(d, d+mx+1)<<"\n";
 }
