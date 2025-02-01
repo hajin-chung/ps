@@ -5,7 +5,7 @@ typedef long long int ll;
 const int N = 100000;
 const ll INF = 1e12;
 ll bit[N+1];
-int a[2][N+1];
+int a[2][N+1], idx[N+1];
 int n;
 
 int main() {
