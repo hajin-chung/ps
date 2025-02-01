@@ -30,24 +30,25 @@ ll query(int node, int l, int r, int i) {
 int main() {
   ios::sync_with_stdio(0); cin.tie(0);
   int n; cin>>n;
-  vector<int> a(n+1), idx(n+1);
-  for (int i = 1; i <= n; i++) {
-    int x; cin>>x;
-    idx[x] = i;
-  }
-  for (int i = 1; i <= n; i++) {
-    int x; cin>>x;
-    a[idx[x]] = i;
-  }
-  ll cnt = 0, ans;
-  for (int i = 1; i <= n; i++) {
-    update(1, 1, n, a[i]);
-    if (a[i] != n) cnt += query(1, 1, n, a[i]+1);
-  }
-  ans = cnt;
-  for (int i = 1; i <= n; i++) {
-    cnt = cnt-(a[i]-1)+(n-a[i]);
+  vector<int> a(n+1), b(n+1), c(n+1), idx(n+1);
+  for (int i = 1; i <= n; i++) cin>>a[i];
+  for (int i = 1; i <= n; i++) cin>>b[i];
+  ll ans = INF;
+  for (int it = 0; it < 2; it++) {
+    for (int i = 1; i <= n; i++) idx[a[i]] = i;
+    for (int i = 1; i <= n; i++) c[idx[i]] = b[i];
+    for (int i = 0; i < 4*n+5; i++) seg[i] = 0;
+    ll cnt = 0;
+    for (int i = 1; i <= n; i++) {
+      update(1, 1, n, c[i]);
+      if (c[i] != n) cnt += query(1, 1, n, c[i]+1);
+    }
     ans = min(ans, cnt);
+    for (int i = 1; i <= n; i++) {
+      cnt = cnt-(c[i]-1)+(n-c[i]);
+      ans = min(ans, cnt);
+    }
+    swap(a, b);
   }
   cout<<ans<<"\n";
 }
