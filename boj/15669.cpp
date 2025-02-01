@@ -20,7 +20,7 @@ void f(int u, int p, int lev) {
 
 ll h(int u, int v, int p) {
   ll ret = cnt[u][p]-cnt[v][1-p];
-  if (u != 1) ret += cnt[0][depth[u]%2!=p]-cnt[u][p];
+  if (u != 1) ret += cnt[1][(depth[u]+p)%2]-cnt[u][p];
   return ret;
 }
 
