@@ -14,7 +14,6 @@ int main() {
   for (int i = 1; i <= n; i++) cin>>a[0][i];
   for (int i = 1; i <= n; i++) cin>>a[1][i];
   ll ans = INF;
-  vector<int> idx(n+1);
   for (int i = 1; i <= n; i++) idx[a[1][i]] = i;
   ll icnt = 0;
   for (int i = n; i >= 1; i--) {
