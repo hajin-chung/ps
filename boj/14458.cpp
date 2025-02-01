@@ -3,7 +3,7 @@ using namespace std;
 
 typedef long long int ll;
 const int N = 100000;
-const ll INF = 1e9;
+const ll INF = 1e12;
 ll seg1[4*N+5], seg2[4*N+5], lazy[4*N+5];
 
 void update(int node, int l, int r, int i) {
