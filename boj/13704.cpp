@@ -1,6 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+typedef long long int ll;
 const int N = 1000000;
 const int SN = 1000;
 
@@ -11,7 +12,7 @@ struct Q {
     return e < t.e;
   }
 };
-int chk[1<<20], cnt;
+ll chk[1<<20], cnt;
 
 int main() {
   ios::sync_with_stdio(0); cin.tie(0);
