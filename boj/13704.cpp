@@ -30,7 +30,7 @@ int main() {
   }
   sort(query.begin(), query.end());
   auto add = [&](int x) { cnt += chk[x^k]; chk[x]++; };
-  auto del = [&](int x) { cnt -= chk[x^k]; chk[x]--; };
+  auto del = [&](int x) { chk[x]--; cnt -= chk[x^k]; };
   vector<int> ans(m);
   auto [s, e, i] = query[0];
   for (int i = s; i <= e; i++) add(p[i]);
