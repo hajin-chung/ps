@@ -19,7 +19,7 @@ int main() {
     for (int i = 0; i <= MAX; i++)
       for (int j = 0; j < u; j++) {
         if (!dp[j][i]) continue;
-        t[j+1][i+p[u]-p[u-j]] = 1;
+        t[j+1][i+p[u]-p[u-j-1]] = 1;
         t[0][i] = 1;
       }
     for (int i = 0; i <= MAX; i++)
