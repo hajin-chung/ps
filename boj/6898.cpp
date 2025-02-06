@@ -16,17 +16,14 @@ int main() {
   cin>>k;
   dp[0][0] = t[0][0] = 1;
   for (int u = 1; u <= n; u++) {
-    for (int i = 0; i <= MAX; i++)
-      for (int j = 0; j < u; j++) {
-        if (!dp[j][i]) continue;
-        t[j+1][i+p[u]-p[u-j-1]] = 1;
-        t[0][i] = 1;
-      }
-    for (int i = 0; i <= MAX; i++)
-      for (int j = 0; j <= u; j++) {
-        dp[j][i] = t[j][i];
-        t[j][i] = 0;
-      }
+    for (int i = 0; i < u; i++) {
+      t[i+1] |= dp[i]<<(p[u]-p[u-i-1]);
+      t[0] |= dp[i];
+    }
+    for (int i = 0; i <= u; i++) {
+      dp[i] = t[i];
+      t[i].reset();
+    }
   }
   for (int i = k;; i++) {
     if (i > MAX) {
