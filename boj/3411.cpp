@@ -31,13 +31,14 @@ void f() {
     return ret;
   };
   auto update = [&](int i, int v) { 
-    for (; i < xs.size(); i+=i&-i) bit[i]+=v; };
+    for (; i <= xs.size(); i+=i&-i) bit[i]+=v; };
   for (int i = 0; i < k; i++) { cx[i].insert(0); cx[i].insert(xs.size()+1); }
   int ans = 0, i, j;
   for (i = 0; i < n;) {
     for (j = i; j < n && a[j].y == a[i].y; j++) {
       auto it = cx[a[j].c].lower_bound(a[j].x);
-      ans = max(ans, query(*it-1)-query(*(--it)));
+      int r = *it, l = *(--it);
+      ans = max(ans, query(r-1)-query(l));
     }
     for (; i < j; i++) {
       cx[a[i].c].insert(a[i].x);
