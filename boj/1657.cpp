@@ -29,7 +29,7 @@ int main() {
           mx(dp[k][bit], dp[k][b]+s[a[i][j]][a[i][j-1]]);
         }
         if (i > 0 && (bit & (1<<j))) {
-          int b2 = ((1<<m)-1)^(1<<j), b1 = bit&~(1<<j);
+          int b2 = ((1<<m)-1)&~(1<<j), b1 = bit&~(1<<j);
           mx(dp[k][bit], dp[k][b1]+dp[1-k][b2]+s[a[i][j]][a[i-1][j]]);
         }
       }
