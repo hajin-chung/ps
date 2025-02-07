@@ -7,7 +7,7 @@ typedef long long int ll;
 vector<int> t[N+1], g[N+1];
 int ind[N+1];
 ll dp[N+1];
-bool chk[N+1];
+bool chk[N+1], cycle = 0;
 
 void f(int u) {
   g[u] = t[u];
@@ -16,6 +16,16 @@ void f(int u) {
       chk[v] = 1;
       f(v);
     }
+}
+
+void h(int u) {
+  for (auto v : g[u]) {
+    if (chk[v]) cycle = 1;
+    else {
+      chk[v] = 1;
+      h(v);
+    }
+  }
 }
 
 int main() {
@@ -34,6 +44,16 @@ int main() {
     return 0;
   }
   if (ind[1] != 0) {
+    printf("inf\n");
+    return 0;
+  }
+  for (int i = 1; i <= n; i++) chk[i] = 0;
+  for (int i = 1; i <= n; i++)
+    if (!chk[i]) {
+      chk[i] = 1;
+      h(i);
+    }
+  if (cycle) {
     printf("inf\n");
     return 0;
   }
