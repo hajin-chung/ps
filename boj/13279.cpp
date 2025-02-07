@@ -18,7 +18,7 @@ int main() {
   ans[0] = dp[n-1];
   for (int i = 1; i < n; i++) {
     for (int j = 0; j < n-i; j++)
-      dp[j] = (dp[j]*a[j+i]+j>0?dp[j-1]:0LL)%MOD;
+      dp[j] = (dp[j]*a[j+i]+(j?dp[j-1]:0LL))%MOD;
     ans[i] = dp[n-1-i];
   }
   int q; cin>>q;
