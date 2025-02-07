@@ -1,13 +1,14 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-const int N = 10000;
-const int MOD = 1e9;
 typedef long long int ll;
+const int N = 10000;
+const ll MOD1 = 1e9;
+const ll MOD2 = 1e10;
 vector<int> t[N+1], g[N+1];
 int ind[N+1];
 ll dp[N+1];
-bool chk[N+1], cycle = 0;
+bool chk[N+1];
 
 void f(int u) {
   g[u] = t[u];
@@ -16,16 +17,6 @@ void f(int u) {
       chk[v] = 1;
       f(v);
     }
-}
-
-void h(int u) {
-  for (auto v : g[u]) {
-    if (chk[v]) cycle = 1;
-    else {
-      chk[v] = 1;
-      h(v);
-    }
-  }
 }
 
 int main() {
@@ -47,26 +38,19 @@ int main() {
     printf("inf\n");
     return 0;
   }
-  for (int i = 1; i <= n; i++) chk[i] = 0;
-  for (int i = 1; i <= n; i++)
-    if (!chk[i]) {
-      chk[i] = 1;
-      h(i);
-    }
-  if (cycle) {
-    printf("inf\n");
-    return 0;
-  }
   queue<int> q;
   dp[1] = 1;
   q.push(1);
   while (!q.empty()) {
     int u = q.front(); q.pop();
     for (auto v : g[u]) {
-      dp[v] += dp[u]; dp[v] %= MOD;
+      dp[v] += dp[u]; dp[v] %= MOD2;
       if (--ind[v] == 0) q.push(v);
     }
   }
-  if (dp[2] == 0) printf("inf\n");
-  else printf("%09d\n", (int)dp[2]);
+  if (ind[2] || dp[2] == 0) printf("inf\n");
+  else {
+    if (dp[2] >= MOD1) printf("%09lld\n", dp[2]%MOD1);
+    else printf("%lld\n", dp[2]);
+  }
 }
