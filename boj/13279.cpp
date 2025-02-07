@@ -13,13 +13,15 @@ int main() {
   for (int i = 0; i < n; i++) {
     cin>>a[i];
     dp[i] = a[i];
-    if (i) dp[i] += dp[i-1];
+    ans[0] += a[i];
   }
-  ans[0] = dp[n-1];
   for (int i = 1; i < n; i++) {
-    for (int j = 0; j < n-i; j++)
-      dp[j] = (dp[j]*a[j+i]%MOD+(j?dp[j-1]:0LL))%MOD;
-    ans[i] = dp[n-1-i];
+    ll p = 0;
+    for (int j = 0; j < n-i; j++) {
+      p += dp[j]; p %= MOD;
+      ans[i] += p*a[i+j]%MOD; ans[i] %= MOD;
+      dp[j] = p*a[i+j]%MOD;
+    }
   }
   int q; cin>>q;
   while (q--) {
