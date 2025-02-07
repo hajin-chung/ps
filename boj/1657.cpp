@@ -20,6 +20,7 @@ int main() {
   int ans = 0;
   for (int i = 0; i < n; i++) {
     int k = i&1;
+    for (int bit = 0; bit < (1<<m); bit++) dp[k][bit] = 0;
     for (int bit = 0; bit < (1<<m); bit++) {
       for (int j = 0; j < m; j++) {
         if (bit & (1<<j)) 
