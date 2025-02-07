@@ -8,7 +8,7 @@ const ll MOD2 = 1e10;
 vector<int> t[N+1], g[N+1];
 int ind[N+1];
 ll dp[N+1];
-bool chk[N+1];
+bool chk[N+1], big[N+1];
 
 void f(int u) {
   g[u] = t[u];
@@ -45,12 +45,15 @@ int main() {
     int u = q.front(); q.pop();
     for (auto v : g[u]) {
       dp[v] += dp[u];
+      if (dp[v] >= MOD1) big[v] = 1;
+      if (big[u]) big[v] = 1;
+      dp[v] %= MOD2;
       if (--ind[v] == 0) q.push(v);
     }
   }
   if (ind[2] || dp[2] == 0) printf("inf\n");
   else {
-    if (dp[2] >= MOD1) printf("%09lld\n", dp[2]%MOD1);
+    if (big[2]) printf("%09lld\n", dp[2]%MOD1);
     else printf("%lld\n", dp[2]);
   }
 }
