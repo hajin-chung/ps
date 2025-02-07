@@ -44,7 +44,7 @@ int main() {
   while (!q.empty()) {
     int u = q.front(); q.pop();
     for (auto v : g[u]) {
-      dp[v] += dp[u]; dp[v] %= MOD2;
+      dp[v] += dp[u];
       if (--ind[v] == 0) q.push(v);
     }
   }
