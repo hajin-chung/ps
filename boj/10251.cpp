@@ -11,7 +11,7 @@ void mn(int &x, int v) { if (x > v) x = v; }
 
 void f() {
   int n, m, g, l; cin>>n>>m>>l>>g;
-  int mxd = 200;
+  int mxd = 2*min(n, m);
   for (int i = 0; i < n; i++)
     for (int j = 0; j < m-1; j++)
       cin>>a[i][j][0];
@@ -23,17 +23,15 @@ void f() {
       for (int d = 0; d <= mxd; d++)
         dp[i][j][d][0] = dp[i][j][d][1] = INF;
   dp[0][0][0][0] = dp[0][0][0][1] = 0;
-  for (int i = 0; i < n; i++)
-    for (int j = 0; j < m; j++)
-      for (int d = 0; d <= mxd; d++) {
-        if (i) {
-          mn(dp[i][j][d][1], dp[i-1][j][d][1]+a[i-1][j][1]);
-          if (d) mn(dp[i][j][d][1], dp[i-1][j][d-1][0]+a[i-1][j][1]);
-        }
-        if (j) {
-          mn(dp[i][j][d][0], dp[i][j-1][d][0]+a[i][j-1][0]);
-          if (d) mn(dp[i][j][d][0], dp[i][j-1][d-1][1]+a[i][j-1][0]);
-        }
+  for (int i = 1; i < n; i++) dp[i][0][0][1] = dp[i-1][0][0][1] + a[i-1][0][1];
+  for (int i = 1; i < m; i++) dp[0][i][0][0] = dp[0][i-1][0][0] + a[0][i-1][0];
+  for (int i = 1; i < n; i++)
+    for (int j = 1; j < m; j++)
+      for (int d = 1; d <= 2*min(i, j); d++) {
+        mn(dp[i][j][d][1], dp[i-1][j][d][1]+a[i-1][j][1]);
+        mn(dp[i][j][d][1], dp[i-1][j][d-1][0]+a[i-1][j][1]);
+        mn(dp[i][j][d][0], dp[i][j-1][d][0]+a[i][j-1][0]);
+        mn(dp[i][j][d][0], dp[i][j-1][d-1][1]+a[i][j-1][0]);
       }
   int ans = -1;
   for (int d = 0; d <= mxd; d++)
