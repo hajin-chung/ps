@@ -1,24 +1,67 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-typedef long long ll;
-const int MOD = 100003;
+const int INF = 1e9;
+const int N = 100;
+const int M = 100;
+int a[N][M][2];
+int dp[N][M][N+M][2];
+
+void mn(int &x, int v) { if (x > v) x = v; }
+
+void f() {
+    int n, m, g, l; cin>>n>>m>>l>>g;
+    int mxd = 2*(min(n, m)-1)-1;
+    for (int i = 0; i < n; i++)
+        for (int j = 0; j < m-1; j++)
+            cin>>a[i][j][0];
+    for (int i = 0; i < n-1; i++)
+        for (int j = 0; j < m; j++)
+            cin>>a[i][j][1];
+    for (int i = 0; i < n; i++)
+        for (int j = 0; j < m; j++)
+            for (int d = 0; d <= mxd; d++)
+                dp[i][j][d][0] = dp[i][j][d][1] = INF;
+    dp[0][0][0][0] = dp[0][0][0][1] = 0;
+    for (int i = 0; i < n; i++)
+        for (int j = 0; j < m; j++)
+            for (int d = 0; d <= mxd; d++) {
+                if (i) {
+                    mn(dp[i][j][d][1], dp[i-1][j][d][1]+a[i-1][j][1]);
+                    if (d == mxd) continue;
+                    if (d+1 <= mxd) mn(dp[i][j][d+1][1], dp[i-1][j][d][0]+a[i-1][j][1]);
+                }
+                if (j) {
+                    mn(dp[i][j][d][0], dp[i][j-1][d][0]+a[i][j-1][0]);
+                    if (d+1 <= mxd) mn(dp[i][j][d+1][0], dp[i][j-1][d][0]+a[i][j-1][0]);
+                }
+            }
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < m; j++) {
+            int md = -1, mg = -1;
+            for (int d = 0; d <= mxd; d++)
+                if (dp[i][j][d][0] <= g || dp[i][j][d][1] <= g) {
+                    md = d;
+                    mg = min(dp[i][j][d][0], dp[i][j][d][1]);
+                    break;
+                }
+            cout<<md<<","<<mg<<" ";
+        }
+        cout<<"\n";
+    }
+    int ans = -1;
+    for (int d = 0; d <= mxd; d++)
+        if (dp[n-1][m-1][d][1] <= g || dp[n-1][m-1][d][0] <= g) {
+            ans = d;
+            break;
+        }
+    if (ans != -1) {
+        cout<<(n+m-2)*l+ans<<"\n";
+    } else cout<<ans<<"\n";
+}
 
 int main() {
     ios::sync_with_stdio(0); cin.tie(0);
-    int n; cin >> n;
-    vector<ll> a(n);
-    for (auto &x : a) cin >> x;
-    vector<ll> dp(n + 1, 0);
-    dp[0] = 1;
-    for (int i = 0; i < n; ++i) {
-        for (int j = i + 1; j > 0; --j) {
-            dp[j] = (dp[j] + a[i] * dp[j - 1]) % MOD;
-        }
-    }
-    int q; cin >> q;
-    while (q--) {
-        int k; cin >> k;
-        cout << dp[k] % MOD << "\n";
-    }
+    int t; cin>>t;
+    while (t--) f();
 }
