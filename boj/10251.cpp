@@ -5,13 +5,13 @@ const int INF = 1e9;
 const int N = 100;
 const int M = 100;
 int a[N][M][2];
-int dp[N][M][N+M][2];
+int dp[N][M][N+M+5][2];
 
 void mn(int &x, int v) { if (x > v) x = v; }
 
 void f() {
   int n, m, g, l; cin>>n>>m>>l>>g;
-  int mxd = 2*min(n, m);
+  int mxd = 200;
   for (int i = 0; i < n; i++)
     for (int j = 0; j < m-1; j++)
       cin>>a[i][j][0];
@@ -28,10 +28,8 @@ void f() {
   for (int i = 1; i < n; i++)
     for (int j = 1; j < m; j++)
       for (int d = 1; d <= 2*min(i, j); d++) {
-        mn(dp[i][j][d][1], dp[i-1][j][d][1]+a[i-1][j][1]);
-        mn(dp[i][j][d][1], dp[i-1][j][d-1][0]+a[i-1][j][1]);
-        mn(dp[i][j][d][0], dp[i][j-1][d][0]+a[i][j-1][0]);
-        mn(dp[i][j][d][0], dp[i][j-1][d-1][1]+a[i][j-1][0]);
+        dp[i][j][d][0] = min(dp[i][j-1][d][0], dp[i][j-1][d-1][1])+a[i][j-1][0];
+        dp[i][j][d][1] = min(dp[i-1][j][d][1], dp[i-1][j][d-1][0])+a[i-1][j][1];
       }
   int ans = -1;
   for (int d = 0; d <= mxd; d++)
