@@ -11,7 +11,7 @@ void mn(int &x, int v) { if (x > v) x = v; }
 
 void f() {
   int n, m, g, l; cin>>n>>m>>l>>g;
-  int mxd = 2*min(n, m);
+  int mxd = 200;
   for (int i = 0; i < n; i++)
     for (int j = 0; j < m-1; j++)
       cin>>a[i][j][0];
