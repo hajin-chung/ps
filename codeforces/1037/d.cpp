@@ -84,7 +84,7 @@ void f() {
     int rr = query(1, 0, mx, cc, cc);
     update(1, 0, mx, l[idx], r[idx], max(cc, rr));
   }
-  cout<<v[query(1, 0, mx, k, k)]<<"\n";
+  cout<<v[max(query(1, 0, mx, k, k), k)]<<"\n";
 }
 
 int main() {
