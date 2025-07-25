@@ -8,11 +8,19 @@ const int N = 1e5;
 typedef pair<int, int> pii;
 vector<int> l, r;
 vector<pii> c;
-int tree[4*N+5], lazy[4*N+5];
+int seg[4*N+5], lazy[4*N+5];
+
+void init(int node, int l, int r) {
+  seg[node] = lazy[node] = 0;
+  if (l == r) return;
+  int m = (l+r)>>1;
+  init(node*2, l, m);
+  init(node*2+1, m+1, r);
+}
 
 void propagate(int node, int l, int r) {
   if (lazy[node] == 0) return;
-  tree[node] = max(tree[node], lazy[node]);
+  seg[node] = max(seg[node], lazy[node]);
   if (l != r) {
     lazy[node*2] = max(lazy[node*2], lazy[node]);
     lazy[node*2+1] = max(lazy[node*2+1], lazy[node]);
@@ -23,7 +31,7 @@ void propagate(int node, int l, int r) {
 int query(int node, int l, int r, int ql, int qr) {
   propagate(node, l, r);
   if (r < ql || qr < l) return 0;
-  if (ql <= l && r <= qr) return tree[node];
+  if (ql <= l && r <= qr) return seg[node];
   int m = (l+r)>>1;
   int ll = query(node*2, l, m, ql, qr);
   int rr = query(node*2+1, m+1, r, ql, qr);
@@ -41,12 +49,11 @@ void update(int node, int l, int r, int ql, int qr, int v) {
   int m = (l+r)>>1;
   update(node*2, l, m, ql, qr, v);
   update(node*2+1, m+1, r, ql, qr, v);
-  tree[node] = max(tree[node*2], tree[node*2+1]);
+  seg[node] = max(seg[node*2], seg[node*2+1]);
 }
 
 void f() {
   int n, k; cin>>n>>k;
-  for (int i = 0; i < 4*n+5; i++) tree[i] = lazy[i] = 0;
   l.resize(0); r.resize(0); c.resize(0);
   vector<int> v;
   v.push_back(k);
@@ -69,20 +76,14 @@ void f() {
     r[i] = lower_bound(all(v), r[i])-v.begin();
     c[i].fi = lower_bound(all(v), c[i].fi)-v.begin();
   }
-
-  // cout<<"============="<<"\n";
-  // cout<<k<<"\n";
-  // for (int i = 0; i < n; i++) cout<<l[i]<<" "<<r[i]<<" "<<c[i].fi<<"\n";
-  // cout<<"============="<<"\n";
   
-  int mx = v.size();
   sort(c.begin(), c.end(), greater<pii>());
+  int mx = v.size()-1;
+  init(1, 0, mx);
   for (auto [cc, idx] : c) {
     int rr = query(1, 0, mx, cc, cc);
-    // cout<<cc<<" "<<rr<<"\n";
     update(1, 0, mx, l[idx], r[idx], max(cc, rr));
   }
-  // cout<<query(1, 0, mx, k, k)<<"\n";
   cout<<v[query(1, 0, mx, k, k)]<<"\n";
 }
 
