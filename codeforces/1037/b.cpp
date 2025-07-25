@@ -13,12 +13,9 @@ void f() {
 
   int cnt = 0;
   for (int i = 1; i <= n; i++) {
-    if (a[i]) {
-      cnt = 0;
-      continue;
-    }
+    if (a[i]) cnt = 0;
+    else cnt++;
 
-    cnt++;
     if (cnt >= k) {
       if (i-k-1 <= 0) dp[i] = max(1, dp[i-1]);
       else dp[i] = max(dp[i-k-1]+1, dp[i-1]);
