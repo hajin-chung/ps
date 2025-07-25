@@ -19,7 +19,10 @@ void f() {
     }
 
     cnt++;
-    if (cnt >= k) dp[i] = max(dp[i-k-1]+1, dp[i-1]);
+    if (cnt >= k) {
+      if (i-k-1 <= 0) dp[i] = max(1, dp[i-1]);
+      else dp[i] = max(dp[i-k-1]+1, dp[i-1]);
+    }
     else dp[i] = max(dp[i], dp[i-1]);
   }
   cout<<dp[n]<<"\n";
