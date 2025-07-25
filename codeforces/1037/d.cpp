@@ -11,6 +11,7 @@ vector<pii> c;
 int seg[4*N+5], lazy[4*N+5];
 
 void init(int node, int l, int r) {
+  if (node < 0 || node > 4*N) return;
   seg[node] = lazy[node] = 0;
   if (l == r) return;
   int m = (l+r)>>1;
