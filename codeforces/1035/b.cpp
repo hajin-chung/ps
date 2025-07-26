@@ -9,17 +9,20 @@ bool f() {
   vector<ll> a(n);
   for (auto &x: a) cin>>x;
 
-  ll mn = a[0], mx = a[0];
-  for (int i = 1; i < n; i++) {
-    mn = min(abs(mn-a[i]), abs(mx-a[i]));
+  ll mn = 0, mx = 0;
+  for (int i = 0; i < n; i++) {
+    if (mn - a[i] == 0 || mx - a[i] == 0) mn = 0;
+    else if (mn - a[i] < 0 && mx - a[i] > 0) mn = 0;
+    else mn = min(abs(mn-a[i]), abs(mx-a[i]));
     mx = mx+a[i];
   }
 
   ll dx = px-qx, dy = py-qy;
   dx *= dx; dy *= dy;
   mn *= mn; mx *= mx;
+  ll d = dx+dy;
 
-  return mn <= dx+dy && dx+dy <= mx;
+  return mn <= d && d <= mx;
 }
 
 int main() {
