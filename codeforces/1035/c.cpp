@@ -12,7 +12,7 @@ ll f() {
   for (ll t = l; t; t>>=1) e <<= 1;
   if (e > r) return -1;
 
-  if (k <= n/2) return l;
+  if (k <= n-2) return l;
   else return e;
 }
 
