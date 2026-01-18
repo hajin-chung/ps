@@ -1,0 +1,28 @@
+#include <bits/stdc++.h>
+#define fi first
+#define se second
+#define all(x) (x).begin(), (x).end()
+#define sz(x) (x).size()
+using namespace std;
+
+typedef long long int ll;
+typedef pair<int, int> pii;
+
+int gcd(int a,int b){
+  if(b==0)return a;
+  else return gcd(b,a%b);
+}
+
+void solve() {
+  int n; cin>>n;
+  string a; cin>>a;
+  int cnt = 0, li = n-1;
+  for (int i = n-1; i >= 0; i--) cnt += (a[i] != a[n-1]);
+  cout<<cnt<<"\n";
+}
+
+int main() {
+  ios::sync_with_stdio(0); cin.tie(0);
+  int t; cin>>t;
+  while(t--) solve();
+}
